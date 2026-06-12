@@ -14,16 +14,141 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          target: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          target?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          target?: string | null
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          interest: string | null
+          message: string | null
+          name: string
+          phone: string | null
+          source: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          interest?: string | null
+          message?: string | null
+          name: string
+          phone?: string | null
+          source?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          interest?: string | null
+          message?: string | null
+          name?: string
+          phone?: string | null
+          source?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          capacity: string | null
+          category: string
+          created_at: string
+          description: string | null
+          fuel_type: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          capacity?: string | null
+          category: string
+          created_at?: string
+          description?: string | null
+          fuel_type?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          capacity?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          fuel_type?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +275,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
