@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { trackEvent, trackCalculatorUse } from "@/lib/analytics";
 import {
   Phone,
   Mail,
@@ -23,7 +22,6 @@ import {
   Clock,
   Building2,
   Check,
-  Loader2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -127,19 +125,17 @@ const t: Record<Lang, Dict> = {
   },
 };
 
-const PRODUCT_PLACEHOLDER =
+const PRODUCT_IMG =
   "https://images.unsplash.com/photo-1581093458791-9d42e3c7f7e3?auto=format&fit=crop&w=900&q=80";
 
-type DbProduct = {
-  id: string;
-  name: string;
-  category: string;
-  capacity: string | null;
-  fuel_type: string | null;
-  image_url: string | null;
-  description: string | null;
-  is_active: boolean;
-};
+const PRODUCTS = [
+  { cat: "Buhar Kazanları", name: "Kuvars Serisi", sub: "Tek Külhanlı", capacity: "500 – 5.000 kg/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Buhar Kazanları", name: "Kuvars NG Serisi", sub: "Yüksek Verim", capacity: "500 – 10.000 kg/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Buhar Kazanları", name: "Turmalin Serisi", sub: "Endüstriyel", capacity: "2.000 – 5.000 kg/h", fuel: "Multi Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Sıcak Su Kazanları", name: "Oniks Serisi", sub: "Yüksek Kapasite", capacity: "3.000.000 – 6.000.000 kcal/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Sıcak Su Kazanları", name: "Akuamarin Serisi", sub: "Modüler Tasarım", capacity: "75 – 20.000 kW", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Sıcak Hava Kazanları", name: "HAS NG Serisi", sub: "Sera & Sanayi", capacity: "100.000 – 1.000.000 kcal/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
+];
 
 const WHATSAPP = "905551112233";
 
@@ -147,22 +143,7 @@ function Index() {
   const [lang, setLang] = useState<Lang>("TR");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [products, setProducts] = useState<DbProduct[]>([]);
-  const [productsLoading, setProductsLoading] = useState(true);
   const L = t[lang];
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await supabase
-        .from("products")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order");
-      setProducts((data as DbProduct[]) ?? []);
-      setProductsLoading(false);
-    };
-    fetchProducts();
-  }, []);
 
   useEffect(() => {
     const stored = typeof window !== "undefined" ? localStorage.getItem("enorpa_lang") : null;
@@ -353,19 +334,9 @@ function Index() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {productsLoading ? (
-              <div className="col-span-full py-12 flex justify-center">
-                <Loader2 className="h-6 w-6 animate-spin text-orange" />
-              </div>
-            ) : products.length === 0 ? (
-              <div className="col-span-full py-12 text-center text-muted-foreground">
-                Henruz urun yok.
-              </div>
-            ) : (
-              products.map((p) => (
-                <ProductCard key={p.id} p={p} L={L} />
-              ))
-            )}
+            {PRODUCTS.map((p) => (
+              <ProductCard key={p.name} p={p} L={L} />
+            ))}
           </div>
 
           <div className="mt-12 flex justify-center">
@@ -398,7 +369,6 @@ function Index() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"
-        onClick={() => trackEvent("whatsapp_click")}
         className="hidden md:flex fixed bottom-6 right-6 z-40 h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-transform"
       >
         <MessageCircle className="h-7 w-7" />
@@ -406,11 +376,7 @@ function Index() {
 
       {/* MOBILE STICKY BOTTOM BAR */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-50 grid grid-cols-3 bg-navy-dark text-white border-t-2 border-orange shadow-2xl">
-        <a
-          href="tel:+908504712100"
-          onClick={() => trackEvent("phone_click")}
-          className="flex flex-col items-center justify-center gap-0.5 py-2.5 active:bg-navy"
-        >
+        <a href="tel:+908504712100" className="flex flex-col items-center justify-center gap-0.5 py-2.5 active:bg-navy">
           <Phone className="h-5 w-5" />
           <span className="text-[11px] font-display uppercase tracking-wider font-semibold">Ara</span>
         </a>
@@ -418,7 +384,6 @@ function Index() {
           href={`https://wa.me/${WHATSAPP}`}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackEvent("whatsapp_click")}
           className="flex flex-col items-center justify-center gap-0.5 py-2.5 bg-[#25D366] active:bg-[#1ea952]"
         >
           <MessageCircle className="h-5 w-5" />
@@ -433,12 +398,12 @@ function Index() {
   );
 }
 
-function ProductCard({ p, L }: { p: DbProduct; L: Dict }) {
+function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
         <img
-          src={p.image_url || PRODUCT_PLACEHOLDER}
+          src={p.img}
           alt={p.name}
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
@@ -446,10 +411,13 @@ function ProductCard({ p, L }: { p: DbProduct; L: Dict }) {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
         <div className="absolute top-4 left-4">
           <span className="bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-2.5 py-1">
-            {p.category}
+            {p.cat}
           </span>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
+          <div className="text-white/70 text-xs uppercase tracking-wider font-medium mb-1">
+            {p.sub}
+          </div>
           <h3 className="font-display text-white text-2xl font-bold uppercase">{p.name}</h3>
         </div>
       </div>
@@ -471,7 +439,7 @@ function ProductCard({ p, L }: { p: DbProduct; L: Dict }) {
               <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                 {L.fuel}
               </dt>
-              <dd className="font-display text-navy text-base font-semibold">{p.fuel_type || "—"}</dd>
+              <dd className="font-display text-navy text-base font-semibold">{p.fuel}</dd>
             </div>
           </div>
         </dl>
@@ -628,12 +596,6 @@ function CapacityCalculator() {
     else if (facility === "greenhouse") recommended = "HAS NG Serisi";
     return { kcal, kw, recommended };
   }, [facility, area, fuel]);
-
-  useEffect(() => {
-    if (result) {
-      trackCalculatorUse(`${result.kcal} kcal/h - ${result.recommended}`);
-    }
-  }, [result]);
 
   const reset = () => {
     setStep(0);
@@ -834,23 +796,16 @@ function QuickCallbackForm() {
       return;
     }
     setError(null);
-    const leadData = {
+    const { error: dbError } = await supabase.from("leads").insert({
       name: cleanName,
       phone: cleanPhone,
       source: "quick_callback",
       interest: "Hızlı Geri Arama",
-    };
-    const { error: dbError } = await supabase.from("leads").insert(leadData);
+    });
     if (dbError) {
       setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
       return;
     }
-    trackEvent("quick_callback_submitted");
-    fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/notify-lead`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(leadData),
-    }).catch(() => {});
     setSubmitted(true);
   };
 
@@ -1041,19 +996,12 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
       return;
     }
     setError(null);
-    const leadData = {
+    await supabase.from("leads").insert({
       name: clean.split("@")[0],
       email: clean,
       source: "document_gate",
       interest: `Belge: ${doc.title}`,
-    };
-    await supabase.from("leads").insert(leadData);
-    trackEvent("document_gate_submitted", doc.title);
-    fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/notify-lead`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(leadData),
-    }).catch(() => {});
+    });
     setDone(true);
   };
 
