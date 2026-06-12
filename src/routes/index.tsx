@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Phone,
   Mail,
@@ -782,7 +783,7 @@ function QuickCallbackForm() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanName = name.trim();
     const cleanPhone = phone.trim();
@@ -795,6 +796,16 @@ function QuickCallbackForm() {
       return;
     }
     setError(null);
+    const { error: dbError } = await supabase.from("leads").insert({
+      name: cleanName,
+      phone: cleanPhone,
+      source: "quick_callback",
+      interest: "Hızlı Geri Arama",
+    });
+    if (dbError) {
+      setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
+      return;
+    }
     setSubmitted(true);
   };
 
@@ -977,7 +988,7 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const clean = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean) || clean.length > 255) {
@@ -985,6 +996,12 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
       return;
     }
     setError(null);
+    await supabase.from("leads").insert({
+      name: clean.split("@")[0],
+      email: clean,
+      source: "document_gate",
+      interest: `Belge: ${doc.title}`,
+    });
     setDone(true);
   };
 
