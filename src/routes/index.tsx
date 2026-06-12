@@ -29,7 +29,27 @@ export const Route = createFileRoute("/")({
 
 type Lang = "TR" | "EN" | "RU";
 
-const t = {
+type Dict = {
+  nav: readonly string[];
+  quote: string;
+  heroTitle: string;
+  heroSub: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  yearsExp: string;
+  projects: string;
+  countries: string;
+  satisfaction: string;
+  certified: string;
+  productsTitle: string;
+  productsSub: string;
+  capacity: string;
+  fuel: string;
+  inspect: string;
+  viewAll: string;
+};
+
+const t: Record<Lang, Dict> = {
   TR: {
     nav: ["Anasayfa", "Ürünler", "Referanslar", "Belgeler", "İletişim"],
     quote: "Teklif Al",
