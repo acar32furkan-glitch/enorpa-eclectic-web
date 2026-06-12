@@ -112,7 +112,7 @@ const t: Record<Lang, Dict> = {
     inspect: "Подробнее",
     viewAll: "Вся продукция",
   },
-} as const;
+};
 
 const PRODUCTS = [
   { cat: "Buhar Kazanları", name: "Kuvars Serisi", sub: "Tek Külhanlı", capacity: "500 – 5.000 kg/h", fuel: "Katı Yakıtlı" },
