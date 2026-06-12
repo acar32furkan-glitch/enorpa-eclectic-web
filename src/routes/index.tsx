@@ -335,7 +335,7 @@ function Index() {
   );
 }
 
-function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: typeof t.TR }) {
+function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative h-48 bg-navy-dark overflow-hidden">
@@ -394,7 +394,7 @@ function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: typeof t.TR })
   );
 }
 
-function TrustBar({ L }: { L: typeof t.TR }) {
+function TrustBar({ L }: { L: Dict }) {
   return (
     <section className="bg-white border-b border-border">
       <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
