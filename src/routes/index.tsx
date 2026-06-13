@@ -215,15 +215,18 @@ function Index() {
           </a>
 
           <nav className="hidden lg:flex items-center gap-8">
-            {L.nav.map((item, i) => (
-              <a
-                key={item}
-                href={i === 0 ? "#" : `#${["products", "refs", "docs", "contact"][i - 1]}`}
-                className="font-sans text-sm font-medium text-navy-dark hover:text-orange transition-colors uppercase tracking-wide"
-              >
-                {item}
-              </a>
-            ))}
+            {L.nav.map((item, i) => {
+              const href = i === 0 ? "#" : i === 1 ? "/urunler" : `#${["", "refs", "docs", "contact"][i - 1]}`;
+              return (
+                <a
+                  key={item}
+                  href={href}
+                  className="font-sans text-sm font-medium text-navy-dark hover:text-orange transition-colors uppercase tracking-wide"
+                >
+                  {item}
+                </a>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">
@@ -247,16 +250,19 @@ function Index() {
         {menuOpen && (
           <div className="lg:hidden border-t border-border bg-white">
             <div className="px-4 py-4 flex flex-col gap-1">
-              {L.nav.map((item, i) => (
-                <a
-                  key={item}
-                  href={i === 0 ? "#" : `#${["products", "refs", "docs", "contact"][i - 1]}`}
-                  className="py-3 px-2 font-medium text-navy-dark hover:bg-steel border-b border-border last:border-0"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
+              {L.nav.map((item, i) => {
+                const href = i === 0 ? "#" : i === 1 ? "/urunler" : `#${["", "refs", "docs", "contact"][i - 1]}`;
+                return (
+                  <a
+                    key={item}
+                    href={href}
+                    className="py-3 px-2 font-medium text-navy-dark hover:bg-steel border-b border-border last:border-0"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item}
+                  </a>
+                );
+              })}
               <a
                 href="#contact"
                 className="mt-3 bg-orange text-white text-center font-display font-semibold uppercase tracking-wider py-3"
@@ -367,13 +373,12 @@ function Index() {
 }
 
 /* =========================================================================
-   PRODUCTS SECTION — category tabs + product cards + detail modal
+   PRODUCTS SECTION — featured products grid + CTA to full catalog
 ========================================================================= */
 
 function ProductsSection({ L }: { L: Dict }) {
-  const [activeTab, setActiveTab] = useState(productCategories[0].id);
   const [modalProduct, setModalProduct] = useState<Product | null>(null);
-  const activeCategory = productCategories.find((c) => c.id === activeTab) ?? productCategories[0];
+  const featured = getFeaturedProducts();
 
   return (
     <section id="products" className="bg-steel py-20 md:py-28">
@@ -388,28 +393,22 @@ function ProductsSection({ L }: { L: Dict }) {
           <p className="mt-4 text-muted-foreground text-base md:text-lg">{L.productsSub}</p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 border-b border-border pb-4">
-          {productCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveTab(cat.id)}
-              className={`font-display uppercase tracking-wider text-sm font-semibold px-5 py-2.5 transition-colors ${
-                activeTab === cat.id
-                  ? "bg-orange text-white"
-                  : "bg-white text-navy border border-border hover:border-orange"
-              }`}
-            >
-              {cat.title}
-            </button>
+        {/* Featured Product Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featured.map((p) => (
+            <ProductCard key={p.name} product={p} categoryTitle={p.categoryTitle} L={L} onDetail={() => setModalProduct(p)} />
           ))}
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {activeCategory.products.map((p) => (
-            <ProductCard key={p.name} product={p} categoryTitle={activeCategory.title} L={L} onDetail={() => setModalProduct(p)} />
-          ))}
+        {/* CTA to full catalog */}
+        <div className="mt-12 flex justify-center">
+          <a
+            href="/urunler"
+            className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-8 py-4 transition-colors text-base"
+          >
+            Tüm Ürün Kataloğunu İncele
+            <ArrowRight className="h-5 w-5" />
+          </a>
         </div>
       </div>
 
