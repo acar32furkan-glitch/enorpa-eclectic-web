@@ -16,17 +16,18 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3">Enorpa Enerji</div>
+        <h1 className="font-display text-8xl font-bold text-navy">404</h1>
+        <h2 className="mt-4 font-display text-2xl font-bold uppercase text-navy">Sayfa Bulunamadı</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          Aradığınız sayfa mevcut değil veya taşınmış olabilir.
         </p>
-        <div className="mt-6">
+        <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-6 py-3 transition-colors"
           >
-            Go home
+            Anasayfaya Dön
           </Link>
         </div>
       </div>
@@ -95,6 +96,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" },
       { rel: "icon", href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23e05c1a'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>E</text></svg>" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Enorpa Enerji",
+          url: "https://enorpa-eclectic-web.vercel.app",
+          logo: "https://enorpa-eclectic-web.vercel.app/favicon.ico",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Sanayi Mah. 3231 Sk. No:12",
+            addressLocality: "Merkez",
+            addressRegion: "Isparta",
+            addressCountry: "TR",
+          },
+          telephone: "+908504712100",
+          sameAs: ["https://instagram.com/enorpaenerji"],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -104,7 +126,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <head>
         <HeadContent />
       </head>
@@ -123,6 +145,17 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href="https://wa.me/908504712100"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-transform"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </a>
     </QueryClientProvider>
   );
 }

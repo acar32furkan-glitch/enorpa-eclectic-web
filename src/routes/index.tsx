@@ -29,12 +29,13 @@ import { productCategories, getFeaturedProducts, type Product, type ProductCateg
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Enorpa Enerji — Endüstriyel Isıtmada Güvenilir Güç" },
-      {
-        name: "description",
-        content:
-          "Buhar, sıcak su ve sıcak hava kazanları. 25+ yıllık deneyimle endüstriyel ısıtma çözümleri. CE, TSE, ISO 9001 sertifikalı.",
-      },
+      { title: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
+      { name: "description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri. 26 ülkede 138+ proje." },
+      { property: "og:title", content: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
+      { property: "og:description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri." },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "tr_TR" },
+      { property: "og:site_name", content: "Enorpa Enerji" },
     ],
   }),
   component: Index,
@@ -1572,9 +1573,9 @@ function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <div>© {new Date().getFullYear()} Enorpa Enerji. Tüm hakları saklıdır.</div>
           <div className="flex items-center gap-5">
-            <a href="#contact" className="hover:text-white">Gizlilik</a>
-            <a href="#contact" className="hover:text-white">KVKK</a>
-            <a href="#contact" className="hover:text-white">Çerezler</a>
+            <a href="/gizlilik-politikasi" className="hover:text-white">Gizlilik</a>
+            <a href="/kvkk" className="hover:text-white">KVKK</a>
+            <a href="/cerez-politikasi" className="hover:text-white">Çerezler</a>
           </div>
         </div>
       </div>
