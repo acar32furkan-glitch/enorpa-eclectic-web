@@ -325,6 +325,9 @@ function Index() {
 
       <TrustBar L={L} />
 
+      {/* SECTORS */}
+      <SectorsSection />
+
       {/* PRODUCTS */}
       <ProductsSection L={L} />
 
@@ -336,6 +339,12 @@ function Index() {
 
       {/* DOCUMENT CENTER */}
       <DocumentCenter />
+
+      {/* PROJECT GALLERY */}
+      <ProjectGallery />
+
+      {/* TESTIMONIALS */}
+      <TestimonialsSection />
 
       {/* CONTACT (anchor for nav links) */}
       <ContactSection />
@@ -1019,6 +1028,51 @@ const REFERENCES = [
   { name: "Marmara Kimya Tesisleri", sector: "Kimya", year: "2024", desc: "Turmalin Serisi buhar kazanı, 5.000 kg/h" },
 ];
 
+/* =========================================================================
+   SECTORS
+========================================================================= */
+
+const SECTORS = [
+  { icon: "🌱", title: "Sera Isıtma Sistemleri", desc: "Sera ısıtma tesisatı proje ve kurulumu" },
+  { icon: "🏭", title: "Endüstriyel Buhar Sistemleri", desc: "Endüstriyel tesislerde kullanılan yüksek verimli ısıtma sistemleri" },
+  { icon: "💨", title: "Kurutma Sistemleri", desc: "Nemin azaltılması için kullanılan teknolojik çözümler" },
+  { icon: "🏢", title: "Mahal Isıtma Sistemleri", desc: "Yapı içindeki sıcaklık düzenlemesi için kullanılan sistemler" },
+];
+
+function SectorsSection() {
+  return (
+    <section className="bg-white py-20 md:py-28 border-t border-border">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Sektörler
+          </div>
+          <h2 className="font-display text-navy text-3xl md:text-5xl font-bold uppercase">
+            Sektörler
+          </h2>
+          <p className="mt-4 text-muted-foreground text-base md:text-lg">
+            Kazan, ısıtma ve buhar sistemleri çözümlerimizle dünyanın birçok noktasında farklı sektörlerdeki müşterilerimize profesyonel çözümler sunuyoruz.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SECTORS.map((s) => (
+            <div key={s.title} className="bg-steel border border-border p-6 text-center hover:border-orange transition-colors">
+              <div className="text-4xl mb-4">{s.icon}</div>
+              <h3 className="font-display text-navy text-lg font-bold uppercase mb-2">{s.title}</h3>
+              <p className="text-sm text-muted-foreground">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   REFERENCES
+========================================================================= */
+
 function ReferencesSection() {
   return (
     <section id="refs" className="bg-white py-20 md:py-28 border-t border-border">
@@ -1077,6 +1131,122 @@ const DOCS: Doc[] = [
   { id: "catalog-2026", title: "2026 Genel Katalog", sub: "Tüm Ürün Yelpazesi", size: "18 MB", gated: true, url: "/docs/catalog-2026.pdf" },
   { id: "engineering-guide", title: "Mühendislik Tasarım Kılavuzu", sub: "Premium Rehber", size: "8.7 MB", gated: true, url: "/docs/engineering-guide.pdf" },
 ];
+
+/* =========================================================================
+   PROJECT GALLERY
+========================================================================= */
+
+const PROJECTS = [
+  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu" },
+  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu" },
+  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu" },
+  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu" },
+];
+
+function ProjectGallery() {
+  return (
+    <section className="bg-steel py-20 md:py-28 border-t border-border">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Projelerimiz
+          </div>
+          <h2 className="font-display text-navy text-3xl md:text-5xl font-bold uppercase">
+            Projelerimizden Görüntüler
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {PROJECTS.map((p) => (
+            <div key={p.title} className="group bg-white border border-border hover:border-orange transition-all overflow-hidden">
+              <div className="aspect-[4/3] bg-navy-dark flex items-center justify-center">
+                <div className="text-white/20 font-display text-xs uppercase tracking-wider text-center px-4">
+                  <div className="h-12 w-12 mx-auto mb-2 border-2 border-white/10 flex items-center justify-center">
+                    <span className="text-lg">📷</span>
+                  </div>
+                  Fotoğraf
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="font-display text-navy text-base font-bold uppercase">{p.title}</h3>
+                <p className="text-xs text-muted-foreground mt-1">{p.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   DOCUMENT CENTER
+========================================================================= */
+
+/* =========================================================================
+   TESTIMONIALS
+========================================================================= */
+
+const TESTIMONIALS = [
+  {
+    quote: "Müşterilerimize sağladığımız kaliteli ve zamanında teknik destek, işlerini kesintisiz sürdürmelerini sağlıyor. Saha ekiplerimiz her projede profesyonel yaklaşımları ve yenilikçi çözümleriyle fark yaratıyor.",
+    name: "Mevlüt A.",
+    title: "Servis & Saha Sorumlusu",
+  },
+  {
+    quote: "Yenilikçi stratejiler ve sektörel uzmanlıkla enerji çözümlerinde öncü konumdayız. Müşteri odaklı yaklaşımımızla sürdürülebilirlik ve verimlilik alanlarında öncü projelere imza atıyoruz.",
+    name: "Onur K.",
+    title: "Proje & Pazarlama Müdürü",
+  },
+  {
+    quote: "Enerji sektöründe sağlam bir iz bırakmanın gururunu yaşıyoruz. Yenilikçi projelerimiz ve müşteri odaklı yaklaşımımızla sektördeki değişimi liderlik ederek yönlendiriyoruz.",
+    name: "İbrahim Ç.",
+    title: "Yönetim Kurulu Üyesi",
+  },
+  {
+    quote: "Isıtma sektöründe kalite ve yenilik standartlarını belirlemekteyiz. Yaratıcı çözümlerimizle üretimde verimlilik ve sürdürülebilirlik sağlayarak müşterilerimize mükemmel ürünler sunmayı hedefliyoruz.",
+    name: "Aykut M.",
+    title: "Yönetim Kurulu Üyesi",
+  },
+];
+
+function TestimonialsSection() {
+  return (
+    <section className="bg-navy-dark text-white py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Görüşler
+          </div>
+          <h2 className="font-display text-white text-3xl md:text-5xl font-bold uppercase">
+            Yüksek Teknoloji & Mühendislik
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {TESTIMONIALS.map((t) => (
+            <div key={t.name} className="border border-white/10 p-6 md:p-8">
+              <svg className="h-6 w-6 text-orange mb-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+              <p className="text-white/80 text-sm leading-relaxed mb-6 italic">
+                "{t.quote}"
+              </p>
+              <div>
+                <div className="font-display text-white font-bold uppercase text-sm">{t.name}</div>
+                <div className="text-xs text-white/50 mt-0.5">{t.title}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   DOCUMENT CENTER
+========================================================================= */
 
 function DocumentCenter() {
   const [gatedDoc, setGatedDoc] = useState<Doc | null>(null);
