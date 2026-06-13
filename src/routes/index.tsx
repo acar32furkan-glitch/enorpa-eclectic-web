@@ -22,7 +22,9 @@ import {
   Clock,
   Building2,
   Check,
+  Info,
 } from "lucide-react";
+import { productCategories, type Product, type ProductCategory } from "@/data/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -127,15 +129,6 @@ const t: Record<Lang, Dict> = {
 
 const PRODUCT_IMG =
   "https://images.unsplash.com/photo-1581093458791-9d42e3c7f7e3?auto=format&fit=crop&w=900&q=80";
-
-const PRODUCTS = [
-  { cat: "Buhar Kazanları", name: "Kuvars Serisi", sub: "Tek Külhanlı", capacity: "500 – 5.000 kg/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Buhar Kazanları", name: "Turmalin Serisi", sub: "Endüstriyel", capacity: "2.000 – 5.000 kg/h", fuel: "Multi Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Buhar Kazanları", name: "Obsidyen Serisi", sub: "Yüksek Basınç", capacity: "1.000 – 8.000 kg/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Sıcak Su Kazanları", name: "Kalsedon Serisi", sub: "Katı Yakıtlı", capacity: "500.000 – 5.000.000 kcal/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Sıcak Su Kazanları", name: "Akuamarin Serisi", sub: "Modüler Tasarım", capacity: "75 – 20.000 kW", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Sıcak Hava Kazanları", name: "HAS Turbo Serisi", sub: "Sera & Sanayi", capacity: "100.000 – 1.500.000 kcal/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
-];
 
 const WHATSAPP = "905551112233";
 
@@ -321,35 +314,7 @@ function Index() {
       <TrustBar L={L} />
 
       {/* PRODUCTS */}
-      <section id="products" className="bg-steel py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="max-w-2xl mb-12">
-            <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-              Ürün Kataloğu
-            </div>
-            <h2 className="font-display text-navy text-3xl md:text-5xl font-bold uppercase">
-              {L.productsTitle}
-            </h2>
-            <p className="mt-4 text-muted-foreground text-base md:text-lg">{L.productsSub}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PRODUCTS.map((p) => (
-              <ProductCard key={p.name} p={p} L={L} />
-            ))}
-          </div>
-
-          <div className="mt-12 flex justify-center">
-            <a
-              href="#products"
-              className="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
-            >
-              {L.viewAll}
-              <ArrowRight className="h-5 w-5" />
-            </a>
-          </div>
-        </div>
-      </section>
+      <ProductsSection L={L} />
 
       {/* REFERENCES */}
       <ReferencesSection />
@@ -401,8 +366,72 @@ function Index() {
   );
 }
 
-function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
+/* =========================================================================
+   PRODUCTS SECTION — category tabs + product cards + detail modal
+========================================================================= */
+
+function ProductsSection({ L }: { L: Dict }) {
+  const [activeTab, setActiveTab] = useState(productCategories[0].id);
+  const [modalProduct, setModalProduct] = useState<Product | null>(null);
+  const activeCategory = productCategories.find((c) => c.id === activeTab) ?? productCategories[0];
+
+  return (
+    <section id="products" className="bg-steel py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Ürün Kataloğu
+          </div>
+          <h2 className="font-display text-navy text-3xl md:text-5xl font-bold uppercase">
+            {L.productsTitle}
+          </h2>
+          <p className="mt-4 text-muted-foreground text-base md:text-lg">{L.productsSub}</p>
+        </div>
+
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-2 mb-8 border-b border-border pb-4">
+          {productCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveTab(cat.id)}
+              className={`font-display uppercase tracking-wider text-sm font-semibold px-5 py-2.5 transition-colors ${
+                activeTab === cat.id
+                  ? "bg-orange text-white"
+                  : "bg-white text-navy border border-border hover:border-orange"
+              }`}
+            >
+              {cat.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {activeCategory.products.map((p) => (
+            <ProductCard key={p.name} product={p} categoryTitle={activeCategory.title} L={L} onDetail={() => setModalProduct(p)} />
+          ))}
+        </div>
+      </div>
+
+      {/* Detail Modal */}
+      {modalProduct && <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />}
+    </section>
+  );
+}
+
+function ProductCard({
+  product,
+  categoryTitle,
+  L,
+  onDetail,
+}: {
+  product: Product;
+  categoryTitle: string;
+  L: Dict;
+  onDetail: () => void;
+}) {
   const [imgError, setImgError] = useState(false);
+  const hasDetail = !!product.detail;
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
@@ -412,8 +441,8 @@ function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
           </div>
         ) : (
           <img
-            src={p.img}
-            alt={p.name}
+            src={PRODUCT_IMG}
+            alt={product.name}
             loading="lazy"
             onError={() => setImgError(true)}
             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
@@ -422,48 +451,129 @@ function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
         <div className="absolute top-4 left-4">
           <span className="bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-2.5 py-1">
-            {p.cat}
+            {categoryTitle}
           </span>
         </div>
         <div className="absolute bottom-4 left-4 right-4">
           <div className="text-white/70 text-xs uppercase tracking-wider font-medium mb-1">
-            {p.sub}
+            {product.type}
           </div>
-          <h3 className="font-display text-white text-2xl font-bold uppercase">{p.name}</h3>
+          <h3 className="font-display text-white text-2xl font-bold uppercase">{product.name}</h3>
         </div>
       </div>
 
       <div className="p-5 flex-1 flex flex-col">
         <dl className="space-y-3 border-b border-border pb-4">
-          <div className="flex items-start gap-3">
-            <Gauge className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                {L.capacity}
-              </dt>
-              <dd className="font-display text-navy text-base font-semibold">{p.capacity}</dd>
+          {product.capacity && (
+            <div className="flex items-start gap-3">
+              <Gauge className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
+              <div>
+                <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{L.capacity}</dt>
+                <dd className="font-display text-navy text-base font-semibold">{product.capacity}</dd>
+              </div>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <Flame className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
-            <div>
-              <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                {L.fuel}
-              </dt>
-              <dd className="font-display text-navy text-base font-semibold">{p.fuel}</dd>
-            </div>
-          </div>
+          )}
         </dl>
 
-        <a
-          href="#products"
-          className="mt-5 inline-flex items-center justify-between font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
-        >
-          {L.inspect}
-          <ArrowRight className="h-4 w-4" />
-        </a>
+        <div className="mt-5 flex items-center justify-between">
+          <button
+            onClick={onDetail}
+            className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+          >
+            {hasDetail ? "Detay" : L.inspect}
+            <ArrowRight className="h-4 w-4" />
+          </button>
+          {hasDetail && (
+            <span className="text-[10px] uppercase tracking-wider text-orange font-display font-semibold flex items-center gap-1">
+              <Info className="h-3 w-3" /> Detaylı Bilgi
+            </span>
+          )}
+        </div>
       </div>
     </article>
+  );
+}
+
+function ProductModal({ product, onClose }: { product: Product; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white max-w-lg w-full p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-3 right-3 text-muted-foreground hover:text-navy" aria-label="Kapat">
+          <X className="h-5 w-5" />
+        </button>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-10 w-10 bg-orange text-white flex items-center justify-center">
+            <Info className="h-5 w-5" />
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-orange font-display font-bold">
+              {product.type}
+            </div>
+            <h3 className="font-display text-navy text-xl font-bold uppercase leading-tight">{product.name}</h3>
+          </div>
+        </div>
+
+        {product.capacity && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+            <Gauge className="h-4 w-4 text-orange" />
+            <span className="font-display font-semibold text-navy">{product.capacity}</span>
+          </div>
+        )}
+
+        {product.detail && (
+          <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{product.detail}</p>
+        )}
+
+        {product.specs && (
+          <div className="bg-steel border border-border p-4 space-y-2">
+            {product.specs.yakit && (
+              <div className="flex items-start gap-2 text-sm">
+                <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Yakıt</span>
+                  <p className="font-display text-navy font-semibold">{product.specs.yakit}</p>
+                </div>
+              </div>
+            )}
+            {product.specs.basinc && (
+              <div className="flex items-start gap-2 text-sm">
+                <Gauge className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Basınç</span>
+                  <p className="font-display text-navy font-semibold">{product.specs.basinc}</p>
+                </div>
+              </div>
+            )}
+            {product.specs.cikisSicakligi && (
+              <div className="flex items-start gap-2 text-sm">
+                <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Çıkış Sıcaklığı</span>
+                  <p className="font-display text-navy font-semibold">{product.specs.cikisSicakligi}</p>
+                </div>
+              </div>
+            )}
+            {product.specs.standart && (
+              <div className="flex items-start gap-2 text-sm">
+                <ShieldCheck className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Standart</span>
+                  <p className="font-display text-navy font-semibold">{product.specs.standart}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <button
+          onClick={onClose}
+          className="mt-5 w-full bg-navy text-white font-display uppercase tracking-wider text-sm font-semibold py-3 hover:bg-navy-dark transition-colors"
+        >
+          Kapat
+        </button>
+      </div>
+    </div>
   );
 }
 
