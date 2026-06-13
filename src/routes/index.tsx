@@ -64,7 +64,7 @@ type Dict = {
 
 const t: Record<Lang, Dict> = {
   TR: {
-    nav: ["Anasayfa", "Ürünler", "Referanslar", "Belgeler", "İletişim"],
+    nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Referanslar", "Belgeler", "İletişim"],
     quote: "Teklif Al",
     heroTitle: "Endüstriyel Isıtmada\nGüvenilir Güç",
     heroSub:
@@ -216,7 +216,10 @@ function Index() {
 
           <nav className="hidden lg:flex items-center gap-8">
             {L.nav.map((item, i) => {
-              const href = i === 0 ? "#" : i === 1 ? "/urunler" : `#${["", "refs", "docs", "contact"][i - 1]}`;
+              let href = "#";
+              if (i === 1) href = "/urunler";
+              else if (i === 2) href = "/hakkimizda";
+              else if (i > 2) href = `#${["", "", "refs", "docs", "contact"][i]}`;
               return (
                 <a
                   key={item}
@@ -251,7 +254,10 @@ function Index() {
           <div className="lg:hidden border-t border-border bg-white">
             <div className="px-4 py-4 flex flex-col gap-1">
               {L.nav.map((item, i) => {
-                const href = i === 0 ? "#" : i === 1 ? "/urunler" : `#${["", "refs", "docs", "contact"][i - 1]}`;
+                let href = "#";
+                if (i === 1) href = "/urunler";
+                else if (i === 2) href = "/hakkimizda";
+                else if (i > 2) href = `#${["", "", "refs", "docs", "contact"][i]}`;
                 return (
                   <a
                     key={item}
