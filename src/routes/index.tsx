@@ -480,6 +480,8 @@ function ProductCard({
           <img
             src={PRODUCT_IMG}
             alt={product.name}
+            width="900"
+            height="675"
             loading="lazy"
             onError={() => setImgError(true)}
             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
@@ -500,17 +502,17 @@ function ProductCard({
       </div>
 
       <div className="p-5 flex-1 flex flex-col">
-        <dl className="space-y-3 border-b border-border pb-4">
+        <div className="space-y-3 border-b border-border pb-4">
           {product.capacity && (
             <div className="flex items-start gap-3">
               <Gauge className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
               <div>
-                <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{L.capacity}</dt>
-                <dd className="font-display text-navy text-base font-semibold">{product.capacity}</dd>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{L.capacity}</div>
+                <div className="font-display text-navy text-base font-semibold">{product.capacity}</div>
               </div>
             </div>
           )}
-        </dl>
+        </div>
 
         <div className="mt-5 flex items-center justify-between">
           <button
