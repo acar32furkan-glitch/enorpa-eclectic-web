@@ -1,16 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Inbox, Clock, Trophy, Loader2 } from "lucide-react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
 import { supabase } from "@/integrations/supabase/client";
+
+const Charts = lazy(() =>
+  import("recharts").then((m) => ({
+    default: ({
+      data,
+    }: {
+      data: { day: string; leads: number }[];
+    }) => (
+      <m.ResponsiveContainer>
+        <m.BarChart data={data}>
+          <m.CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <m.XAxis dataKey="day" tick={{ fill: "#64748b", fontSize: 12 }} />
+          <m.YAxis allowDecimals={false} tick={{ fill: "#64748b", fontSize: 12 }} />
+          <m.Tooltip />
+          <m.Bar dataKey="leads" fill="#e05c1a" radius={[4, 4, 0, 0]} />
+        </m.BarChart>
+      </m.ResponsiveContainer>
+    ),
+  })),
+);
 
 export const Route = createFileRoute("/admin/_protected/dashboard")({
   ssr: false,
@@ -104,15 +115,9 @@ function Dashboard() {
           Son 7 Gün — Talep Akışı
         </h2>
         <div style={{ width: "100%", height: 300 }}>
-          <ResponsiveContainer>
-            <BarChart data={chart}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="day" tick={{ fill: "#64748b", fontSize: 12 }} />
-              <YAxis allowDecimals={false} tick={{ fill: "#64748b", fontSize: 12 }} />
-              <Tooltip />
-              <Bar dataKey="leads" fill="#e05c1a" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <Suspense fallback={<div className="flex items-center justify-center h-full"><Loader2 className="h-6 w-6 animate-spin text-orange" /></div>}>
+            <Charts data={chart} />
+          </Suspense>
         </div>
       </div>
     </div>
