@@ -113,3 +113,38 @@ export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
   }
   return result;
 }
+
+/** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
+export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
+  try {
+    const { createClient } = await import("@supabase/supabase-js");
+    const SUPABASE_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co";
+    const SUPABASE_KEY =
+      (typeof window !== "undefined"
+        ? (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY
+        : undefined) || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtaGtycmJ2a2Fmd2NieXl2ZXpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyOTYzOTIsImV4cCI6MjA5Njg3MjM5Mn0.t3vWLqrej0-fSV0BmF3hLu0EbNqv50JE_ggAY7eGLTE";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const { data, error } = await supabase.from("products").select("*").order("sort_order");
+    if (error || !data || data.length === 0) return productCategories;
+
+    const grouped: Record<string, ProductCategory> = {};
+    for (const row of data) {
+      const catId = row.category_id;
+      if (!grouped[catId]) {
+        grouped[catId] = { id: catId, title: row.category_title, products: [] };
+      }
+      const p: Product = {
+        name: row.name,
+        type: row.type,
+        capacity: row.capacity || undefined,
+        detail: row.detail || undefined,
+        specs: row.specs || undefined,
+        featured: row.featured || false,
+      };
+      grouped[catId].products.push(p);
+    }
+    return Object.values(grouped);
+  } catch {
+    return productCategories;
+  }
+}
