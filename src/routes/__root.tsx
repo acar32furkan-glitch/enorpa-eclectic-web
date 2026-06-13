@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -140,11 +140,55 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [consent, setConsent] = useState<"accepted" | "rejected" | null>(null);
+
+  useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("cookie_consent") : null;
+    if (stored === "accepted" || stored === "rejected") {
+      setConsent(stored);
+      if (stored === "accepted") injectGA();
+    }
+  }, []);
+
+  const accept = () => {
+    localStorage.setItem("cookie_consent", "accepted");
+    setConsent("accepted");
+    injectGA();
+  };
+
+  const reject = () => {
+    localStorage.setItem("cookie_consent", "rejected");
+    setConsent("rejected");
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+
+      {/* Cookie Consent Banner */}
+      {consent === null && (
+        <div className="fixed bottom-0 inset-x-0 z-50 bg-navy-dark text-white p-4 md:py-3 md:px-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm shadow-2xl">
+          <p className="text-white/80 text-xs md:text-sm leading-relaxed">
+            Bu site, deneyiminizi geliştirmek ve site trafiğini analiz etmek için çerezler kullanır.
+            Detaylar için <a href="/cerez-politikasi" className="text-orange underline hover:no-underline">Çerez Politikamızı</a> inceleyebilirsiniz.
+          </p>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={reject}
+              className="px-4 py-2 border border-white/30 text-white/80 hover:bg-white/10 font-display uppercase tracking-wider text-xs transition-colors"
+            >
+              Reddet
+            </button>
+            <button
+              onClick={accept}
+              className="px-4 py-2 bg-orange hover:bg-orange-dark text-white font-display uppercase tracking-wider text-xs transition-colors"
+            >
+              Kabul Et
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Floating WhatsApp Button */}
       <a
@@ -152,10 +196,24 @@ function RootComponent() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-40 h-14 w-14 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 transition-transform"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
       </a>
     </QueryClientProvider>
   );
+}
+
+function injectGA() {
+  if (typeof window === "undefined" || (window as any).__gaInjected) return;
+  (window as any).__gaInjected = true;
+
+  const s1 = document.createElement("script");
+  s1.async = true;
+  s1.src = "https://www.googletagmanager.com/gtag/js?id=G-DXP4FYVTDG";
+  document.head.appendChild(s1);
+
+  const s2 = document.createElement("script");
+  s2.textContent = `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-DXP4FYVTDG');`;
+  document.head.appendChild(s2);
 }
