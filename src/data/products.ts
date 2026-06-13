@@ -11,6 +11,7 @@ export type Product = {
   capacity?: string;
   detail?: string;
   specs?: ProductSpecs;
+  featured?: boolean;
 };
 
 export type ProductCategory = {
@@ -32,8 +33,9 @@ export const productCategories: ProductCategory[] = [
         detail:
           "Katı, sıvı, gaz ve biomass yakıtla çalışabilen tam otomatik kontrol sistemi. Hareketli ızgaralar sayesinde yakıtı kül formuna kadar tamamen yakar.",
         specs: { yakit: "Doğalgaz/Fuel-Oil/Kömür/Pelet/Prina", basinc: "3 barG", standart: "TS EN 497 / TS EN 12953" },
+        featured: true,
       },
-      { name: "Akuamarin Serisi", type: "Sıvı/Gaz Yakıtlı Sıcak Su Kazanı", capacity: "75 kW – 20.000 kW" },
+      { name: "Akuamarin Serisi", type: "Sıvı/Gaz Yakıtlı Sıcak Su Kazanı", capacity: "75 kW – 20.000 kW", featured: true },
       { name: "Ametist Serisi", type: "Katı Yakıtlı Sıcak Su Kazanı", capacity: "500.000 – 5.000.000 kcal/h" },
       { name: "Turkuaz Serisi", type: "Katı Yakıtlı Sıcak Su Kazanı", capacity: "300.000 – 1.750.000 kcal/h" },
       {
@@ -43,6 +45,7 @@ export const productCategories: ProductCategory[] = [
         detail:
           "2 ayrı yanma odası sayesinde yarım kapasitede çalışabilen, düşük yakıt tüketimiyle tasarruf sağlayan tasarım. %94'e varan kurum tutma kapasiteli siklon sistemi standarttır.",
         specs: { yakit: "Kömür/Pelet/Prina", basinc: "3 barG", standart: "TS EN 497" },
+        featured: true,
       },
     ],
   },
@@ -50,10 +53,10 @@ export const productCategories: ProductCategory[] = [
     id: "buhar",
     title: "Buhar Kazanları",
     products: [
-      { name: "Kuvars Serisi (Tek Külhanlı)", type: "Katı Yakıtlı Buhar Kazanı", capacity: "500 – 5.000 kg/h" },
+      { name: "Kuvars Serisi (Tek Külhanlı)", type: "Katı Yakıtlı Buhar Kazanı", capacity: "500 – 5.000 kg/h", featured: true },
       { name: "Kuvars Serisi (Çift Külhanlı)", type: "Katı Yakıtlı Buhar Kazanı", capacity: "500 – 5.000 kg/h" },
       { name: "Kuvars NG Serisi", type: "Sıvı/Gaz Yakıtlı Buhar Kazanı", capacity: "500 – 10.000 kg/h" },
-      { name: "Turmalin Serisi", type: "Multi Yakıtlı Buhar Kazanı", capacity: "2.000 – 5.000 kg/h" },
+      { name: "Turmalin Serisi", type: "Multi Yakıtlı Buhar Kazanı", capacity: "2.000 – 5.000 kg/h", featured: true },
     ],
   },
   {
@@ -69,6 +72,7 @@ export const productCategories: ProductCategory[] = [
         detail:
           "Çift pota - çift redüktör - çift körük fanlı tasarım sayesinde düşük talepte yarım kapasite çalışabilir. Bir pota arızalansa diğeri çalışmaya devam eder. %91'e varan termal verim.",
         specs: { yakit: "10-18mm Kömür/Pelet/Prina", cikisSicakligi: "100°C", standart: "TS EN 497" },
+        featured: true,
       },
     ],
   },
@@ -96,3 +100,16 @@ export const productCategories: ProductCategory[] = [
     ],
   },
 ];
+
+/** Tüm kategorilerden featured ürünleri döndürür */
+export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
+  const result: (Product & { categoryTitle: string })[] = [];
+  for (const cat of productCategories) {
+    for (const p of cat.products) {
+      if (p.featured) {
+        result.push({ ...p, categoryTitle: cat.title });
+      }
+    }
+  }
+  return result;
+}
