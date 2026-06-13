@@ -214,7 +214,7 @@ function Index() {
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-16 md:h-20">
-          <a href="#" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2">
             <span className="font-display text-2xl md:text-3xl font-bold text-navy tracking-tight">
               ENORPA
             </span>
@@ -254,10 +254,10 @@ function Index() {
         {menuOpen && (
           <div className="lg:hidden border-t border-border bg-white">
             <div className="px-4 py-4 flex flex-col gap-1">
-              {L.nav.map((item) => (
+              {L.nav.map((item, i) => (
                 <a
                   key={item}
-                  href="#"
+                  href={i === 0 ? "#" : `#${["products", "refs", "docs", "contact"][i - 1]}`}
                   className="py-3 px-2 font-medium text-navy-dark hover:bg-steel border-b border-border last:border-0"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -341,7 +341,7 @@ function Index() {
 
           <div className="mt-12 flex justify-center">
             <a
-              href="#"
+              href="#products"
               className="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
             >
               {L.viewAll}
@@ -350,6 +350,9 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* REFERENCES */}
+      <ReferencesSection />
 
       {/* LEAD GEN: CALCULATOR + QUICK FORM */}
       <LeadGenSection />
@@ -399,15 +402,23 @@ function Index() {
 }
 
 function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
+  const [imgError, setImgError] = useState(false);
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
-        <img
-          src={p.img}
-          alt={p.name}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-        />
+        {imgError ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
+            <Factory className="h-16 w-16 text-white/20" />
+          </div>
+        ) : (
+          <img
+            src={p.img}
+            alt={p.name}
+            loading="lazy"
+            onError={() => setImgError(true)}
+            className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
         <div className="absolute top-4 left-4">
           <span className="bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-2.5 py-1">
@@ -445,7 +456,7 @@ function ProductCard({ p, L }: { p: (typeof PRODUCTS)[number]; L: Dict }) {
         </dl>
 
         <a
-          href="#"
+          href="#products"
           className="mt-5 inline-flex items-center justify-between font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
         >
           {L.inspect}
@@ -883,6 +894,54 @@ function QuickCallbackForm() {
 }
 
 /* =========================================================================
+   PHASE 2 — REFERENCES
+========================================================================= */
+
+const REFERENCES = [
+  { name: "Bursa Tekstil A.Ş.", sector: "Tekstil", year: "2023", desc: "2 adet Kuvars Serisi buhar kazanı, 8.000 kg/h kapasite" },
+  { name: "Ege Gıda Sanayi", sector: "Gıda", year: "2024", desc: "Akuamarin Serisi sıcak su kazanı, 12.000 kW" },
+  { name: "Anadolu Sera İşletmesi", sector: "Sera", year: "2023", desc: "HAS NG Serisi sıcak hava sistemi, 800.000 kcal/h" },
+  { name: "Marmara Kimya Tesisleri", sector: "Kimya", year: "2024", desc: "Turmalin Serisi buhar kazanı, 5.000 kg/h" },
+];
+
+function ReferencesSection() {
+  return (
+    <section id="refs" className="bg-white py-20 md:py-28 border-t border-border">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Referanslar
+          </div>
+          <h2 className="font-display text-navy text-3xl md:text-5xl font-bold uppercase">
+            Tamamlanan Projeler
+          </h2>
+          <p className="mt-4 text-muted-foreground text-base md:text-lg">
+            25+ yılda 500'ün üzerinde projeyi başarıyla tamamladık.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {REFERENCES.map((r) => (
+            <div key={r.name} className="border border-border bg-steel p-6 hover:border-orange transition-colors">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="text-xs uppercase tracking-wider text-orange font-display font-semibold">
+                    {r.sector}
+                  </div>
+                  <h3 className="font-display text-navy text-xl font-bold uppercase mt-1">{r.name}</h3>
+                </div>
+                <span className="text-xs text-muted-foreground font-display uppercase tracking-wider">{r.year}</span>
+              </div>
+              <p className="text-sm text-muted-foreground">{r.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
    PHASE 2 — DOCUMENT CENTER
 ========================================================================= */
 
@@ -892,15 +951,16 @@ type Doc = {
   sub: string;
   size: string;
   gated: boolean;
+  url: string;
 };
 
 const DOCS: Doc[] = [
-  { id: "kuvars-spec", title: "Kuvars Serisi Teknik Föy", sub: "PDF · Buhar Kazanları", size: "1.2 MB", gated: false },
-  { id: "oniks-spec", title: "Oniks Serisi Teknik Föy", sub: "PDF · Sıcak Su Kazanları", size: "1.8 MB", gated: false },
-  { id: "has-spec", title: "HAS NG Teknik Föy", sub: "PDF · Sıcak Hava Sistemleri", size: "0.9 MB", gated: false },
-  { id: "certificates", title: "Sertifikalar Paketi", sub: "CE · TSE · ISO 9001", size: "3.4 MB", gated: false },
-  { id: "catalog-2026", title: "2026 Genel Katalog", sub: "Tüm Ürün Yelpazesi", size: "18 MB", gated: true },
-  { id: "engineering-guide", title: "Mühendislik Tasarım Kılavuzu", sub: "Premium Rehber", size: "8.7 MB", gated: true },
+  { id: "kuvars-spec", title: "Kuvars Serisi Teknik Föy", sub: "PDF · Buhar Kazanları", size: "1.2 MB", gated: false, url: "/docs/kuvars-spec.pdf" },
+  { id: "oniks-spec", title: "Oniks Serisi Teknik Föy", sub: "PDF · Sıcak Su Kazanları", size: "1.8 MB", gated: false, url: "/docs/oniks-spec.pdf" },
+  { id: "has-spec", title: "HAS NG Teknik Föy", sub: "PDF · Sıcak Hava Sistemleri", size: "0.9 MB", gated: false, url: "/docs/has-spec.pdf" },
+  { id: "certificates", title: "Sertifikalar Paketi", sub: "CE · TSE · ISO 9001", size: "3.4 MB", gated: false, url: "/docs/certificates.pdf" },
+  { id: "catalog-2026", title: "2026 Genel Katalog", sub: "Tüm Ürün Yelpazesi", size: "18 MB", gated: true, url: "/docs/catalog-2026.pdf" },
+  { id: "engineering-guide", title: "Mühendislik Tasarım Kılavuzu", sub: "Premium Rehber", size: "8.7 MB", gated: true, url: "/docs/engineering-guide.pdf" },
 ];
 
 function DocumentCenter() {
@@ -977,7 +1037,7 @@ function DocCard({ d, onGated }: { d: Doc; onGated: () => void }) {
     );
   }
   return (
-    <a href="#" className={className} download>
+    <a href={d.url} download className={className}>
       {content}
     </a>
   );
@@ -1034,7 +1094,7 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
               "{doc.title}" e-postanıza gönderildi.
             </p>
             <a
-              href="#"
+              href={doc.url}
               download
               className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-6 py-3"
             >
@@ -1205,9 +1265,9 @@ function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <div>© {new Date().getFullYear()} Enorpa Enerji. Tüm hakları saklıdır.</div>
           <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-white">Gizlilik</a>
-            <a href="#" className="hover:text-white">KVKK</a>
-            <a href="#" className="hover:text-white">Çerezler</a>
+            <a href="#contact" className="hover:text-white">Gizlilik</a>
+            <a href="#contact" className="hover:text-white">KVKK</a>
+            <a href="#contact" className="hover:text-white">Çerezler</a>
           </div>
         </div>
       </div>
@@ -1224,7 +1284,7 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
       <ul className="space-y-2 text-sm text-white/80">
         {links.map((l) => (
           <li key={l}>
-            <a href="#" className="hover:text-orange transition-colors">
+            <a href="#contact" className="hover:text-orange transition-colors">
               {l}
             </a>
           </li>

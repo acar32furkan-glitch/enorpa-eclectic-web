@@ -12,4 +12,17 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    resolve: {
+      alias: {
+        // React 19 has useSyncExternalStore built-in — shim the polyfill
+        "use-sync-external-store/shim/with-selector.js": "react",
+        "use-sync-external-store/shim/with-selector": "react",
+        "use-sync-external-store/shim": "react",
+      },
+    },
+    build: {
+      chunkSizeWarningLimit: 600,
+    },
+  },
 });
