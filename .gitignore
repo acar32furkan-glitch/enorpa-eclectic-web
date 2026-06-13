@@ -18,6 +18,7 @@ dist-ssr
 .env
 .env.local
 .env.production
+api/
 
 # Wrangler / Cloudflare
 .wrangler/
