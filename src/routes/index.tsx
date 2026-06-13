@@ -24,7 +24,7 @@ import {
   Check,
   Info,
 } from "lucide-react";
-import { productCategories, type Product, type ProductCategory } from "@/data/products";
+import { productCategories, getFeaturedProducts, type Product, type ProductCategory } from "@/data/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
