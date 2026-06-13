@@ -72,7 +72,7 @@ const t: Record<Lang, Dict> = {
     yearsExp: "Yıl Deneyim",
     projects: "Tamamlanan Proje",
     countries: "Ülkeye İhracat",
-    satisfaction: "Müşteri Memnuniyeti",
+    satisfaction: "Mutlu Müşteri",
     certified: "Sertifikalı Üretim:",
     productsTitle: "Ürün Kategorilerimiz",
     productsSub:
@@ -130,11 +130,11 @@ const PRODUCT_IMG =
 
 const PRODUCTS = [
   { cat: "Buhar Kazanları", name: "Kuvars Serisi", sub: "Tek Külhanlı", capacity: "500 – 5.000 kg/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Buhar Kazanları", name: "Kuvars NG Serisi", sub: "Yüksek Verim", capacity: "500 – 10.000 kg/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
   { cat: "Buhar Kazanları", name: "Turmalin Serisi", sub: "Endüstriyel", capacity: "2.000 – 5.000 kg/h", fuel: "Multi Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Sıcak Su Kazanları", name: "Oniks Serisi", sub: "Yüksek Kapasite", capacity: "3.000.000 – 6.000.000 kcal/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Buhar Kazanları", name: "Obsidyen Serisi", sub: "Yüksek Basınç", capacity: "1.000 – 8.000 kg/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Sıcak Su Kazanları", name: "Kalsedon Serisi", sub: "Katı Yakıtlı", capacity: "500.000 – 5.000.000 kcal/h", fuel: "Katı Yakıtlı", img: PRODUCT_IMG },
   { cat: "Sıcak Su Kazanları", name: "Akuamarin Serisi", sub: "Modüler Tasarım", capacity: "75 – 20.000 kW", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
-  { cat: "Sıcak Hava Kazanları", name: "HAS NG Serisi", sub: "Sera & Sanayi", capacity: "100.000 – 1.000.000 kcal/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
+  { cat: "Sıcak Hava Kazanları", name: "HAS Turbo Serisi", sub: "Sera & Sanayi", capacity: "100.000 – 1.500.000 kcal/h", fuel: "Sıvı/Gaz Yakıtlı", img: PRODUCT_IMG },
 ];
 
 const WHATSAPP = "905551112233";
@@ -473,9 +473,9 @@ function TrustBar({ L }: { L: Dict }) {
       <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 mb-10 pb-10 border-b border-border">
           <Counter end={25} suffix="+" label={L.yearsExp} />
-          <Counter end={500} suffix="+" label={L.projects} />
-          <Counter end={15} suffix="+" label={L.countries} />
-          <Counter end={98} suffix="%" label={L.satisfaction} />
+          <Counter end={138} suffix="+" label={L.projects} />
+          <Counter end={26} suffix="+" label={L.countries} />
+          <Counter end={347} suffix="+" label={L.satisfaction} />
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1174,7 +1174,7 @@ function ContactSection() {
         <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ContactCard icon={<Phone className="h-5 w-5" />} title="Telefon" body="+90 850 471 2100" href="tel:+908504712100" />
           <ContactCard icon={<Mail className="h-5 w-5" />} title="E-posta" body="turuncu@enorpa.com" href="mailto:turuncu@enorpa.com" />
-          <ContactCard icon={<MapPin className="h-5 w-5" />} title="Fabrika" body="OSB · Bursa, Türkiye" />
+          <ContactCard icon={<MapPin className="h-5 w-5" />} title="Fabrika" body="Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA" />
           <ContactCard icon={<Building2 className="h-5 w-5" />} title="Mesai" body="Pzt – Cum · 08:30 – 18:00" />
         </div>
       </div>
@@ -1244,7 +1244,7 @@ function SiteFooter() {
           <div className="space-y-3 text-sm text-white/80">
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
-              <span>OSB Mavi Cad. No: 12 · Bursa / Türkiye</span>
+              <span>Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA</span>
             </div>
             <a href="tel:+908504712100" className="flex items-start gap-2 hover:text-orange">
               <Phone className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
