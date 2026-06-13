@@ -136,6 +136,7 @@ function Index() {
   const [lang, setLang] = useState<Lang>("TR");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [settings, setSettings] = useState<Record<string, boolean>>({});
   const L = t[lang];
 
   useEffect(() => {
@@ -166,6 +167,27 @@ function Index() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Load site settings from Supabase
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await supabase.from("site_settings").select("key, value");
+        const map: Record<string, boolean> = {};
+        if (data) {
+          for (const row of data) {
+            map[row.key] = row.value ?? true;
+          }
+        }
+        setSettings(map);
+      } catch {
+        // On error, all sections default to visible
+        setSettings({});
+      }
+    })();
+  }, []);
+
+  const show = (key: string): boolean => settings[key] !== false;
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-16 md:pb-0">
@@ -323,28 +345,28 @@ function Index() {
         </div>
       </section>
 
-      <TrustBar L={L} />
+      {show("show_stats") && <TrustBar L={L} />}
 
       {/* SECTORS */}
-      <SectorsSection />
+      {show("show_sectors") && <SectorsSection />}
 
       {/* PRODUCTS */}
       <ProductsSection L={L} />
 
       {/* REFERENCES */}
-      <ReferencesSection />
+      {show("show_references") && <ReferencesSection />}
 
       {/* LEAD GEN: CALCULATOR + QUICK FORM */}
       <LeadGenSection />
 
       {/* DOCUMENT CENTER */}
-      <DocumentCenter />
+      {show("show_documents") && <DocumentCenter />}
 
       {/* PROJECT GALLERY */}
-      <ProjectGallery />
+      {show("show_gallery") && <ProjectGallery />}
 
       {/* TESTIMONIALS */}
-      <TestimonialsSection />
+      {show("show_testimonials") && <TestimonialsSection />}
 
       {/* CONTACT (anchor for nav links) */}
       <ContactSection />

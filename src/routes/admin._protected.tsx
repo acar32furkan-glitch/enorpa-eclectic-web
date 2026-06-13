@@ -77,6 +77,7 @@ function AdminLayout() {
     { to: "/admin/dashboard", label: "Site Analizleri", icon: LayoutDashboard },
     { to: "/admin/leads", label: "Talepler", icon: Inbox },
     { to: "/admin/products", label: "Ürün Yönetimi", icon: Package },
+    { to: "/admin/settings", label: "Ayarlar", icon: LayoutDashboard },
   ];
 
   const signOut = async () => {
