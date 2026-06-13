@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "vercel-build": "npm run build && node -e \"const fs=require('fs'); const path=require('path'); fs.mkdirSync('api',{recursive:true}); fs.cpSync('dist/server/server.js','api/index.js'); if(fs.existsSync('dist/server/assets')) fs.cpSync('dist/server/assets','api/assets',{recursive:true}); console.log('api/index.js created');\"",
+    "vercel-build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
