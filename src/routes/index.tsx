@@ -24,7 +24,7 @@ import {
   Check,
   Info,
 } from "lucide-react";
-import { productCategories, getFeaturedProducts, type Product, type ProductCategory } from "@/data/products";
+import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory } from "@/data/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -416,7 +416,23 @@ function Index() {
 
 function ProductsSection({ L }: { L: Dict }) {
   const [modalProduct, setModalProduct] = useState<Product | null>(null);
-  const featured = getFeaturedProducts();
+  const [categories, setCategories] = useState<ProductCategory[]>(fallbackCategories);
+  const [featured, setFeatured] = useState(getFeaturedProducts());
+
+  useEffect(() => {
+    (async () => {
+      const cats = await fetchProductsFromSupabase();
+      setCategories(cats);
+      // Recalculate featured from fetched data
+      const feat: (Product & { categoryTitle: string })[] = [];
+      for (const cat of cats) {
+        for (const p of cat.products) {
+          if (p.featured) feat.push({ ...p, categoryTitle: cat.title });
+        }
+      }
+      setFeatured(feat.length > 0 ? feat : getFeaturedProducts());
+    })();
+  }, []);
 
   return (
     <section id="products" className="bg-steel py-20 md:py-28">

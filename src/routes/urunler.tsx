@@ -1,22 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Gauge, Flame, Factory, ArrowRight, X, Info, ShieldCheck } from "lucide-react";
-import { productCategories, type Product } from "@/data/products";
+import { productCategories as fallbackCategories, fetchProductsFromSupabase, type Product, type ProductCategory } from "@/data/products";
 
 export const Route = createFileRoute("/urunler")({
   head: () => ({
     meta: [
-      { title: "Ürünlerimiz — Enorpa Enerji" },
-      { name: "description", content: "Buhar kazanları, sıcak su kazanları, sıcak hava sistemleri ve daha fazlası. Enorpa Enerji'nin tüm ürün kataloğu." },
+      { title: "Ürünlerimiz | Enorpa Enerji" },
+      { name: "description", content: "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar - sıcak su, buhar, sıcak hava ve kızgın su kazanı çözümleri." },
+      { property: "og:title", content: "Ürünlerimiz | Enorpa Enerji" },
+      { property: "og:description", content: "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar." },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "tr_TR" },
+      { property: "og:site_name", content: "Enorpa Enerji" },
     ],
   }),
   component: UrunlerPage,
 });
 
 function UrunlerPage() {
-  const [activeTab, setActiveTab] = useState(productCategories[0].id);
+  const [categories, setCategories] = useState<ProductCategory[]>(fallbackCategories);
+  const [activeTab, setActiveTab] = useState(fallbackCategories[0].id);
   const [modalProduct, setModalProduct] = useState<Product | null>(null);
-  const activeCategory = productCategories.find((c) => c.id === activeTab) ?? productCategories[0];
+  const activeCategory = categories.find((c) => c.id === activeTab) ?? categories[0];
+
+  useEffect(() => {
+    (async () => {
+      const cats = await fetchProductsFromSupabase();
+      setCategories(cats);
+    })();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
