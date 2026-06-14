@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ShieldCheck, Award, Factory, BookOpen, Search, PenTool, Wrench, Users } from "lucide-react";
+import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/hakkimizda")({
   head: () => ({
@@ -49,19 +50,7 @@ const STEPS = [
 function HakkimizdaPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Top bar */}
-      <div className="bg-navy-dark text-white">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold tracking-tight">ENORPA</span>
-            <span className="h-2 w-2 rounded-full bg-orange" />
-          </Link>
-          <Link to="/" className="text-xs uppercase tracking-wider text-white/70 hover:text-orange font-display">
-            ← Anasayfa
-          </Link>
-        </div>
-      </div>
-
+      <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
         {/* Hero */}
         <div className="max-w-3xl mb-16">
@@ -153,6 +142,7 @@ function HakkimizdaPage() {
           </div>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 }
