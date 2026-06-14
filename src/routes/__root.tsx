@@ -8,9 +8,20 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+const getSessionId = () => {
+  if (typeof window === "undefined") return "";
+  let sid = localStorage.getItem("enorpa_session_id");
+  if (!sid) {
+    sid = crypto.randomUUID();
+    localStorage.setItem("enorpa_session_id", sid);
+  }
+  return sid;
+};
 
 function NotFoundComponent() {
   return (
@@ -142,6 +153,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [consent, setConsent] = useState<"accepted" | "rejected" | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const stored = typeof window !== "undefined" ? localStorage.getItem("cookie_consent") : null;
@@ -150,6 +162,21 @@ function RootComponent() {
       if (stored === "accepted") injectGA();
     }
   }, []);
+
+  useEffect(() => {
+    if (consent !== "accepted") return;
+    const handleRouteChange = () => {
+      try {
+        const path = window.location.pathname;
+        const referrer = document.referrer || "";
+        const session_id = getSessionId();
+        supabase.from("page_views").insert({ path, referrer, session_id }).catch(() => {});
+      } catch { }
+    };
+    router.subscribe(handleRouteChange);
+    handleRouteChange();
+    return () => router.subscribe(() => { });
+  }, [consent, router]);
 
   const accept = () => {
     localStorage.setItem("cookie_consent", "accepted");
