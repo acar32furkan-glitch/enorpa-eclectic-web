@@ -131,7 +131,7 @@ const t: Record<Lang, Dict> = {
 const PRODUCT_IMG =
   "https://images.unsplash.com/photo-1581093458791-9d42e3c7f7e3?auto=format&fit=crop&w=900&q=80";
 
-const WHATSAPP = "905551112233";
+const WHATSAPP = "908504712100";
 
 function Index() {
   const [lang, setLang] = useState<Lang>("TR");
@@ -1560,8 +1560,15 @@ function SiteFooter() {
           </div>
         </div>
 
-        <FooterCol title="Ürünler" links={["Buhar Kazanları", "Sıcak Su Kazanları", "Sıcak Hava Kazanları", "Yedek Parça"]} />
-        <FooterCol title="Kurumsal" links={["Hakkımızda", "Referanslar", "Belgeler", "İletişim"]} />
+<FooterCol title="Ürünler" links={[
+           { label: "Ürünlerimiz", href: "/urunler" },
+         ]}/>
+         <FooterCol title="Kurumsal" links={[
+           { label: "Hakkımızda", href: "/hakkimizda" },
+           { label: "Referanslar", href: "#refs" },
+           { label: "Dokümanlar", href: "#docs" },
+           { label: "İletişim", href: "#contact" },
+         ]} />
 
         <div>
           <div className="text-xs uppercase tracking-[0.25em] text-orange font-display font-bold mb-4">
@@ -1601,7 +1608,7 @@ function SiteFooter() {
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: string[] }) {
+function FooterCol({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
       <div className="text-xs uppercase tracking-[0.25em] text-orange font-display font-bold mb-4">
@@ -1609,9 +1616,9 @@ function FooterCol({ title, links }: { title: string; links: string[] }) {
       </div>
       <ul className="space-y-2 text-sm text-white/80">
         {links.map((l) => (
-          <li key={l}>
-            <a href="#contact" className="hover:text-orange transition-colors">
-              {l}
+          <li key={l.label}>
+            <a href={l.href} className="hover:text-orange transition-colors">
+              {l.label}
             </a>
           </li>
         ))}

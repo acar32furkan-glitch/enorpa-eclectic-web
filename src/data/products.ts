@@ -1,3 +1,5 @@
+import { supabase } from "@/integrations/supabase/client";
+
 export type ProductSpecs = {
   yakit?: string;
   basinc?: string;
@@ -117,13 +119,7 @@ export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
 /** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
 export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
   try {
-    const { createClient } = await import("@supabase/supabase-js");
-    const SUPABASE_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co";
-    const SUPABASE_KEY =
-      (typeof window !== "undefined"
-        ? (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY
-        : undefined) || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtaGtycmJ2a2Fmd2NieXl2ZXpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyOTYzOTIsImV4cCI6MjA5Njg3MjM5Mn0.t3vWLqrej0-fSV0BmF3hLu0EbNqv50JE_ggAY7eGLTE";
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Use the centralized supabase client
     const { data, error } = await supabase.from("products").select("*").order("sort_order");
     if (error || !data || data.length === 0) return productCategories;
 
