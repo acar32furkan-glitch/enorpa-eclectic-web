@@ -10,6 +10,7 @@ import {
   Calculator,
   ArrowRight,
   MapPin,
+  Info,
 } from "lucide-react";
 import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
