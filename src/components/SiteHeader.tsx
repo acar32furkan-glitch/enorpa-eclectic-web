@@ -35,13 +35,6 @@ export function SiteHeader() {
     const stored = typeof window !== "undefined" ? localStorage.getItem("enorpa_lang") : null;
     if (stored === "TR" || stored === "EN" || stored === "RU") {
       setLang(stored);
-      return;
-    }
-    if (typeof navigator !== "undefined") {
-      const code = (navigator.language || "tr").slice(0, 2).toLowerCase();
-      if (code === "ru") setLang("RU");
-      else if (code === "tr") setLang("TR");
-      else setLang("EN");
     }
   }, []);
 
