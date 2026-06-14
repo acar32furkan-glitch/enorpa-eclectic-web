@@ -19,8 +19,8 @@ type NavDict = {
 
 const t: Record<Lang, NavDict> = {
   TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Referanslar", "Belgeler", "İletişim"], quote: "Teklif Al" },
-  EN: { nav: ["Home", "Products", "References", "Documents", "Contact"], quote: "Get Quote" },
-  RU: { nav: ["Главная", "Продукция", "Проекты", "Документы", "Контакты"], quote: "Запросить цену" },
+  EN: { nav: ["Home", "Products", "About", "References", "Documents", "Contact"], quote: "Get Quote" },
+  RU: { nav: ["Главная", "Продукция", "О компании", "Проекты", "Документы", "Контакты"], quote: "Запросить цену" },
 };
 
 const WHATSAPP = "908504712100";
@@ -59,7 +59,6 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Helper to build proper href - anchor links need homepage prefix
   const getHref = (isIndex: number) => {
     if (isIndex === 0) return "/";
     if (isIndex === 1) return "/urunler";
