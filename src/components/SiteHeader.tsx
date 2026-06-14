@@ -26,17 +26,22 @@ const t: Record<Lang, NavDict> = {
 const WHATSAPP = "908504712100";
 
 export function SiteHeader() {
-  const [lang, setLang] = useState<Lang>("TR");
+  const [lang, setLang] = useState<Lang>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("enorpa_lang");
+      if (stored === "TR" || stored === "EN" || stored === "RU") return stored;
+    }
+    return "TR";
+  });
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const L = t[lang];
 
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("enorpa_lang") : null;
-    if (stored === "TR" || stored === "EN" || stored === "RU") {
-      setLang(stored);
+    if (lang !== "TR") {
+      localStorage.setItem("enorpa_lang", lang);
     }
-  }, []);
+  }, [lang]);
 
   const chooseLang = (l: Lang) => {
     setLang(l);
