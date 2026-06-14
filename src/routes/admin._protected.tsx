@@ -53,7 +53,7 @@ function AdminLayout() {
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-steel flex items-center justify-center p-4">
-        <div className="bg-white p-8 max-w-md text-center shadow">
+        <div className="bg-white p-5 sm:p-8 max-w-md text-center shadow">
           <h2 className="font-display text-2xl font-bold uppercase text-navy mb-3">
             Yetkisiz Erişim
           </h2>

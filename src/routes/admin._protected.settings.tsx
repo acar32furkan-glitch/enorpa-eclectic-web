@@ -61,7 +61,7 @@ function SettingsPage() {
   };
 
   return (
-    <div className="p-8 max-w-3xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-3xl mx-auto">
       {error && (
         <div className="mb-4 text-red-600 bg-red-50 border border-red-200 px-4 py-3 rounded">
           {error}
@@ -79,18 +79,18 @@ function SettingsPage() {
 
       <div className="bg-white border border-border">
         {loading ? (
-          <div className="p-12 flex justify-center">
+          <div className="p-6 sm:p-12 flex justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-orange" />
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center text-muted-foreground">
+          <div className="p-6 sm:p-12 text-center text-muted-foreground">
             Henüz ayar bulunamadı. Supabase'de site_settings tablosunu oluşturun.
           </div>
         ) : (
           <div className="divide-y divide-border">
             {items.map((item) => (
-              <div key={item.key} className="flex items-center justify-between px-6 py-4">
-                <div>
+              <div key={item.key} className="flex min-w-0 flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
                   <div className="font-display text-navy font-semibold uppercase text-sm">{item.label}</div>
                   <div className="text-xs text-muted-foreground mt-0.5 font-mono">{item.key}</div>
                 </div>
@@ -103,13 +103,13 @@ function SettingsPage() {
                   )}
                   <button
                     onClick={() => toggle(item)}
-                    className={`relative h-6 w-11 rounded-full transition-colors ${
+                    className={`relative h-8 w-14 rounded-full transition-colors ${
                       item.value ? "bg-orange" : "bg-gray-300"
                     }`}
                   >
                     <span
-                      className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
-                        item.value ? "translate-x-5" : ""
+                      className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-white shadow transition-transform ${
+                        item.value ? "translate-x-6" : ""
                       }`}
                     />
                   </button>

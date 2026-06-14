@@ -50,7 +50,7 @@ function AdminLogin() {
   return (
     <div className="min-h-screen bg-navy flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white shadow-2xl">
-        <div className="bg-navy-dark text-white px-8 py-6 border-b-4 border-orange">
+        <div className="bg-navy-dark text-white px-5 py-6 sm:px-8 border-b-4 border-orange">
           <Link to="/" className="flex items-center gap-2 mb-3 text-white/70 hover:text-orange text-xs uppercase tracking-[0.3em] font-display">
             ← Anasayfa
           </Link>
@@ -67,7 +67,7 @@ function AdminLogin() {
           </div>
         </div>
 
-        <form onSubmit={submit} className="p-8 space-y-5">
+        <form onSubmit={submit} className="p-5 space-y-5 sm:p-8">
           <div>
             <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
               E-posta
