@@ -4,8 +4,13 @@ import { ShieldCheck, Award, Factory, BookOpen, Search, PenTool, Wrench, Users }
 export const Route = createFileRoute("/hakkimizda")({
   head: () => ({
     meta: [
-      { title: "Hakkımızda — Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji — endüstriyel ısıtma kazanları, buhar kazanları ve sıcak hava sistemleri üreticisi. TSE, CE, ASME, EAC sertifikalı." },
+      { title: "Hakkımızda | Enorpa Enerji" },
+      { name: "description", content: "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi. AR-GE odaklı, dünya çapında 347+ müşteriye hizmet." },
+      { property: "og:title", content: "Hakkımızda | Enorpa Enerji" },
+      { property: "og:description", content: "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi." },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "tr_TR" },
+      { property: "og:site_name", content: "Enorpa Enerji" },
     ],
   }),
   component: HakkimizdaPage,

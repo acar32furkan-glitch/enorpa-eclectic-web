@@ -9,14 +9,45 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UrunlerRouteImport } from './routes/urunler'
+import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
+import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
+import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
 import { Route as AdminProtectedIndexRouteImport } from './routes/admin._protected.index'
+import { Route as AdminProtectedSettingsRouteImport } from './routes/admin._protected.settings'
 import { Route as AdminProtectedProductsRouteImport } from './routes/admin._protected.products'
 import { Route as AdminProtectedLeadsRouteImport } from './routes/admin._protected.leads'
 import { Route as AdminProtectedDashboardRouteImport } from './routes/admin._protected.dashboard'
 
+const UrunlerRoute = UrunlerRouteImport.update({
+  id: '/urunler',
+  path: '/urunler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KvkkRoute = KvkkRouteImport.update({
+  id: '/kvkk',
+  path: '/kvkk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HakkimizdaRoute = HakkimizdaRouteImport.update({
+  id: '/hakkimizda',
+  path: '/hakkimizda',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GizlilikPolitikasiRoute = GizlilikPolitikasiRouteImport.update({
+  id: '/gizlilik-politikasi',
+  path: '/gizlilik-politikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CerezPolitikasiRoute = CerezPolitikasiRouteImport.update({
+  id: '/cerez-politikasi',
+  path: '/cerez-politikasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,6 +68,11 @@ const AdminProtectedIndexRoute = AdminProtectedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminProtectedRoute,
 } as any)
+const AdminProtectedSettingsRoute = AdminProtectedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminProtectedRoute,
+} as any)
 const AdminProtectedProductsRoute = AdminProtectedProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -55,68 +91,144 @@ const AdminProtectedDashboardRoute = AdminProtectedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cerez-politikasi': typeof CerezPolitikasiRoute
+  '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/kvkk': typeof KvkkRoute
+  '/urunler': typeof UrunlerRoute
   '/admin': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
+  '/admin/settings': typeof AdminProtectedSettingsRoute
   '/admin/': typeof AdminProtectedIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cerez-politikasi': typeof CerezPolitikasiRoute
+  '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/kvkk': typeof KvkkRoute
+  '/urunler': typeof UrunlerRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
+  '/admin/settings': typeof AdminProtectedSettingsRoute
   '/admin': typeof AdminProtectedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cerez-politikasi': typeof CerezPolitikasiRoute
+  '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
+  '/hakkimizda': typeof HakkimizdaRoute
+  '/kvkk': typeof KvkkRoute
+  '/urunler': typeof UrunlerRoute
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/_protected/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/_protected/leads': typeof AdminProtectedLeadsRoute
   '/admin/_protected/products': typeof AdminProtectedProductsRoute
+  '/admin/_protected/settings': typeof AdminProtectedSettingsRoute
   '/admin/_protected/': typeof AdminProtectedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cerez-politikasi'
+    | '/gizlilik-politikasi'
+    | '/hakkimizda'
+    | '/kvkk'
+    | '/urunler'
     | '/admin'
     | '/admin/login'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/admin/products'
+    | '/admin/settings'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cerez-politikasi'
+    | '/gizlilik-politikasi'
+    | '/hakkimizda'
+    | '/kvkk'
+    | '/urunler'
     | '/admin/login'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/admin/products'
+    | '/admin/settings'
     | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/cerez-politikasi'
+    | '/gizlilik-politikasi'
+    | '/hakkimizda'
+    | '/kvkk'
+    | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
     | '/admin/_protected/dashboard'
     | '/admin/_protected/leads'
     | '/admin/_protected/products'
+    | '/admin/_protected/settings'
     | '/admin/_protected/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CerezPolitikasiRoute: typeof CerezPolitikasiRoute
+  GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
+  HakkimizdaRoute: typeof HakkimizdaRoute
+  KvkkRoute: typeof KvkkRoute
+  UrunlerRoute: typeof UrunlerRoute
   AdminProtectedRoute: typeof AdminProtectedRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/urunler': {
+      id: '/urunler'
+      path: '/urunler'
+      fullPath: '/urunler'
+      preLoaderRoute: typeof UrunlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kvkk': {
+      id: '/kvkk'
+      path: '/kvkk'
+      fullPath: '/kvkk'
+      preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hakkimizda': {
+      id: '/hakkimizda'
+      path: '/hakkimizda'
+      fullPath: '/hakkimizda'
+      preLoaderRoute: typeof HakkimizdaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gizlilik-politikasi': {
+      id: '/gizlilik-politikasi'
+      path: '/gizlilik-politikasi'
+      fullPath: '/gizlilik-politikasi'
+      preLoaderRoute: typeof GizlilikPolitikasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cerez-politikasi': {
+      id: '/cerez-politikasi'
+      path: '/cerez-politikasi'
+      fullPath: '/cerez-politikasi'
+      preLoaderRoute: typeof CerezPolitikasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -143,6 +255,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminProtectedIndexRouteImport
+      parentRoute: typeof AdminProtectedRoute
+    }
+    '/admin/_protected/settings': {
+      id: '/admin/_protected/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminProtectedSettingsRouteImport
       parentRoute: typeof AdminProtectedRoute
     }
     '/admin/_protected/products': {
@@ -173,6 +292,7 @@ interface AdminProtectedRouteChildren {
   AdminProtectedDashboardRoute: typeof AdminProtectedDashboardRoute
   AdminProtectedLeadsRoute: typeof AdminProtectedLeadsRoute
   AdminProtectedProductsRoute: typeof AdminProtectedProductsRoute
+  AdminProtectedSettingsRoute: typeof AdminProtectedSettingsRoute
   AdminProtectedIndexRoute: typeof AdminProtectedIndexRoute
 }
 
@@ -180,6 +300,7 @@ const AdminProtectedRouteChildren: AdminProtectedRouteChildren = {
   AdminProtectedDashboardRoute: AdminProtectedDashboardRoute,
   AdminProtectedLeadsRoute: AdminProtectedLeadsRoute,
   AdminProtectedProductsRoute: AdminProtectedProductsRoute,
+  AdminProtectedSettingsRoute: AdminProtectedSettingsRoute,
   AdminProtectedIndexRoute: AdminProtectedIndexRoute,
 }
 
@@ -189,6 +310,11 @@ const AdminProtectedRouteWithChildren = AdminProtectedRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CerezPolitikasiRoute: CerezPolitikasiRoute,
+  GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
+  HakkimizdaRoute: HakkimizdaRoute,
+  KvkkRoute: KvkkRoute,
+  UrunlerRoute: UrunlerRoute,
   AdminProtectedRoute: AdminProtectedRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
 }

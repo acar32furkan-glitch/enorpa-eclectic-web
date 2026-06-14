@@ -1,9 +1,12 @@
--- Mevcut tabloyu seed_products.sql ile uyumlu hale getir
--- Önce eksik kolonları ekle
+-- Mevcut tabloya eksik kolonları ekle
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS type TEXT;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS category_id TEXT;
 ALTER TABLE public.products ADD COLUMN IF NOT EXISTS category_title TEXT;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS detail TEXT;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS specs JSONB;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
 
--- Mevcut verileri temizle (tekrar çalıştırılabilirlik için)
+-- Mevcut verileri temizle
 TRUNCATE TABLE public.products;
 
 -- Sıcak Su Kazanları
