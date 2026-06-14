@@ -19,6 +19,15 @@ dist-ssr
 .env.local
 .env.production
 
+# Vercel
+.vercel/
+
+# API placeholder (build output)
+api/
+
+# Kilo Code extension
+.kilo/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
