@@ -168,7 +168,8 @@ function Dashboard() {
     counts[k] = (counts[k] ?? 0) + 1;
   });
   const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
-  const topCategory = top ? top[0] : "—";
+  const topCategory = top ? top[0] : "Henüz veri yok";
+  const hasLeadData = leads.length > 0;
 
   // 7-day chart
   const chart: { day: string; leads: number }[] = [];
@@ -217,7 +218,13 @@ function Dashboard() {
         </h2>
         <div style={{ width: "100%", height: 300 }}>
           <Suspense fallback={<div className="flex items-center justify-center h-full"><Loader2 className="h-6 w-6 animate-spin text-orange" /></div>}>
-            <Charts data={chart} />
+            {hasLeadData ? (
+              <Charts data={chart} />
+            ) : (
+              <div className="flex items-center justify-center h-full text-center text-muted-foreground">
+                Henüz veri yok
+              </div>
+            )}
           </Suspense>
         </div>
       </div>

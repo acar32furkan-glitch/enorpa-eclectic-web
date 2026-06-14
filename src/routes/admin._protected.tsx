@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Inbox, Package, LogOut, Flame, Loader2, Settings } from "lucide-react";
+import { LayoutDashboard, Inbox, Package, LogOut, Flame, Loader2, Settings, Menu, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/_protected")({
@@ -12,6 +12,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -87,7 +88,27 @@ function AdminLayout() {
 
   return (
     <div className="min-h-screen flex bg-steel">
-      <aside className="w-64 bg-navy-dark text-white flex flex-col">
+      <button
+        type="button"
+        onClick={() => setSidebarOpen(true)}
+        className="md:hidden fixed top-3 left-3 z-50 h-10 w-10 items-center justify-center rounded-full bg-white text-navy shadow-lg"
+        aria-label="Menüyü aç"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {sidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden fixed inset-0 z-30 bg-black/40"
+          aria-label="Menüyü kapat"
+        />
+      )}
+
+      <aside className={`w-64 bg-navy-dark text-white flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-200 md:relative md:translate-x-0 ${
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      }`}>
         <div className="px-6 py-6 border-b border-white/10">
           <Link to="/" className="flex items-center gap-2">
             <div className="h-9 w-9 bg-orange flex items-center justify-center">
@@ -106,6 +127,7 @@ function AdminLayout() {
               <Link
                 key={n.to}
                 to={n.to}
+                onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 font-display uppercase text-sm tracking-wider transition-colors ${
                   active ? "bg-orange text-white" : "text-white/70 hover:bg-white/5 hover:text-white"
                 }`}
@@ -118,7 +140,10 @@ function AdminLayout() {
         </nav>
         <div className="p-4 border-t border-white/10">
           <button
-            onClick={signOut}
+            onClick={async () => {
+              await signOut();
+              setSidebarOpen(false);
+            }}
             className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-orange font-display uppercase text-sm tracking-wider"
           >
             <LogOut className="h-4 w-4" />
@@ -126,7 +151,19 @@ function AdminLayout() {
           </button>
         </div>
       </aside>
-      <main className="flex-1 overflow-auto">
+
+      {sidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden fixed top-3 right-3 z-50 h-10 w-10 items-center justify-center rounded-full bg-white text-navy shadow-lg"
+          aria-label="Menüyü kapat"
+        >
+          <X className="h-5 w-5" />
+        </button>
+      )}
+
+      <main className="flex-1 overflow-auto min-w-0">
         <Outlet />
       </main>
     </div>
