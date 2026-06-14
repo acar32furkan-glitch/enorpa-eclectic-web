@@ -88,14 +88,16 @@ function AdminLayout() {
 
   return (
     <div className="min-h-screen flex bg-steel">
-      <button
-        type="button"
-        onClick={() => setSidebarOpen(true)}
-        className="md:hidden fixed top-3 left-3 z-50 h-10 w-10 items-center justify-center rounded-full bg-white text-navy shadow-lg"
-        aria-label="Menüyü aç"
-      >
-        <Menu className="h-5 w-5" />
-      </button>
+      {!sidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden fixed top-3 left-3 z-50 h-10 w-10 items-center justify-center rounded-full bg-white text-navy shadow-lg"
+          aria-label="Menüyü aç"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      )}
 
       {sidebarOpen && (
         <button
