@@ -73,43 +73,85 @@ export type Database = {
       }
       products: {
         Row: {
-          capacity: string | null
-          category: string
-          created_at: string
-          description: string | null
-          fuel_type: string | null
           id: string
-          image_url: string | null
-          is_active: boolean
+          category: string
           name: string
+          type: string
+          capacity: string | null
+          detail: string | null
+          specs: Json | null
+          featured: boolean
           sort_order: number
-          updated_at: string
+          created_at: string
+          updated_at: string | null
         }
         Insert: {
-          capacity?: string | null
-          category: string
-          created_at?: string
-          description?: string | null
-          fuel_type?: string | null
           id?: string
-          image_url?: string | null
-          is_active?: boolean
+          category: string
           name: string
+          type: string
+          capacity?: string | null
+          detail?: string | null
+          specs?: Json | null
+          featured?: boolean
           sort_order?: number
-          updated_at?: string
+          created_at?: string
+          updated_at?: string | null
         }
         Update: {
-          capacity?: string | null
-          category?: string
-          created_at?: string
-          description?: string | null
-          fuel_type?: string | null
           id?: string
-          image_url?: string | null
-          is_active?: boolean
+          category?: string
           name?: string
+          type?: string
+          capacity?: string | null
+          detail?: string | null
+          specs?: Json | null
+          featured?: boolean
           sort_order?: number
-          updated_at?: string
+          created_at?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          value: boolean
+          label: string
+        }
+        Insert: {
+          key: string
+          value: boolean
+          label: string
+        }
+        Update: {
+          key?: string
+          value?: boolean
+          label?: string
+        }
+        Relationships: []
+      }
+      page_views: {
+        Row: {
+          id: string
+          path: string
+          referrer: string | null
+          session_id: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          path: string
+          referrer?: string | null
+          session_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          path?: string
+          referrer?: string | null
+          session_id?: string
+          created_at?: string
         }
         Relationships: []
       }

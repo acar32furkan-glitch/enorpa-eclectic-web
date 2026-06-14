@@ -38,16 +38,13 @@ export function SiteHeader() {
   const L = t[lang];
 
   useEffect(() => {
-    if (lang !== "TR") {
-      localStorage.setItem("enorpa_lang", lang);
-    }
+    localStorage.setItem("enorpa_lang", lang);
   }, [lang]);
 
   const chooseLang = (l: Lang) => {
     setLang(l);
     if (typeof window !== "undefined") {
       localStorage.setItem("enorpa_lang", l);
-      localStorage.setItem("enorpa_lang_manual", "1");
     }
   };
 

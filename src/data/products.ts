@@ -117,6 +117,7 @@ export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
 }
 
 /** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
+/** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
 export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
   try {
     // Use the centralized supabase client
@@ -125,16 +126,17 @@ export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
 
     const grouped: Record<string, ProductCategory> = {};
     for (const row of data) {
-      const catId = row.category_id;
+      const catId = row.category;
       if (!grouped[catId]) {
-        grouped[catId] = { id: catId, title: row.category_title, products: [] };
+        const catMeta = productCategories.find((c) => c.id === catId);
+        grouped[catId] = { id: catId, title: catMeta?.title ?? catId, products: [] };
       }
       const p: Product = {
         name: row.name,
         type: row.type,
         capacity: row.capacity || undefined,
         detail: row.detail || undefined,
-        specs: row.specs || undefined,
+        specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
         featured: row.featured || false,
       };
       grouped[catId].products.push(p);

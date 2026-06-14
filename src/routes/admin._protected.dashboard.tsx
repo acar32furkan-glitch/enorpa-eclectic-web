@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, lazy, Suspense } from "react";
-import { Inbox, Clock, Trophy, Loader2, BarChart3, Users, TrendingUp, PieChart } from "lucide-react";
+import { Inbox, Clock, Trophy, Loader2, Users, TrendingUp, PieChart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const Charts = lazy(() =>
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/admin/_protected/dashboard")({
 type Lead = { created_at: string; interest: string | null; status: string };
 
 type AnalyticsData = {
-  visits: { day: string; count: number }[];
+  visits: { day: string; visits: number }[];
   topPages: { path: string; count: number }[];
   conversionRate: number;
   totalLeads: number;
@@ -134,7 +134,7 @@ function Dashboard() {
 
         setAnalytics({ visits, topPages, conversionRate, totalLeads, totalVisits: totalVisits || 0, trafficSources });
       } catch (e) {
-        console.error("Analytics fetch error:", e);
+        setError(e instanceof Error ? e.message : "Analytics verileri yüklenemedi");
       }
     })();
   }, []);
