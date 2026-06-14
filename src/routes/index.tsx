@@ -43,8 +43,6 @@ export const Route = createFileRoute("/")({
 type Lang = "TR" | "EN" | "RU";
 
 type Dict = {
-  nav: readonly string[];
-  quote: string;
   heroTitle: string;
   heroSub: string;
   ctaPrimary: string;
@@ -64,8 +62,6 @@ type Dict = {
 
 const t: Record<Lang, Dict> = {
   TR: {
-    nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Referanslar", "Belgeler", "İletişim"],
-    quote: "Teklif Al",
     heroTitle: "Endüstriyel Isıtmada\nGüvenilir Güç",
     heroSub:
       "Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel, yüksek verimli çözümler.",
@@ -85,8 +81,6 @@ const t: Record<Lang, Dict> = {
     viewAll: "Tüm Ürünleri Gör",
   },
   EN: {
-    nav: ["Home", "Products", "References", "Documents", "Contact"],
-    quote: "Get Quote",
     heroTitle: "Reliable Power\nin Industrial Heating",
     heroSub:
       "High-efficiency, custom-engineered solutions with steam, hot water and hot air boiler systems for your facility.",
@@ -106,8 +100,6 @@ const t: Record<Lang, Dict> = {
     viewAll: "View All Products",
   },
   RU: {
-    nav: ["Главная", "Продукция", "Проекты", "Документы", "Контакты"],
-    quote: "Запросить цену",
     heroTitle: "Надежная мощность\nпромышленного отопления",
     heroSub:
       "Высокоэффективные индивидуальные решения с паровыми, водогрейными и воздухонагревательными котлами.",
@@ -136,15 +128,10 @@ function Index() {
   const [settings, setSettings] = useState<Record<string, boolean>>({});
   const [showHero, setShowHero] = useState(true);
 
-  // Simple language detection for homepage
+  // Simple language detection for homepage - reads from localStorage only
   const getLang = (): Lang => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("enorpa_lang") as Lang | null;
-      if (stored === "TR" || stored === "EN" || stored === "RU") return stored;
-      const code = (navigator.language || "tr").slice(0, 2).toLowerCase();
-      if (code === "ru") return "RU";
-      if (code === "tr") return "TR";
-    }
+    const stored = typeof window !== "undefined" ? (localStorage.getItem("enorpa_lang") as Lang | null) : null;
+    if (stored === "TR" || stored === "EN" || stored === "RU") return stored;
     return "TR";
   };
   const lang = getLang();

@@ -17,8 +17,7 @@ type Product = {
   name: string;
   type: string;
   capacity: string | null;
-  category_id: string;
-  category_title: string;
+  category: string;
   detail: string | null;
   specs: Record<string, string> | null;
   featured: boolean;
@@ -29,8 +28,7 @@ const empty: Omit<Product, "id"> = {
   name: "",
   type: "",
   capacity: "",
-  category_id: fallbackCategories[0].id,
-  category_title: fallbackCategories[0].title,
+  category: fallbackCategories[0].id,
   detail: "",
   specs: null,
   featured: false,
@@ -49,7 +47,7 @@ function ProductsPage() {
     try {
       const { data, error } = await supabase.from("products").select("*").order("sort_order");
       if (error) throw error;
-      setItems((data as Product[]) ?? []);
+      setItems((data as unknown as Product[]) ?? []);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Bir hata oluştu");
     } finally {
@@ -63,22 +61,37 @@ function ProductsPage() {
 
   const save = async () => {
     if (!editing) return;
-    const payload = { ...editing };
-    delete (payload as any).id;
-    delete (payload as any).isNew;
-    if ((editing as any).isNew) {
-      await supabase.from("products").insert(payload);
-    } else {
-      await supabase.from("products").update(payload).eq("id", editing.id);
+    const payload: Omit<Product, "id" | "isNew"> = {
+      name: editing.name,
+      type: editing.type,
+      category: editing.category,
+      capacity: editing.capacity,
+      detail: editing.detail,
+      specs: editing.specs,
+      featured: editing.featured,
+      sort_order: editing.sort_order,
+    };
+    try {
+      if ((editing as any).isNew) {
+        await supabase.from("products").insert(payload);
+      } else {
+        await supabase.from("products").update(payload).eq("id", editing.id);
+      }
+      setEditing(null);
+      await load();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Kaydetme hatası");
     }
-    setEditing(null);
-    await load();
   };
 
   const remove = async (id: string) => {
     if (!confirm("Bu ürünü silmek istiyor musunuz?")) return;
-    await supabase.from("products").delete().eq("id", id);
-    setItems((prev) => prev.filter((p) => p.id !== id));
+    try {
+      await supabase.from("products").delete().eq("id", id);
+      setItems((prev) => prev.filter((p) => p.id !== id));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Silme hatası");
+    }
   };
 
   if (error)
@@ -134,7 +147,7 @@ function ProductsPage() {
                 {items.map((p) => (
                   <tr key={p.id} className="border-b border-border last:border-0">
                     <td className="px-4 py-3 font-semibold text-navy">{p.name}</td>
-                    <td className="px-4 py-3 text-xs">{p.category_title}</td>
+                    <td className="px-4 py-3 text-xs">{fallbackCategories.find((c) => c.id === p.category)?.title ?? p.category}</td>
                     <td className="px-4 py-3 text-xs">{p.type}</td>
                     <td className="px-4 py-3 text-xs">{p.capacity || "—"}</td>
                     <td className="px-4 py-3">
@@ -206,12 +219,8 @@ function ProductModal({
           <div className="grid grid-cols-2 gap-4">
             <Field label="Kategori">
               <select
-                value={draft.category_id}
-                onChange={(e) => {
-                  const cat = fallbackCategories.find((c) => c.id === e.target.value);
-                  set("category_id", e.target.value);
-                  if (cat) set("category_title", cat.title);
-                }}
+                value={draft.category}
+                onChange={(e) => set("category", e.target.value)}
                 className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none"
               >
                 {fallbackCategories.map((c) => (

@@ -22,12 +22,20 @@ function SettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [msg, setMsg] = useState<{ key: string; text: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase.from("site_settings").select("*").order("key");
-    setItems((data as Setting[]) ?? []);
-    setLoading(false);
+    setError(null);
+    try {
+      const { data, error } = await supabase.from("site_settings").select("*").order("key");
+      if (error) throw error;
+      setItems((data as unknown as Setting[]) ?? []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Ayarlar yüklenemedi");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +62,11 @@ function SettingsPage() {
 
   return (
     <div className="p-8 max-w-3xl mx-auto">
+      {error && (
+        <div className="mb-4 text-red-600 bg-red-50 border border-red-200 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
       <div className="mb-8">
         <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-bold mb-1">
           Site Ayarları
