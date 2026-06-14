@@ -145,7 +145,7 @@ function Index() {
       if (code === "ru") return "RU";
       if (code === "tr") return "TR";
     }
-    return "EN";
+    return "TR";
   };
   const lang = getLang();
   const L = t[lang];
