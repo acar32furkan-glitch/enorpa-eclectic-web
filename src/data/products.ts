@@ -116,32 +116,35 @@ export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
   return result;
 }
 
-/** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
-/** Supabase'den ürünleri çeker, hata durumunda products.ts fallback'ini kullanır */
 export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
   try {
-    // Use the centralized supabase client
     const { data, error } = await supabase.from("products").select("*").order("sort_order");
     if (error || !data || data.length === 0) return productCategories;
 
-    const grouped: Record<string, ProductCategory> = {};
+    const grouped: ProductCategory[] = productCategories.map((cat) => ({
+      ...cat,
+      products: [],
+    }));
+    const digerIndex = productCategories.findIndex((c) => c.id === "diger");
+    const validCategoryIds = productCategories.map((c) => c.id);
+
     for (const row of data) {
       const catId = row.category;
-      if (!grouped[catId]) {
-        const catMeta = productCategories.find((c) => c.id === catId);
-        grouped[catId] = { id: catId, title: catMeta?.title ?? catId, products: [] };
+      const categoryIndex = validCategoryIds.indexOf(catId);
+      const targetIndex = categoryIndex >= 0 ? categoryIndex : digerIndex;
+      if (targetIndex >= 0) {
+        const p: Product = {
+          name: row.name,
+          type: row.type,
+          capacity: row.capacity || undefined,
+          detail: row.detail || undefined,
+          specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
+          featured: row.featured || false,
+        };
+        grouped[targetIndex].products.push(p);
       }
-      const p: Product = {
-        name: row.name,
-        type: row.type,
-        capacity: row.capacity || undefined,
-        detail: row.detail || undefined,
-        specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
-        featured: row.featured || false,
-      };
-      grouped[catId].products.push(p);
     }
-    return Object.values(grouped);
+    return grouped;
   } catch {
     return productCategories;
   }
