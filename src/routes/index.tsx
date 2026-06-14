@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ShieldCheck,
@@ -11,6 +11,16 @@ import {
   ArrowRight,
   MapPin,
   Info,
+  X,
+  Check,
+  Phone,
+  Mail,
+  Clock,
+  Download,
+  FileText,
+  Lock,
+  Send,
+  Building2,
 } from "lucide-react";
 import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
