@@ -51,7 +51,7 @@ function UrunlerPage() {
 
         {/* Category Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 border-b border-border pb-4">
-          {productCategories.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
