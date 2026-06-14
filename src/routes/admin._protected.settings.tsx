@@ -4,6 +4,9 @@ import { Loader2, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/_protected/settings")({
+  head: () => ({
+    meta: [{ title: "Site Ayarları | Enorpa Admin" }],
+  }),
   ssr: false,
   component: SettingsPage,
 });

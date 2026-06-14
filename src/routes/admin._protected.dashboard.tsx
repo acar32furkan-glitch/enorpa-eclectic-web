@@ -24,6 +24,9 @@ const Charts = lazy(() =>
 );
 
 export const Route = createFileRoute("/admin/_protected/dashboard")({
+  head: () => ({
+    meta: [{ title: "Yönetim Paneli | Enorpa" }],
+  }),
   ssr: false,
   component: Dashboard,
 });
@@ -33,19 +36,35 @@ type Lead = { created_at: string; interest: string | null; status: string };
 function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
-      const since = new Date();
-      since.setDate(since.getDate() - 30);
-      const { data } = await supabase
-        .from("leads")
-        .select("created_at,interest,status")
-        .gte("created_at", since.toISOString());
-      setLeads(data ?? []);
-      setLoading(false);
+      try {
+        const since = new Date();
+        since.setDate(since.getDate() - 30);
+        const { data, error } = await supabase
+          .from("leads")
+          .select("created_at,interest,status")
+          .gte("created_at", since.toISOString());
+        if (error) throw error;
+        setLeads(data ?? []);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Bir hata oluştu");
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
+
+  if (error)
+    return (
+      <div className="p-8 flex items-center justify-center min-h-[60vh]">
+        <div className="text-red-600 bg-red-50 border border-red-200 px-4 py-3 rounded">
+          Veriler yüklenirken hata oluştu, lütfen sayfayı yenileyin
+        </div>
+      </div>
+    );
 
   if (loading)
     return (

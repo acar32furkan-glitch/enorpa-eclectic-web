@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Inbox, Package, LogOut, Flame, Loader2 } from "lucide-react";
+import { LayoutDashboard, Inbox, Package, LogOut, Flame, Loader2, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/_protected")({
@@ -77,7 +77,7 @@ function AdminLayout() {
     { to: "/admin/dashboard", label: "Site Analizleri", icon: LayoutDashboard },
     { to: "/admin/leads", label: "Talepler", icon: Inbox },
     { to: "/admin/products", label: "Ürün Yönetimi", icon: Package },
-    { to: "/admin/settings", label: "Ayarlar", icon: LayoutDashboard },
+    { to: "/admin/settings", label: "Ayarlar", icon: Settings },
   ];
 
   const signOut = async () => {
