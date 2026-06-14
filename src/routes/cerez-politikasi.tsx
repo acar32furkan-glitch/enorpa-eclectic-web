@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/cerez-politikasi")({
   head: () => ({
@@ -13,15 +14,7 @@ export const Route = createFileRoute("/cerez-politikasi")({
 function LegalPage() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-navy-dark text-white">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-xl font-bold tracking-tight">ENORPA</span>
-            <span className="h-2 w-2 rounded-full bg-orange" />
-          </Link>
-          <Link to="/" className="text-xs uppercase tracking-wider text-white/70 hover:text-orange font-display">← Anasayfa</Link>
-        </div>
-      </div>
+      <SiteHeader />
       <div className="mx-auto max-w-3xl px-4 py-16 md:py-24">
         <h1 className="font-display text-navy text-4xl font-bold uppercase mb-8">Çerez Politikası</h1>
         <div className="text-sm text-muted-foreground space-y-4 leading-relaxed">
@@ -33,6 +26,7 @@ function LegalPage() {
           <p>Detaylı bilgi için turuncu@enorpa.com adresinden bize ulaşabilirsiniz.</p>
         </div>
       </div>
+      <SiteFooter />
     </div>
   );
 }
