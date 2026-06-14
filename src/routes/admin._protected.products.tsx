@@ -131,41 +131,48 @@ function ProductsPage() {
             <Loader2 className="h-6 w-6 animate-spin text-orange" />
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-steel border-b border-border">
-                <tr className="text-left font-display uppercase text-xs tracking-wider text-navy">
-                  <th className="px-4 py-3">Ad</th>
-                  <th className="px-4 py-3">Kategori</th>
-                  <th className="px-4 py-3">Tip</th>
-                  <th className="px-4 py-3">Kapasite</th>
-                  <th className="px-4 py-3">Öne Çıkan</th>
-                  <th className="px-4 py-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((p) => (
-                  <tr key={p.id} className="border-b border-border last:border-0">
-                    <td className="px-4 py-3 font-semibold text-navy">{p.name}</td>
-                    <td className="px-4 py-3 text-xs">{fallbackCategories.find((c) => c.id === p.category)?.title ?? p.category}</td>
-                    <td className="px-4 py-3 text-xs">{p.type}</td>
-                    <td className="px-4 py-3 text-xs">{p.capacity || "—"}</td>
-                    <td className="px-4 py-3">
-                      {p.featured ? <span className="text-xs bg-orange text-white px-2 py-1">Öne Çıkan</span> : null}
-                    </td>
-                    <td className="px-4 py-3 flex gap-2">
-                      <button onClick={() => setEditing(p)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-navy hover:bg-steel hover:text-orange" aria-label="Düzenle">
-                        <Pencil className="h-4 w-4" />
-                      </button>
-                      <button onClick={() => remove(p.id)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-red-600" aria-label="Sil">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
+          <>
+            <div className="space-y-3 p-4 md:hidden">
+              {items.map((p) => (
+                <ProductCard key={p.id} product={p} onEdit={setEditing} onDelete={remove} />
+              ))}
+            </div>
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full text-sm">
+                <thead className="bg-steel border-b border-border">
+                  <tr className="text-left font-display uppercase text-xs tracking-wider text-navy">
+                    <th className="px-4 py-3">Ad</th>
+                    <th className="px-4 py-3">Kategori</th>
+                    <th className="px-4 py-3">Tip</th>
+                    <th className="px-4 py-3">Kapasite</th>
+                    <th className="px-4 py-3">Öne Çıkan</th>
+                    <th className="px-4 py-3"></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {items.map((p) => (
+                    <tr key={p.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-3 font-semibold text-navy">{p.name}</td>
+                      <td className="px-4 py-3 text-xs">{fallbackCategories.find((c) => c.id === p.category)?.title ?? p.category}</td>
+                      <td className="px-4 py-3 text-xs">{p.type}</td>
+                      <td className="px-4 py-3 text-xs">{p.capacity || "—"}</td>
+                      <td className="px-4 py-3">
+                        {p.featured ? <span className="text-xs bg-orange text-white px-2 py-1">Öne Çıkan</span> : null}
+                      </td>
+                      <td className="px-4 py-3 flex gap-2">
+                        <button onClick={() => setEditing(p)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-navy hover:bg-steel hover:text-orange" aria-label="Düzenle">
+                          <Pencil className="h-4 w-4" />
+                        </button>
+                        <button onClick={() => remove(p.id)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-red-600" aria-label="Sil">
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
@@ -177,6 +184,54 @@ function ProductsPage() {
           onSave={save}
         />
       )}
+    </div>
+  );
+}
+
+function ProductCard({
+  product,
+  onEdit,
+  onDelete,
+}: {
+  product: Product;
+  onEdit: (p: Product) => void;
+  onDelete: (id: string) => void;
+}) {
+  const category = fallbackCategories.find((c) => c.id === product.category)?.title ?? product.category;
+
+  return (
+    <div className="rounded border border-border p-4">
+      <div className="space-y-2 text-sm">
+        <div className="min-w-0 break-words">
+          <span className="font-display font-semibold uppercase tracking-wider text-orange">Ad:</span>{" "}
+          <span className="font-semibold text-navy">{product.name}</span>
+        </div>
+        <div className="min-w-0 break-words">
+          <span className="font-display font-semibold uppercase tracking-wider text-orange">Kategori:</span>{" "}
+          <span>{category}</span>
+        </div>
+        <div className="min-w-0 break-words">
+          <span className="font-display font-semibold uppercase tracking-wider text-orange">Tip:</span>{" "}
+          <span>{product.type}</span>
+        </div>
+        <div className="min-w-0 break-words">
+          <span className="font-display font-semibold uppercase tracking-wider text-orange">Kapasite:</span>{" "}
+          <span>{product.capacity || "—"}</span>
+        </div>
+      </div>
+      {product.featured && (
+        <div className="mt-3">
+          <span className="text-xs bg-orange text-white px-2 py-1">Öne Çıkan</span>
+        </div>
+      )}
+      <div className="mt-4 flex flex-col gap-2">
+        <button onClick={() => onEdit(product)} className="inline-flex h-10 w-full items-center justify-center gap-2 rounded bg-steel p-2 text-sm font-display uppercase tracking-wider text-navy hover:bg-orange hover:text-white">
+          <Pencil className="h-4 w-4" /> Düzenle
+        </button>
+        <button onClick={() => onDelete(product.id)} className="inline-flex h-10 w-full items-center justify-center gap-2 rounded bg-steel p-2 text-sm font-display uppercase tracking-wider text-muted-foreground hover:bg-orange hover:text-white">
+          <Trash2 className="h-4 w-4" /> Sil
+        </button>
+      </div>
     </div>
   );
 }

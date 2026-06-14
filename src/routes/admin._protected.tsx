@@ -163,8 +163,10 @@ function AdminLayout() {
         </button>
       )}
 
-      <main className="flex-1 overflow-auto min-w-0">
-        <Outlet />
+      <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden">
+        <div className="pt-16 md:pt-0">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

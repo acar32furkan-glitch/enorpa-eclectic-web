@@ -189,11 +189,11 @@ function Dashboard() {
 
   return (
     <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
+      <div className="mb-8 min-w-0">
         <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-bold mb-1">
           Genel Bakış
         </div>
-        <h1 className="font-display text-3xl font-bold uppercase text-navy">Site Analizleri</h1>
+        <h1 className="max-w-full break-words font-display text-2xl font-bold uppercase text-navy sm:text-4xl">Site Analizleri</h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
