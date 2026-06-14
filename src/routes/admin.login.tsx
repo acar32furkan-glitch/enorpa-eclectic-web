@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/login")({
   ssr: false,
-  head: () => ({ meta: [{ title: "Admin Girişi — Enorpa" }] }),
+  head: () => ({ meta: [{ title: "Yönetici Girişi | Enorpa" }] }),
   component: AdminLogin,
 });
 

@@ -5,6 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { productCategories as fallbackCategories } from "@/data/products";
 
 export const Route = createFileRoute("/admin/_protected/products")({
+  head: () => ({
+    meta: [{ title: "Ürün Yönetimi | Enorpa Admin" }],
+  }),
   ssr: false,
   component: ProductsPage,
 });
@@ -37,13 +40,21 @@ const empty: Omit<Product, "id"> = {
 function ProductsPage() {
   const [items, setItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<(Product & { isNew?: boolean }) | null>(null);
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase.from("products").select("*").order("sort_order");
-    setItems((data as Product[]) ?? []);
-    setLoading(false);
+    setError(null);
+    try {
+      const { data, error } = await supabase.from("products").select("*").order("sort_order");
+      if (error) throw error;
+      setItems((data as Product[]) ?? []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Bir hata oluştu");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -69,6 +80,22 @@ function ProductsPage() {
     await supabase.from("products").delete().eq("id", id);
     setItems((prev) => prev.filter((p) => p.id !== id));
   };
+
+  if (error)
+    return (
+      <div className="p-8 flex items-center justify-center min-h-[60vh]">
+        <div className="text-red-600 bg-red-50 border border-red-200 px-4 py-3 rounded">
+          Ürünler yüklenirken hata oluştu, lütfen sayfayı yenileyin
+        </div>
+      </div>
+    );
+
+  if (loading)
+    return (
+      <div className="p-8 flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="h-6 w-6 animate-spin text-orange" />
+      </div>
+    );
 
   return (
     <div className="p-8 max-w-7xl mx-auto">

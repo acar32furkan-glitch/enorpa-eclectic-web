@@ -4,6 +4,9 @@ import { Loader2, Trash2, RefreshCw, Search, Bell } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/_protected/leads")({
+  head: () => ({
+    meta: [{ title: "Talepler | Enorpa Admin" }],
+  }),
   ssr: false,
   component: LeadsPage,
 });
@@ -35,18 +38,26 @@ const SOURCE_LABELS: Record<string, string> = {
 function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [toast, setToast] = useState<{ name: string } | null>(null);
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("leads")
-      .select("*")
-      .order("created_at", { ascending: false });
-    setLeads((data as Lead[]) ?? []);
-    setLoading(false);
+    setError(null);
+    try {
+      const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      setLeads((data as Lead[]) ?? []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Bir hata oluştu");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
