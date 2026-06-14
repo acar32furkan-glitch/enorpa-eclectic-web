@@ -188,7 +188,7 @@ function Dashboard() {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
       <div className="mb-8">
         <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-bold mb-1">
           Genel Bakış
@@ -198,7 +198,7 @@ function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {stats.map((s) => (
-          <div key={s.label} className="bg-white border border-border p-6">
+          <div key={s.label} className="bg-white border border-border p-4 sm:p-6">
             <div className="flex items-start justify-between mb-4">
               <div className="text-xs uppercase tracking-wider font-display text-muted-foreground">
                 {s.label}
@@ -212,7 +212,7 @@ function Dashboard() {
         ))}
       </div>
 
-      <div className="bg-white border border-border p-6">
+      <div className="bg-white border border-border p-4 sm:p-6">
         <h2 className="font-display text-lg font-bold uppercase text-navy mb-4">
           Son 7 Gün — Talep Akışı
         </h2>
@@ -237,14 +237,14 @@ function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white border border-border p-6">
+        <div className="bg-white border border-border p-4 sm:p-6">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-display text-muted-foreground mb-2">
             <Users className="h-4 w-4 text-orange" />
             Toplam Ziyaretçi
           </div>
           <div className="font-display text-3xl font-bold text-navy">{analytics?.totalVisits || 0}</div>
         </div>
-        <div className="bg-white border border-border p-6">
+        <div className="bg-white border border-border p-4 sm:p-6">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-display text-muted-foreground mb-2">
             <TrendingUp className="h-4 w-4 text-orange" />
             Dönüşüm Oranı
@@ -256,15 +256,15 @@ function Dashboard() {
             {analytics ? `${analytics.totalLeads} lead / ${analytics.totalVisits} ziyaretçi` : ""}
           </div>
         </div>
-        <div className="bg-white border border-border p-6">
+        <div className="bg-white border border-border p-4 sm:p-6">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-display text-muted-foreground mb-2">
             <PieChart className="h-4 w-4 text-orange" />
             Trafik Kaynakları
           </div>
           <div className="space-y-1 text-sm">
             {analytics?.trafficSources.map((s) => (
-              <div key={s.source} className="flex justify-between">
-                <span>{s.source}</span>
+              <div key={s.source} className="flex min-w-0 justify-between">
+                <span className="min-w-0 break-words">{s.source}</span>
                 <span className="font-bold text-navy">{s.count}</span>
               </div>
             ))}
@@ -273,7 +273,7 @@ function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white border border-border p-6">
+        <div className="bg-white border border-border p-4 sm:p-6">
           <h3 className="font-display text-lg font-bold uppercase text-navy mb-4">Son 30 Gün — Ziyaretçi Akışı</h3>
           <div style={{ width: "100%", height: 300 }}>
             <Suspense fallback={<div className="flex items-center justify-center h-full"><Loader2 className="h-6 w-6 animate-spin text-orange" /></div>}>
@@ -281,13 +281,13 @@ function Dashboard() {
             </Suspense>
           </div>
         </div>
-        <div className="bg-white border border-border p-6">
+        <div className="bg-white border border-border p-4 sm:p-6">
           <h3 className="font-display text-lg font-bold uppercase text-navy mb-4">En Çok Ziyaret Edilen Sayfalar</h3>
           <div className="divide-y divide-border">
             {analytics?.topPages.length ? (
               analytics.topPages.map((p) => (
-                <div key={p.path} className="py-2 flex justify-between">
-                  <span className="text-sm">{p.path}</span>
+                <div key={p.path} className="py-2 flex min-w-0 justify-between">
+                  <span className="min-w-0 break-all text-sm">{p.path}</span>
                   <span className="font-bold text-navy">{p.count}</span>
                 </div>
               ))

@@ -112,7 +112,7 @@ function ProductsPage() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-bold mb-1">CMS</div>
           <h1 className="font-display text-3xl font-bold uppercase text-navy">Ürün Yönetimi</h1>
@@ -154,10 +154,10 @@ function ProductsPage() {
                       {p.featured ? <span className="text-xs bg-orange text-white px-2 py-1">Öne Çıkan</span> : null}
                     </td>
                     <td className="px-4 py-3 flex gap-2">
-                      <button onClick={() => setEditing(p)} className="text-navy hover:text-orange" aria-label="Düzenle">
+                      <button onClick={() => setEditing(p)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-navy hover:bg-steel hover:text-orange" aria-label="Düzenle">
                         <Pencil className="h-4 w-4" />
                       </button>
-                      <button onClick={() => remove(p.id)} className="text-muted-foreground hover:text-red-600" aria-label="Sil">
+                      <button onClick={() => remove(p.id)} className="inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-red-600" aria-label="Sil">
                         <Trash2 className="h-4 w-4" />
                       </button>
                     </td>
@@ -197,7 +197,7 @@ function ProductModal({
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white max-w-lg w-full p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-3 right-3 text-muted-foreground hover:text-navy">
+        <button onClick={onClose} className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-navy">
           <X className="h-5 w-5" />
         </button>
         <h2 className="font-display text-2xl font-bold uppercase text-navy mb-6">
@@ -216,7 +216,7 @@ function ProductModal({
           <Field label="Tip">
             <input required value={draft.type} onChange={(e) => set("type", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Field label="Kategori">
               <select
                 value={draft.category}
@@ -235,7 +235,7 @@ function ProductModal({
           <Field label="Detay">
             <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
           </Field>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col flex-wrap gap-3 justify-start sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={draft.featured} onChange={(e) => set("featured", e.target.checked)} className="accent-orange h-5 w-5" />
               <span className="text-sm font-display uppercase tracking-wider text-navy">Öne Çıkan</span>
@@ -244,7 +244,7 @@ function ProductModal({
               <input type="number" value={draft.sort_order} onChange={(e) => set("sort_order", Number(e.target.value))} className="w-20 border border-border px-3 py-2 focus:border-orange focus:outline-none" />
             </Field>
           </div>
-          <div className="flex justify-end gap-2 pt-2">
+          <div className="flex flex-col flex-wrap gap-2 justify-start sm:flex-row sm:flex-wrap sm:justify-end pt-2">
             <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-display uppercase tracking-wider text-muted-foreground">İptal</button>
             <button type="submit" className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 font-display uppercase tracking-wider text-sm">Kaydet</button>
           </div>

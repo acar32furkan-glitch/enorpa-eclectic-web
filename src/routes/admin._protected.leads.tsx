@@ -114,10 +114,10 @@ function LeadsPage() {
   }, [leads, search, statusFilter]);
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
       {/* Toast notification */}
       {toast && (
-        <div className="fixed top-4 right-4 z-50 bg-navy-dark text-white px-5 py-3 shadow-xl flex items-center gap-3 animate-in slide-in-from-right">
+        <div className="fixed left-4 right-4 top-4 z-50 max-w-[calc(100%-2rem)] bg-navy-dark text-white px-5 py-3 shadow-xl flex items-center gap-3 animate-in slide-in-from-right">
           <Bell className="h-5 w-5 text-orange" />
           <div>
             <div className="font-display text-sm font-bold uppercase">Yeni Talep</div>
@@ -126,7 +126,7 @@ function LeadsPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
           <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-bold mb-1">CRM</div>
           <h1 className="font-display text-3xl font-bold uppercase text-navy">Talepler</h1>
@@ -154,7 +154,7 @@ function LeadsPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2.5 border border-border text-sm font-display uppercase tracking-wider focus:border-orange focus:outline-none"
+          className="w-full sm:w-auto px-4 py-2.5 border border-border text-sm font-display uppercase tracking-wider focus:border-orange focus:outline-none"
         >
           <option value="all">Tümü</option>
           {STATUS_OPTIONS.map((o) => (
@@ -225,7 +225,7 @@ function LeadsPage() {
                         <select
                           value={l.status}
                           onChange={(e) => updateStatus(l.id, e.target.value)}
-                          className={`text-xs font-display uppercase tracking-wider px-2 py-1.5 border ${opt.className} focus:outline-none rounded`}
+                          className={`min-h-9 w-full sm:w-auto text-xs font-display uppercase tracking-wider px-2 py-1.5 border ${opt.className} focus:outline-none rounded`}
                         >
                           {STATUS_OPTIONS.map((o) => (
                             <option key={o.value} value={o.value}>
@@ -237,7 +237,7 @@ function LeadsPage() {
                       <td className="px-4 py-3">
                         <button
                           onClick={() => remove(l.id)}
-                          className="text-muted-foreground hover:text-red-600"
+                          className="inline-flex h-9 w-9 items-center justify-center p-2 text-muted-foreground hover:bg-steel hover:text-red-600"
                           aria-label="Sil"
                         >
                           <Trash2 className="h-4 w-4" />
