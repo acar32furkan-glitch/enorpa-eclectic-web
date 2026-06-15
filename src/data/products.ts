@@ -14,6 +14,7 @@ export type Product = {
   detail?: string;
   specs?: ProductSpecs;
   featured?: boolean;
+  image_url?: string;
 };
 
 export type ProductCategory = {
@@ -140,6 +141,7 @@ export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
           detail: row.detail || undefined,
           specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
           featured: row.featured || false,
+          image_url: row.image_url || undefined,
         };
         grouped[targetIndex].products.push(p);
       }

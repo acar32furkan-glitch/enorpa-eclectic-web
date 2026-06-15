@@ -14,6 +14,9 @@ import { supabase } from "@/integrations/supabase/client";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+const BRAND_LOGO_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png";
+const FAVICON_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/favicon-192.png";
+
 const getSessionId = () => {
   if (typeof window === "undefined") return "";
   let sid = localStorage.getItem("enorpa_session_id");
@@ -98,15 +101,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Enorpa Enerji — Endüstriyel Isıtmada Güvenilir Güç" },
       { name: "twitter:description", content: "Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel yüksek verimli endüstriyel ısıtma çözümleri." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fad3ca1f-39bc-48fb-8b51-de98845632bd/id-preview-ac897e7b--f5f0040a-22ba-4a23-b7f3-4f183c983042.lovable.app-1781280810402.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fad3ca1f-39bc-48fb-8b51-de98845632bd/id-preview-ac897e7b--f5f0040a-22ba-4a23-b7f3-4f183c983042.lovable.app-1781280810402.png" },
+      { property: "og:image", content: BRAND_LOGO_URL },
+      { name: "twitter:image", content: BRAND_LOGO_URL },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:wght@300,400,500,600&display=swap" },
-      { rel: "icon", href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23e05c1a'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>E</text></svg>" },
+      { rel: "icon", href: FAVICON_URL },
     ],
     scripts: [
       {
