@@ -119,9 +119,6 @@ const t: Record<Lang, Dict> = {
   },
 };
 
-const PRODUCT_IMG =
-  "https://images.unsplash.com/photo-1581093458791-9d42e3c7f7e3?auto=format&fit=crop&w=900&q=80";
-
 const WHATSAPP = "908504712100";
 
 function Index() {
@@ -297,20 +294,20 @@ function ProductCard({
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
-        {imgError ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
-            <Factory className="h-16 w-16 text-white/20" />
-          </div>
-        ) : (
+        {product.image_url && !imgError ? (
           <img
-            src={PRODUCT_IMG}
+            src={product.image_url}
             alt={product.name}
-            width="900"
-            height="675"
             loading="lazy"
+            width="600"
+            height="450"
             onError={() => setImgError(true)}
             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
           />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
+            <Factory className="h-16 w-16 text-white/20" />
+          </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
         <div className="absolute top-4 left-4">
@@ -987,10 +984,10 @@ const DOCS: Doc[] = [
 ========================================================================= */
 
 const PROJECTS = [
-  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu" },
-  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu" },
-  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu" },
-  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu" },
+  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.jpg" },
+  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.jpg" },
+  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.jpg" },
+  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.jpg" },
 ];
 
 function ProjectGallery() {
@@ -1009,13 +1006,15 @@ function ProjectGallery() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {PROJECTS.map((p) => (
             <div key={p.title} className="group bg-white border border-border hover:border-orange transition-all overflow-hidden">
-              <div className="aspect-[4/3] bg-navy-dark flex items-center justify-center">
-                <div className="text-white/20 font-display text-xs uppercase tracking-wider text-center px-4">
-                  <div className="h-12 w-12 mx-auto mb-2 border-2 border-white/10 flex items-center justify-center">
-                    <span className="text-lg">📷</span>
-                  </div>
-                  Fotoğraf
-                </div>
+              <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
+                <img
+                  src={p.image_url}
+                  alt={p.title}
+                  width="600"
+                  height="450"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-all duration-500"
+                />
               </div>
               <div className="p-4">
                 <h3 className="font-display text-navy text-base font-bold uppercase">{p.title}</h3>

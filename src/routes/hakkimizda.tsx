@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ShieldCheck, Award, Factory, BookOpen, Search, PenTool, Wrench, Users } from "lucide-react";
+import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/hakkimizda")({
@@ -18,10 +18,10 @@ export const Route = createFileRoute("/hakkimizda")({
 });
 
 const CERTIFICATIONS = [
-  { icon: ShieldCheck, label: "TSE", sub: "Türk Standartları" },
-  { icon: Award, label: "CE", sub: "European Conformity" },
-  { icon: Factory, label: "ASME", sub: "American Society" },
-  { icon: BookOpen, label: "EAC", sub: "Eurasian Conformity" },
+  { label: "TSE", sub: "Türk Standartları", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/tse.png" },
+  { label: "CE", sub: "European Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png" },
+  { label: "ASME", sub: "American Society", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png" },
+  { label: "EAC", sub: "Eurasian Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png" },
 ];
 
 const STEPS = [
@@ -111,9 +111,14 @@ function HakkimizdaPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CERTIFICATIONS.map((c) => (
               <div key={c.label} className="bg-steel border border-border p-6 text-center">
-                <div className="h-12 w-12 mx-auto bg-navy text-white flex items-center justify-center mb-3">
-                  <c.icon className="h-6 w-6" />
-                </div>
+                <img
+                  src={c.image_url}
+                  alt={c.label}
+                  width="96"
+                  height="96"
+                  loading="lazy"
+                  className="h-12 w-12 object-contain mx-auto mb-3"
+                />
                 <div className="font-display text-navy text-lg font-bold uppercase">{c.label}</div>
                 <div className="text-xs text-muted-foreground mt-1">{c.sub}</div>
               </div>

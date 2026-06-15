@@ -100,18 +100,20 @@ function ProductCard({
   return (
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
-        {imgError ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
-            <Factory className="h-16 w-16 text-white/20" />
-          </div>
-        ) : (
+        {product.image_url && !imgError ? (
           <img
-            src="https://images.unsplash.com/photo-1581093458791-9d42e3c7f7e3?auto=format&fit=crop&w=900&q=80"
+            src={product.image_url}
             alt={product.name}
             loading="lazy"
+            width="600"
+            height="450"
             onError={() => setImgError(true)}
             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
           />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
+            <Factory className="h-16 w-16 text-white/20" />
+          </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
         <div className="absolute top-4 left-4">
