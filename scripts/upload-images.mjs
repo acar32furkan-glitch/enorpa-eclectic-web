@@ -1,47 +1,45 @@
 import { createClient } from "@supabase/supabase-js";
 import { readFile, stat } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { basename, join, resolve } from "node:path";
 
 const SUPABASE_REF = "hmhkrrbvkafwcbyyvezl";
 const BUCKET = "product-images";
-const UPLOAD_ROOT = resolve(
-  "C:/Users/admin/Desktop/enorpa/enorpa-images/enorpa-images/enorpa.com/wp-content/uploads",
-);
+const OPTIMIZED_ROOT = resolve("scripts/optimized");
 
 const IMAGE_MAPPINGS = [
-  ["2024/07/OBS3-RND-2021.03.16.135-1024x753.png", "products/obsidyen.png"],
-  ["2025/06/Akuamarin-1-scaled.png", "products/akuamarin.png"],
-  ["2024/07/Ametist-2500-Render.1-1024x768.png", "products/ametist.png"],
-  ["2024/07/Turkuaz-render-1024x683.png", "products/turkuaz.png"],
-  ["2024/07/KALS30-Render-2.86-1024x665.png", "products/kalsedon.png"],
-  ["2024/07/Kuvars60-1024x724.png", "products/kuvars.png"],
-  ["2024/07/NX6-R3-Render-01.89-1024x683.png", "products/kuvars-ng.png"],
-  ["2024/07/TRM30-Render-OBS-icin1.119-1024x576.png", "products/turmalin.png"],
-  ["2024/07/HAS-Serisi-Kazan-Render-01-1024x640.png", "products/has.png"],
-  ["2024/07/HAS-Mobil-50-2-3-1024x937.png", "products/has-ng.png"],
-  ["2024/07/HT6-Render-1.93-1024x589.png", "products/has-turbo.png"],
-  ["2024/07/AKM-R3.Cutaway-Izometrik-1024x598.png", "products/akuamarin-ks.png"],
-  ["2024/07/Turkuaz-Serisi-Render-1.99-1024x658.png", "products/turkuaz-ks.png"],
-  ["2024/08/kat-kaloriferleri-1-liste-1024x683.png", "products/kat-kaloriferi.png"],
-  ["2024/07/Sera-Isitma.jpg", "products/sera-isitma.jpg"],
-  ["2024/07/Riello-Brulor.png", "products/brulorler.png"],
-  ["2024/07/Cift-Cidarli-Baca-1024x768.jpg", "products/baca.jpg"],
-  ["2024/07/Kondenser.png", "products/kondenser.png"],
-  ["2024/08/Ekonomizer-2-1024x560.png", "products/ekonomizer.png"],
-  ["2024/07/eco-30-g-c-2a-gecici-2-1024x683.png", "products/kazan-otomasyon.png"],
-  ["2024/07/Standart-Kazan-Panosu.jpg", "products/kazan-kontrol-panosu.jpg"],
-  ["2024/07/tashkent-slider-1196x900.jpg", "gallery/taskent.jpg"],
-  ["2024/08/ozbekistan-slider-5-1.jpg", "gallery/harezm.jpg"],
-  ["2025/05/end-buhar-sistem-min.jpg", "gallery/manisa.jpg"],
-  ["2024/08/izmir-slider1-duzenli.jpg", "gallery/izmir.jpg"],
-  ["2024/08/enorpa-logo.png", "brand/logo.png"],
-  ["2024/04/Enorpa-White-Logo.png", "brand/logo-white.png"],
-  ["2024/04/cropped-Enorpa-Origin-1-192x192.png", "brand/favicon-192.png"],
-  ["2024/07/tse.png", "brand/tse.png"],
-  ["2024/07/ce.png", "brand/ce.png"],
-  ["2024/07/asme.png", "brand/asme.png"],
-  ["2024/08/eac.png", "brand/eac.png"],
+  ["2024/07/OBS3-RND-2021.03.16.135-1024x753.png", "products/obsidyen.webp"],
+  ["2025/06/Akuamarin-1-scaled.png", "products/akuamarin.webp"],
+  ["2024/07/Ametist-2500-Render.1-1024x768.png", "products/ametist.webp"],
+  ["2024/07/Turkuaz-render-1024x683.png", "products/turkuaz.webp"],
+  ["2024/07/KALS30-Render-2.86-1024x665.png", "products/kalsedon.webp"],
+  ["2024/07/Kuvars60-1024x724.png", "products/kuvars.webp"],
+  ["2024/07/NX6-R3-Render-01.89-1024x683.png", "products/kuvars-ng.webp"],
+  ["2024/07/TRM30-Render-OBS-icin1.119-1024x576.png", "products/turmalin.webp"],
+  ["2024/07/HAS-Serisi-Kazan-Render-01-1024x640.png", "products/has.webp"],
+  ["2024/07/HAS-Mobil-50-2-3-1024x937.png", "products/has-ng.webp"],
+  ["2024/07/HT6-Render-1.93-1024x589.png", "products/has-turbo.webp"],
+  ["2024/07/AKM-R3.Cutaway-Izometrik-1024x598.png", "products/akuamarin-ks.webp"],
+  ["2024/07/Turkuaz-Serisi-Render-1.99-1024x658.png", "products/turkuaz-ks.webp"],
+  ["2024/08/kat-kaloriferleri-1-liste-1024x683.png", "products/kat-kaloriferi.webp"],
+  ["2024/07/Sera-Isitma.jpg", "products/sera-isitma.webp"],
+  ["2024/07/Riello-Brulor.png", "products/brulorler.webp"],
+  ["2024/07/Cift-Cidarli-Baca-1024x768.jpg", "products/baca.webp"],
+  ["2024/07/Kondenser.png", "products/kondenser.webp"],
+  ["2024/08/Ekonomizer-2-1024x560.png", "products/ekonomizer.webp"],
+  ["2024/07/eco-30-g-c-2a-gecici-2-1024x683.png", "products/kazan-otomasyon.webp"],
+  ["2024/07/Standart-Kazan-Panosu.jpg", "products/kazan-kontrol-panosu.webp"],
+  ["2024/07/tashkent-slider-1196x900.jpg", "gallery/taskent.webp"],
+  ["2024/08/ozbekistan-slider-5-1.jpg", "gallery/harezm.webp"],
+  ["2025/05/end-buhar-sistem-min.jpg", "gallery/manisa.webp"],
+  ["2024/08/izmir-slider1-duzenli.jpg", "gallery/izmir.webp"],
+  ["2024/08/enorpa-logo.png", "brand/logo.webp"],
+  ["2024/04/Enorpa-White-Logo.png", "brand/logo-white.webp"],
+  ["2024/04/cropped-Enorpa-Origin-1-192x192.png", "brand/favicon-192.webp"],
+  ["2024/07/tse.png", "brand/tse.webp"],
+  ["2024/07/ce.png", "brand/ce.webp"],
+  ["2024/07/asme.png", "brand/asme.webp"],
+  ["2024/08/eac.png", "brand/eac.webp"],
+  ["2025/05/nature-ANA-SAYFA-min.png", "brand/nature-ana-sayfa.webp"],
 ];
 
 function loadEnv() {
@@ -74,6 +72,10 @@ function contentTypeFor(filePath) {
   return "application/octet-stream";
 }
 
+function optimizedFileName(relativeSource) {
+  return basename(relativeSource).replace(/\.(jpe?g|png)$/i, ".webp");
+}
+
 async function main() {
   const env = await loadEnv();
   const supabaseUrl = env.SUPABASE_URL || `https://${SUPABASE_REF}.supabase.co`;
@@ -89,10 +91,10 @@ async function main() {
   let failureCount = 0;
 
   for (const [relativeSource, targetPath] of IMAGE_MAPPINGS) {
-    const sourcePath = join(UPLOAD_ROOT, relativeSource);
+    const sourcePath = join(OPTIMIZED_ROOT, optimizedFileName(relativeSource));
     try {
       const sourceStat = await stat(sourcePath);
-      if (!sourceStat.isFile()) throw new Error("source is not a file");
+      if (!sourceStat.isFile()) throw new Error("optimized source is not a file");
 
       const buffer = await readFile(sourcePath);
       const { data, error } = await supabase.storage
@@ -105,11 +107,11 @@ async function main() {
 
       if (error) throw error;
       successCount += 1;
-      console.log(`✅ ${targetPath} <- ${relativeSource}`);
+      console.log(`✅ ${targetPath} <- ${optimizedFileName(relativeSource)}`);
       if (data?.path) console.log(`   Stored path: ${data.path}`);
     } catch (error) {
       failureCount += 1;
-      console.error(`❌ ${targetPath} <- ${relativeSource}`);
+      console.error(`❌ ${targetPath} <- ${optimizedFileName(relativeSource)}`);
       console.error(`   ${error?.message || error}`);
     }
   }

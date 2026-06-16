@@ -164,7 +164,7 @@ function Index() {
               className="absolute inset-0 bg-cover bg-center"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=2000&q=80')",
+                  "url('https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/nature-ana-sayfa.webp')",
               }}
             />
             <div className="absolute inset-0" style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }} />
@@ -984,10 +984,10 @@ const DOCS: Doc[] = [
 ========================================================================= */
 
 const PROJECTS = [
-  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.jpg" },
-  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.jpg" },
-  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.jpg" },
-  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.jpg" },
+  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
+  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.webp" },
+  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.webp" },
+  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.webp" },
 ];
 
 function ProjectGallery() {
