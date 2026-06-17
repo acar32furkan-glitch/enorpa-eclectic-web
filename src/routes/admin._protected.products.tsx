@@ -132,51 +132,55 @@ const toSlug = (str: string) =>
      }
    };
 
-   const save = async (file?: File | null) => {
-     if (!editing) return;
-     setUploading(true);
-     
-     let finalImageUrl = editing.image_url;
-     
-     if (file) {
-       const slug = toSlug(editing.name || "product");
-       const path = `products/${slug}.webp`;
-       const { error: uploadError } = await supabase.storage.from("product-images").upload(path, file, { upsert: true });
-       if (uploadError) {
-         setError(uploadError.message);
-         setUploading(false);
-         return;
-       }
-       const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(path);
-       finalImageUrl = urlData.publicUrl;
-     }
-     
-     const payload = {
-       name: editing.name,
-       type: editing.type,
-       category: editing.category,
-       capacity: editing.capacity,
-       detail: editing.detail,
-       specs: editing.specs,
-       featured: editing.featured,
-       sort_order: editing.sort_order,
-       image_url: finalImageUrl,
-     };
-     try {
-       if ((editing as any).isNew) {
-         await supabase.from("products").insert(payload);
-       } else {
-         await supabase.from("products").update(payload).eq("id", editing.id);
-       }
-       setEditing(null);
-       setUploadFile(null);
-       await load();
-     } catch (e) {
-       setError(e instanceof Error ? e.message : "Kaydetme hatası");
-     } finally {
-       setUploading(false);
-     }
-   };
+const save = async (file?: File | null) => {
+      if (!editing) return;
+      setUploading(true);
+      
+      let finalImageUrl = editing.image_url;
+      
+      if (file) {
+        console.log("Compressed file size (KB):", Math.round(file.size / 1024));
+        const slug = toSlug(editing.name || "product");
+        const path = `products/${slug}.webp`;
+        const { data: uploadData, error: uploadError } = await supabase.storage.from("product-images").upload(path, file, { upsert: true });
+        console.log("Supabase upload response:", { data: uploadData, error: uploadError });
+        if (uploadError) {
+          setError(uploadError.message);
+          setUploading(false);
+          return;
+        }
+        const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(path);
+        finalImageUrl = urlData.publicUrl;
+        console.log("Generated public URL:", finalImageUrl);
+      }
+      
+      const payload = {
+        name: editing.name,
+        type: editing.type,
+        category: editing.category,
+        capacity: editing.capacity,
+        detail: editing.detail,
+        specs: editing.specs,
+        featured: editing.featured,
+        sort_order: editing.sort_order,
+        image_url: finalImageUrl,
+      };
+      console.log("Payload being sent:", payload);
+      try {
+        if ((editing as any).isNew) {
+          await supabase.from("products").insert(payload);
+        } else {
+          await supabase.from("products").update(payload).eq("id", editing.id);
+        }
+        setEditing(null);
+        setUploadFile(null);
+        await load();
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Kaydetme hatası");
+      } finally {
+        setUploading(false);
+      }
+    };
 
   const remove = async (id: string) => {
     if (!confirm("Bu ürünü silmek istiyor musunuz?")) return;
@@ -352,70 +356,68 @@ function ProductModal({
 
    return (
      <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
-       <div className="bg-white max-w-lg w-full p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
-         <button onClick={onClose} className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-navy">
-           <X className="h-5 w-5" />
-         </button>
-         <h2 className="font-display text-2xl font-bold uppercase text-navy mb-6">
-           {draft.isNew ? "Yeni Ürün" : "Ürünü Düzenle"}
-         </h2>
-         <form
-           onSubmit={(e) => {
-             e.preventDefault();
-             onSave(uploadFile);
-           }}
-           className="space-y-4"
-         >
-           <Field label="Ad">
-             <input required value={draft.name} onChange={(e) => set("name", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-           </Field>
-           <Field label="Tip">
-             <input required value={draft.type} onChange={(e) => set("type", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-           </Field>
-           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-             <Field label="Kategori">
-               <select
-                 value={draft.category}
-                 onChange={(e) => set("category", e.target.value)}
-                 className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none"
-               >
-                 {fallbackCategories.map((c) => (
-                   <option key={c.id} value={c.id}>{c.title}</option>
-                 ))}
-               </select>
-             </Field>
-             <Field label="Kapasite">
-               <input value={draft.capacity ?? ""} onChange={(e) => set("capacity", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-             </Field>
+       <div className="bg-white max-w-lg w-full max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+         <div className="overflow-y-auto flex-1">
+           <button onClick={onClose} className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded p-2 text-muted-foreground hover:bg-steel hover:text-navy">
+             <X className="h-5 w-5" />
+           </button>
+           <div className="p-6 md:p-8 pb-0">
+             <h2 className="font-display text-2xl font-bold uppercase text-navy mb-6">
+               {draft.isNew ? "Yeni Ürün" : "Ürünü Düzenle"}
+             </h2>
+             <div className="space-y-4">
+               <Field label="Ad">
+                 <input required value={draft.name} onChange={(e) => set("name", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+               </Field>
+               <Field label="Tip">
+                 <input required value={draft.type} onChange={(e) => set("type", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+               </Field>
+               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                 <Field label="Kategori">
+                   <select
+                     value={draft.category}
+                     onChange={(e) => set("category", e.target.value)}
+                     className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none"
+                   >
+                     {fallbackCategories.map((c) => (
+                       <option key={c.id} value={c.id}>{c.title}</option>
+                     ))}
+                   </select>
+                 </Field>
+                 <Field label="Kapasite">
+                   <input value={draft.capacity ?? ""} onChange={(e) => set("capacity", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                 </Field>
+               </div>
+               <Field label="Detay">
+                 <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+               </Field>
+               <Field label="Görsel Yükle">
+                 <div className="space-y-2">
+                   <input type="file" accept="image/*" onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)} className="w-full" />
+                   {previewUrl && (
+                     <div className="w-32 h-32 rounded border border-border flex items-center justify-center overflow-hidden">
+                       <img src={previewUrl} alt="Önizleme" className="w-32 h-32 object-cover rounded" />
+                     </div>
+                   )}
+                   {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
+                 </div>
+               </Field>
+               <div className="flex flex-col flex-wrap gap-3 justify-start sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+                 <label className="flex items-center gap-2">
+                   <input type="checkbox" checked={draft.featured} onChange={(e) => set("featured", e.target.checked)} className="accent-orange h-5 w-5" />
+                   <span className="text-sm font-display uppercase tracking-wider text-navy">Öne Çıkan</span>
+                 </label>
+                 <Field label="Sıralama">
+                   <input type="number" value={draft.sort_order} onChange={(e) => set("sort_order", Number(e.target.value))} className="w-20 border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                 </Field>
+               </div>
+             </div>
            </div>
-           <Field label="Detay">
-             <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-           </Field>
-<Field label="Görsel Yükle">
-              <div className="space-y-2">
-                <input type="file" accept="image/*" onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)} className="w-full" />
-                {previewUrl && (
-                  <div className="mt-2 w-32 h-32 rounded border border-border flex items-center justify-center overflow-hidden">
-                    <img src={previewUrl} alt="Önizleme" className="w-32 h-32 object-cover rounded" />
-                  </div>
-                )}
-                {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
-              </div>
-            </Field>
-           <div className="flex flex-col flex-wrap gap-3 justify-start sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
-             <label className="flex items-center gap-2">
-               <input type="checkbox" checked={draft.featured} onChange={(e) => set("featured", e.target.checked)} className="accent-orange h-5 w-5" />
-               <span className="text-sm font-display uppercase tracking-wider text-navy">Öne Çıkan</span>
-             </label>
-             <Field label="Sıralama">
-               <input type="number" value={draft.sort_order} onChange={(e) => set("sort_order", Number(e.target.value))} className="w-20 border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-             </Field>
-           </div>
-           <div className="flex flex-col flex-wrap gap-2 justify-start sm:flex-row sm:flex-wrap sm:justify-end pt-2">
-             <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-display uppercase tracking-wider text-muted-foreground">İptal</button>
-             <button type="submit" disabled={uploading} className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 font-display uppercase tracking-wider text-sm disabled:opacity-50">Kaydet</button>
-           </div>
-         </form>
+         </div>
+         <div className="sticky bottom-0 bg-white pt-4 border-t flex flex-col flex-wrap gap-2 justify-start sm:flex-row sm:flex-wrap sm:justify-end p-6 md:p-8">
+           <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-display uppercase tracking-wider text-muted-foreground">İptal</button>
+           <button type="button" disabled={uploading} onClick={() => onSave(uploadFile)} className="bg-orange hover:bg-orange-dark text-white px-5 py-2.5 font-display uppercase tracking-wider text-sm disabled:opacity-50">Kaydet</button>
+         </div>
        </div>
      </div>
    );
