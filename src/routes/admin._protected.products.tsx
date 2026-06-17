@@ -282,6 +282,7 @@ const save = async (file?: File | null) => {
           onSave={save}
           uploadFile={uploadFile}
           uploading={uploading}
+          onFileChange={handleFileChange}
         />
       )}
     </div>
@@ -343,6 +344,7 @@ function ProductModal({
    onSave,
    uploadFile,
    uploading,
+   onFileChange,
   }: {
    draft: Product & { isNew?: boolean };
    onChange: (d: typeof draft) => void;
@@ -350,6 +352,7 @@ function ProductModal({
    onSave: (file?: File | null) => void;
    uploadFile: File | null;
    uploading: boolean;
+   onFileChange: (file: File | null) => void;
  }) {
    const set = <K extends keyof typeof draft>(k: K, v: (typeof draft)[K]) => onChange({ ...draft, [k]: v });
    const previewUrl = uploadFile ? URL.createObjectURL(uploadFile) : draft.image_url;
@@ -391,17 +394,17 @@ function ProductModal({
                <Field label="Detay">
                  <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
                </Field>
-               <Field label="Görsel Yükle">
-                 <div className="space-y-2">
-                   <input type="file" accept="image/*" onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)} className="w-full" />
-                   {previewUrl && (
-                     <div className="w-32 h-32 rounded border border-border flex items-center justify-center overflow-hidden">
-                       <img src={previewUrl} alt="Önizleme" className="w-32 h-32 object-cover rounded" />
-                     </div>
-                   )}
-                   {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
-                 </div>
-               </Field>
+<Field label="Görsel Yükle">
+                  <div className="space-y-2">
+                    <input type="file" accept="image/*" onChange={(e) => onFileChange(e.target.files?.[0] ?? null)} className="w-full" />
+                    {previewUrl && (
+                      <div className="w-32 h-32 rounded border border-border flex items-center justify-center overflow-hidden">
+                        <img src={previewUrl} alt="Önizleme" className="w-32 h-32 object-cover rounded" />
+                      </div>
+                    )}
+                    {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
+                  </div>
+                </Field>
                <div className="flex flex-col flex-wrap gap-3 justify-start sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
                  <label className="flex items-center gap-2">
                    <input type="checkbox" checked={draft.featured} onChange={(e) => set("featured", e.target.checked)} className="accent-orange h-5 w-5" />
