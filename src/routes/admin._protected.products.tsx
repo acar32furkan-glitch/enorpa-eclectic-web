@@ -63,17 +63,74 @@ function ProductsPage() {
      load();
    }, []);
 
-   const toSlug = (str: string) =>
-     str
-       .toLowerCase()
-       .replace(/ı/g, "i")
-       .replace(/ğ/g, "g")
-       .replace(/ü/g, "u")
-       .replace(/ş/g, "s")
-       .replace(/ö/g, "o")
-       .replace(/ç/g, "c")
-       .replace(/[^a-z0-9]+/g, "-")
-       .replace(/^-+|-+$/g, "");
+const toSlug = (str: string) =>
+      str
+        .toLowerCase()
+        .replace(/ı/g, "i")
+        .replace(/ğ/g, "g")
+        .replace(/ü/g, "u")
+        .replace(/ş/g, "s")
+        .replace(/ö/g, "o")
+        .replace(/ç/g, "c")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+   const compressImage = (file: File): Promise<File> => {
+     return new Promise((resolve, reject) => {
+       const img = new Image();
+       img.onload = () => {
+         let { width, height } = img;
+         const max = 1200;
+         if (width > max || height > max) {
+           if (width > height) {
+             if (width > max) {
+               height = Math.round((height * max) / width);
+               width = max;
+             }
+           } else {
+             if (height > max) {
+               width = Math.round((width * max) / height);
+               height = max;
+             }
+           }
+         }
+         const canvas = document.createElement("canvas");
+         canvas.width = width;
+         canvas.height = height;
+         const ctx = canvas.getContext("2d");
+         if (!ctx) return reject(new Error("Canvas context error"));
+         ctx.drawImage(img, 0, 0, width, height);
+         canvas.toBlob((blob) => {
+           if (!blob) return reject(new Error("Compression failed"));
+           resolve(new File([blob], file.name.replace(/\.[^/.]+$/, ".webp"), { type: "image/webp" }));
+         }, "image/webp", 0.8);
+       };
+       img.onerror = () => reject(new Error("Image load error"));
+       img.src = URL.createObjectURL(file);
+     });
+   };
+
+   const handleFileChange = async (file: File | null) => {
+     if (!file) {
+       setUploadFile(null);
+       return;
+     }
+     if (!file.type.startsWith("image/")) {
+       setError("Lütfen geçerli bir görsel dosyası seçin");
+       return;
+     }
+     try {
+       const compressed = await compressImage(file);
+       if (compressed.size > 3 * 1024 * 1024) {
+         setError("Görsel çok büyük, lütfen daha küçük bir dosya seçin");
+         return;
+       }
+       setUploadFile(compressed);
+       setError(null);
+     } catch (e) {
+       setError(e instanceof Error ? e.message : "Görsel işlenemedi");
+     }
+   };
 
    const save = async (file?: File | null) => {
      if (!editing) return;
@@ -214,16 +271,15 @@ function ProductsPage() {
       </div>
 
 {editing && (
-         <ProductModal
-           draft={editing}
-           onChange={setEditing}
-           onClose={() => { setEditing(null); setUploadFile(null); }}
-           onSave={save}
-           uploadFile={uploadFile}
-           onFileChange={setUploadFile}
-           uploading={uploading}
-         />
-       )}
+        <ProductModal
+          draft={editing}
+          onChange={setEditing}
+          onClose={() => { setEditing(null); setUploadFile(null); }}
+          onSave={save}
+          uploadFile={uploadFile}
+          uploading={uploading}
+        />
+      )}
     </div>
   );
 }
@@ -282,15 +338,13 @@ function ProductModal({
    onClose,
    onSave,
    uploadFile,
-   onFileChange,
    uploading,
- }: {
+  }: {
    draft: Product & { isNew?: boolean };
    onChange: (d: typeof draft) => void;
    onClose: () => void;
    onSave: (file?: File | null) => void;
    uploadFile: File | null;
-   onFileChange: (file: File | null) => void;
    uploading: boolean;
  }) {
    const set = <K extends keyof typeof draft>(k: K, v: (typeof draft)[K]) => onChange({ ...draft, [k]: v });
@@ -337,15 +391,17 @@ function ProductModal({
            <Field label="Detay">
              <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
            </Field>
-           <Field label="Görsel Yükle">
-             <div className="space-y-2">
-               <input type="file" accept="image/*" onChange={(e) => onFileChange(e.target.files?.[0] ?? null)} className="w-full" />
-               {previewUrl && (
-                 <img src={previewUrl} alt="Önizleme" className="mt-2 h-32 w-auto object-contain border border-border" />
-               )}
-               {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
-             </div>
-           </Field>
+<Field label="Görsel Yükle">
+              <div className="space-y-2">
+                <input type="file" accept="image/*" onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)} className="w-full" />
+                {previewUrl && (
+                  <div className="mt-2 w-32 h-32 rounded border border-border flex items-center justify-center overflow-hidden">
+                    <img src={previewUrl} alt="Önizleme" className="w-32 h-32 object-cover rounded" />
+                  </div>
+                )}
+                {uploading && <span className="text-sm text-navy">Yükleniyor...</span>}
+              </div>
+            </Field>
            <div className="flex flex-col flex-wrap gap-3 justify-start sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
              <label className="flex items-center gap-2">
                <input type="checkbox" checked={draft.featured} onChange={(e) => set("featured", e.target.checked)} className="accent-orange h-5 w-5" />
