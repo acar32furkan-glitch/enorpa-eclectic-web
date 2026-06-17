@@ -160,13 +160,13 @@ function Index() {
         <>
           {/* HERO */}
           <section className="relative">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "url('https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/nature-ana-sayfa.webp')",
-              }}
-            />
+<div
+               className="absolute inset-0 bg-cover bg-center"
+               style={{
+                 backgroundImage:
+                   "url('https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp')",
+               }}
+             />
             <div className="absolute inset-0" style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }} />
             <div className="relative mx-auto max-w-7xl px-4 py-24 md:py-36 lg:py-44">
               <div className="max-w-3xl">
