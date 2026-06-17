@@ -140,15 +140,30 @@ const save = async (file?: File | null) => {
       
       if (file) {
         console.log("Compressed file size (KB):", Math.round(file.size / 1024));
+        console.log("File type:", file.type);
+        console.log("File name:", file.name);
+        
+        if (!file.type.startsWith("image/")) {
+          setError("Geçersiz dosya türü");
+          setUploading(false);
+          return;
+        }
+        
         const slug = toSlug(editing.name || "product");
         const path = `products/${slug}.webp`;
-        const { data: uploadData, error: uploadError } = await supabase.storage.from("product-images").upload(path, file, { upsert: true });
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from("product-images")
+          .upload(path, file, { upsert: true });
+        
         console.log("Supabase upload response:", { data: uploadData, error: uploadError });
+        
         if (uploadError) {
           setError(uploadError.message);
           setUploading(false);
           return;
         }
+        
         const { data: urlData } = supabase.storage.from("product-images").getPublicUrl(path);
         finalImageUrl = urlData.publicUrl;
         console.log("Generated public URL:", finalImageUrl);
