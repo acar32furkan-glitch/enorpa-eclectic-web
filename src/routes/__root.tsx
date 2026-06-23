@@ -118,25 +118,23 @@ meta: [
       { rel: "icon", href: FAVICON_URL },
     ],
 scripts: [
-       {
-         type: "application/ld+json",
-         children: JSON.stringify({
-           "@context": "https://schema.org",
-           "@type": "Organization",
-           name: "Enorpa Enerji",
-           url: "https://enorpa-eclectic-web.vercel.app",
-           logo: "https://enorpa-eclectic-web.vercel.app/favicon.ico",
-           address: {
-             "@type": "PostalAddress",
-             streetAddress: "Sanayi Mah. 3231 Sk. No:12",
-             addressLocality: "Merkez",
-             addressRegion: "Isparta",
-             addressCountry: "TR",
-           },
-           telephone: "+908504712100",
-           sameAs: ["https://instagram.com/enorpaenerji"],
-         }),
-       },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Enorpa Enerji",
+            url: "https://enorpa-eclectic-web.vercel.app",
+            logo: "https://enorpa-eclectic-web.vercel.app/favicon.ico",
+            telephone: "+908504712100",
+            sameAs: ["https://instagram.com/enorpaenerji"],
+            location: [
+              { "@type": "Place", "name": "Merkez Ofis", "address": { "@type": "PostalAddress", "streetAddress": "Sanayi Mah. 3231 Sk. No:12", "addressLocality": "Isparta", "addressCountry": "TR" }},
+              { "@type": "Place", "name": "Fabrika 2 Isparta OSB", "address": { "@type": "PostalAddress", "streetAddress": "Vatan OSB Mah. 304. Cad. No:12", "addressLocality": "Isparta", "addressCountry": "TR" }},
+              { "@type": "Place", "name": "Fabrika 3 Karaman OSB", "address": { "@type": "PostalAddress", "streetAddress": "OSB Mah. 17. Cad. No:49", "addressLocality": "Karaman", "addressCountry": "TR" }}
+            ]
+          }),
+        },
        {
          type: "text/javascript",
          children: `!function(f,b,e,v,n,t,s){

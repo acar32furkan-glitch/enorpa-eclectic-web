@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users } from "lucide-react";
+import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users, Building2 } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/hakkimizda")({
@@ -22,6 +22,7 @@ const CERTIFICATIONS = [
   { label: "CE", sub: "European Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png" },
   { label: "ASME", sub: "American Society", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png" },
   { label: "EAC", sub: "Eurasian Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png" },
+  { label: "GOST", sub: "Russian Standard", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/gost.png" },
 ];
 
 const STEPS = [
@@ -106,7 +107,7 @@ function HakkimizdaPage() {
             Standartlar & Sertifikalar
           </div>
           <p className="text-muted-foreground text-sm mt-4 mb-6">
-            Ürünlerimiz TSE, CE, ASME ve EAC standartlarına uygun üretilmektedir.
+            Ürünlerimiz TSE, CE, ASME, EAC ve GOST standartlarına uygun üretilmektedir. Rusya, BDT ülkeleri ve Amerika pazarları için gerekli tüm sertifikasyonlara sahibiz.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CERTIFICATIONS.map((c) => (
@@ -146,8 +147,38 @@ function HakkimizdaPage() {
             ))}
           </div>
         </div>
+
+        {/* 3 Üretim Tesisi */}
+        <div className="mt-16">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            3 Üretim Tesisi
+          </div>
+          <p className="text-muted-foreground text-sm mt-4 mb-6 max-w-4xl">
+            Isparta'daki iki fabrikamız ve Karaman'daki modern üretim tesisimizle toplam 3 üretim merkezinde kesintisiz üretim kapasitesine sahibiz.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FactoryCard title="Fabrika 1 — Merkez Ofis" address="Sanayi Mah. 3231 Sk. No:12 Merkez / ISPARTA" />
+            <FactoryCard title="Fabrika 2 — Isparta OSB" address="Vatan OSB Mah. 304. Cad. No:12 Merkez / ISPARTA" />
+            <FactoryCard title="Fabrika 3 — Karaman OSB" address="OSB Mah. 17. Cad. No:49 Merkez / KARAMAN (2024'te açıldı)" />
+          </div>
+        </div>
       </div>
       <SiteFooter />
+    </div>
+  );
+}
+
+function FactoryCard({ title, address }: { title: string; address: string }) {
+  return (
+    <div className="bg-white border border-border p-5">
+      <div className="flex items-start gap-3 mb-3">
+        <Building2 className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" />
+        <h4 className="font-display text-navy font-bold uppercase">{title}</h4>
+      </div>
+      <p className="text-sm text-muted-foreground">{address}</p>
+      <span className="inline-block mt-3 bg-orange text-white text-[10px] uppercase tracking-wider font-semibold px-2 py-1">
+        Aktif Üretim
+      </span>
     </div>
   );
 }
