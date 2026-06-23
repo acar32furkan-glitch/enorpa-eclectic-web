@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Gauge, Flame, Factory, ArrowRight, X, Info, ShieldCheck } from "lucide-react";
 import { productCategories as fallbackCategories, fetchProductsFromSupabase, type Product, type ProductCategory, toSlug } from "@/data/products";
@@ -177,6 +177,14 @@ function ProductCard({
               {hasDetail ? "Detay" : "İncele"}
               <ArrowRight className="h-4 w-4" />
             </button>
+            <Link
+              to="/urunler/$slug"
+              params={{ slug: productSlug }}
+              className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+            >
+              Tam Sayfa
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </div>
