@@ -15,6 +15,7 @@ import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
 import { Route as AdminProtectedIndexRouteImport } from './routes/admin._protected.index'
@@ -52,6 +53,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => UrunlerRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
@@ -95,9 +101,10 @@ export interface FileRoutesByFullPath {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/kvkk': typeof KvkkRoute
-  '/urunler': typeof UrunlerRoute
+  '/urunler': typeof UrunlerRouteWithChildren
   '/admin': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/urunler/$slug': typeof UrunlerSlugRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
@@ -110,8 +117,9 @@ export interface FileRoutesByTo {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/kvkk': typeof KvkkRoute
-  '/urunler': typeof UrunlerRoute
+  '/urunler': typeof UrunlerRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/urunler/$slug': typeof UrunlerSlugRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
@@ -125,9 +133,10 @@ export interface FileRoutesById {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/kvkk': typeof KvkkRoute
-  '/urunler': typeof UrunlerRoute
+  '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/urunler/$slug': typeof UrunlerSlugRoute
   '/admin/_protected/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/_protected/leads': typeof AdminProtectedLeadsRoute
   '/admin/_protected/products': typeof AdminProtectedProductsRoute
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin'
     | '/admin/login'
+    | '/urunler/$slug'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/admin/products'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/kvkk'
     | '/urunler'
     | '/admin/login'
+    | '/urunler/$slug'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/admin/products'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
+    | '/urunler/$slug'
     | '/admin/_protected/dashboard'
     | '/admin/_protected/leads'
     | '/admin/_protected/products'
@@ -187,7 +199,7 @@ export interface RootRouteChildren {
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
   KvkkRoute: typeof KvkkRoute
-  UrunlerRoute: typeof UrunlerRoute
+  UrunlerRoute: typeof UrunlerRouteWithChildren
   AdminProtectedRoute: typeof AdminProtectedRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
 }
@@ -235,6 +247,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/urunler/$slug': {
+      id: '/urunler/$slug'
+      path: '/$slug'
+      fullPath: '/urunler/$slug'
+      preLoaderRoute: typeof UrunlerSlugRouteImport
+      parentRoute: typeof UrunlerRoute
     }
     '/admin/login': {
       id: '/admin/login'
@@ -288,6 +307,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface UrunlerRouteChildren {
+  UrunlerSlugRoute: typeof UrunlerSlugRoute
+}
+
+const UrunlerRouteChildren: UrunlerRouteChildren = {
+  UrunlerSlugRoute: UrunlerSlugRoute,
+}
+
+const UrunlerRouteWithChildren =
+  UrunlerRoute._addFileChildren(UrunlerRouteChildren)
+
 interface AdminProtectedRouteChildren {
   AdminProtectedDashboardRoute: typeof AdminProtectedDashboardRoute
   AdminProtectedLeadsRoute: typeof AdminProtectedLeadsRoute
@@ -314,7 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
   KvkkRoute: KvkkRoute,
-  UrunlerRoute: UrunlerRoute,
+  UrunlerRoute: UrunlerRouteWithChildren,
   AdminProtectedRoute: AdminProtectedRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
 }
