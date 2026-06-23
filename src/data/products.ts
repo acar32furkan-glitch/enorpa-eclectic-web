@@ -8,13 +8,17 @@ export type ProductSpecs = {
 };
 
 export type Product = {
-  name: string;
-  type: string;
-  capacity?: string;
-  detail?: string;
-  specs?: ProductSpecs;
-  featured?: boolean;
-  image_url?: string;
+   name: string;
+   type: string;
+   capacity?: string;
+   detail?: string;
+   specs?: ProductSpecs;
+   featured?: boolean;
+   image_url?: string;
+   slug?: string;
+   long_description?: string;
+   pdf_url?: string;
+   meta_description?: string;
 };
 
 export type ProductCategory = {
@@ -126,7 +130,7 @@ export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
       ...cat,
       products: [],
     }));
-    const digerIndex = productCategories.findIndex((c) => c.id === "diger");
+const digerIndex = productCategories.findIndex((c) => c.id === "diger");
     const validCategoryIds = productCategories.map((c) => c.id);
 
     for (const row of data) {
@@ -142,6 +146,10 @@ export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
           specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
           featured: row.featured || false,
           image_url: row.image_url || undefined,
+          slug: row.slug || toSlug(row.name) || undefined,
+          long_description: row.long_description || undefined,
+          pdf_url: row.pdf_url || undefined,
+          meta_description: row.meta_description || undefined,
         };
         grouped[targetIndex].products.push(p);
       }
@@ -149,5 +157,42 @@ export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
     return grouped;
   } catch {
     return productCategories;
+  }
+}
+
+export function toSlug(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/ı/g, "i")
+    .replace(/ğ/g, "g")
+    .replace(/ü/g, "u")
+    .replace(/ş/g, "s")
+    .replace(/ö/g, "o")
+    .replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export async function fetchProductBySlug(slug: string): Promise<Product | null> {
+  try {
+    const { data, error } = await supabase.from("products").select("*").eq("slug", slug).single();
+    if (error || !data) return null;
+    
+    const p: Product = {
+      name: data.name,
+      type: data.type,
+      capacity: data.capacity || undefined,
+      detail: data.detail || undefined,
+      specs: data.specs ? (data.specs as unknown as ProductSpecs) : undefined,
+      featured: data.featured || false,
+      image_url: data.image_url || undefined,
+      slug: data.slug || undefined,
+      long_description: data.long_description || undefined,
+      pdf_url: data.pdf_url || undefined,
+      meta_description: data.meta_description || undefined,
+    };
+    return p;
+  } catch {
+    return null;
   }
 }

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Loader2, Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { productCategories as fallbackCategories } from "@/data/products";
+import { productCategories as fallbackCategories, toSlug } from "@/data/products";
 
 export const Route = createFileRoute("/admin/_protected/products")({
   head: () => ({
@@ -23,6 +23,10 @@ type Product = {
    featured: boolean;
    sort_order: number;
    image_url: string | null;
+   slug: string | null;
+   long_description: string | null;
+   pdf_url: string | null;
+   meta_description: string | null;
 };
 
 const empty: Omit<Product, "id"> = {
@@ -35,6 +39,10 @@ const empty: Omit<Product, "id"> = {
    featured: false,
    sort_order: 0,
    image_url: null,
+   slug: null,
+   long_description: null,
+   pdf_url: null,
+   meta_description: null,
 };
 
 function ProductsPage() {
@@ -59,23 +67,11 @@ function ProductsPage() {
      }
    };
 
-   useEffect(() => {
-     load();
-   }, []);
+useEffect(() => {
+      load();
+    }, []);
 
-const toSlug = (str: string) =>
-      str
-        .toLowerCase()
-        .replace(/ı/g, "i")
-        .replace(/ğ/g, "g")
-        .replace(/ü/g, "u")
-        .replace(/ş/g, "s")
-        .replace(/ö/g, "o")
-        .replace(/ç/g, "c")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-
-   const compressImage = (file: File): Promise<File> => {
+    const compressImage = (file: File): Promise<File> => {
      return new Promise((resolve, reject) => {
        const img = new Image();
        img.onload = () => {
@@ -179,6 +175,10 @@ const save = async (file?: File | null) => {
         featured: editing.featured,
         sort_order: editing.sort_order,
         image_url: finalImageUrl,
+        slug: editing.slug || toSlug(editing.name || "product"),
+        long_description: editing.long_description,
+        pdf_url: editing.pdf_url,
+        meta_description: editing.meta_description,
       };
       console.log("Payload being sent:", payload);
       try {
@@ -406,10 +406,22 @@ function ProductModal({
                    <input value={draft.capacity ?? ""} onChange={(e) => set("capacity", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
                  </Field>
                </div>
-               <Field label="Detay">
-                 <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
-               </Field>
-<Field label="Görsel Yükle">
+<Field label="Detay">
+                  <textarea rows={3} value={draft.detail ?? ""} onChange={(e) => set("detail", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                </Field>
+                <Field label="Uzun Açıklama">
+                  <textarea rows={5} value={draft.long_description ?? ""} onChange={(e) => set("long_description", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                </Field>
+                <Field label="PDF URL">
+                  <input value={draft.pdf_url ?? ""} onChange={(e) => set("pdf_url", e.target.value)} placeholder="https://..." className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                </Field>
+                <Field label="Meta Açıklama (SEO)">
+                  <textarea rows={2} value={draft.meta_description ?? ""} onChange={(e) => set("meta_description", e.target.value)} className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                </Field>
+                <Field label="Slug (URL)">
+                  <input value={draft.slug ?? ""} onChange={(e) => set("slug", e.target.value)} placeholder="Otomatik oluşturulur" className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none" />
+                </Field>
+                <Field label="Görsel Yükle">
                   <div className="space-y-2">
                     <input type="file" accept="image/*" onChange={(e) => onFileChange(e.target.files?.[0] ?? null)} className="w-full" />
                     {previewUrl && (
