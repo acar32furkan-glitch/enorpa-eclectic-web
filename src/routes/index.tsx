@@ -205,8 +205,9 @@ function Index() {
       )}
 
       {show("show_stats") && <TrustBar L={L} />}
-      {show("show_sectors") && <SectorsSection />}
-      <ProductsSection L={L} />
+{show("show_sectors") && <SectorsSection />}
+        <FuelSavingsCalculator />
+        <ProductsSection L={L} />
       {show("show_references") && <ReferencesSection />}
       <LeadGenSection />
       {show("show_documents") && <DocumentCenter />}
@@ -521,7 +522,7 @@ function Counter({ end, suffix, label }: { end: number; suffix: string; label: s
    PHASE 2 — LEAD GEN: CAPACITY CALCULATOR + QUICK CALLBACK
 ========================================================================= */
 
-type FacilityType = "textile" | "food" | "greenhouse" | "hotel" | "chemical";
+type FacilityType = "textile" | "food" | "greenhouse" | "hotel" | "chemical" | "other";
 type FuelType = "natural_gas" | "solid" | "diesel" | "lpg";
 
 const FACILITIES: { id: FacilityType; label: string; factor: number; icon: string }[] = [
@@ -922,6 +923,140 @@ function SectorsSection() {
               <p className="text-sm text-muted-foreground">{s.desc}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FuelSavingsCalculator() {
+  const [fuelType, setFuelType] = useState<FuelType>("natural_gas");
+  const [consumption, setConsumption] = useState(1000);
+  const [unitPrice, setUnitPrice] = useState(5);
+  const [facilityType, setFacilityType] = useState<FacilityType>("greenhouse");
+
+  const EFFICIENCY_RATES: Record<FuelType, number> = {
+    natural_gas: 0.12,
+    solid: 0.32,
+    diesel: 0.28,
+    lpg: 0.18,
+  };
+
+  const SYSTEM_COSTS: Record<FacilityType, number> = {
+    greenhouse: 1250000,
+    hotel: 2250000,
+    industrial: 3000000,
+    other: 1250000,
+  };
+
+  const monthlyFuelCost = consumption * unitPrice;
+  const yearlyFuelCost = monthlyFuelCost * 12;
+  const savingsRate = EFFICIENCY_RATES[fuelType] + 0.10;
+  const yearlySavings = yearlyFuelCost * savingsRate;
+  const monthlySavings = yearlySavings / 12;
+  const roiYears = SYSTEM_COSTS[facilityType] / yearlySavings;
+
+  const unitLabel = fuelType === "natural_gas" ? "m³/ay" : "ton/ay";
+
+  return (
+    <section id="roi-calculator" className="bg-navy text-white py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="max-w-2xl mb-12">
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            Yakıt Tasarruf Hesaplayıcısı
+          </div>
+          <h2 className="font-display text-white text-3xl md:text-5xl font-bold uppercase">
+            Yakıt Tasarruf Hesaplayıcısı
+          </h2>
+          <p className="mt-4 text-white/70 text-base md:text-lg">
+            Enorpa sistemiyle ne kadar tasarruf edebileceğinizi hesaplayın.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs uppercase tracking-wider font-display font-semibold text-white/70 mb-2">
+                Mevcut Yakıt Tipi
+              </label>
+              <select
+                value={fuelType}
+                onChange={(e) => setFuelType(e.target.value as FuelType)}
+                className="w-full bg-navy-dark border border-white/20 px-4 py-3 text-white focus:border-orange"
+              >
+                <option value="natural_gas">Doğalgaz</option>
+                <option value="diesel">Fuel-Oil</option>
+                <option value="solid">Kömür</option>
+                <option value="lpg">Pelet</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs uppercase tracking-wider font-display font-semibold text-white/70 mb-2">
+                Aylık Yakıt Tüketimi ({unitLabel})
+              </label>
+              <input
+                type="number"
+                min={0}
+                value={consumption}
+                onChange={(e) => setConsumption(Number(e.target.value))}
+                className="w-full bg-navy-dark border border-white/20 px-4 py-3 text-white focus:border-orange"
+              />
+            </div>
+            <div>
+              <label className="block text-xs uppercase tracking-wider font-display font-semibold text-white/70 mb-2">
+                Mevcut Yakıt Birim Fiyatı (TL)
+              </label>
+              <input
+                type="number"
+                min={0}
+                step={0.01}
+                value={unitPrice}
+                onChange={(e) => setUnitPrice(Number(e.target.value))}
+                className="w-full bg-navy-dark border border-white/20 px-4 py-3 text-white focus:border-orange"
+              />
+            </div>
+            <div>
+              <label className="block text-xs uppercase tracking-wider font-display font-semibold text-white/70 mb-2">
+                Tesis Tipi
+              </label>
+              <select
+                value={facilityType}
+                onChange={(e) => setFacilityType(e.target.value as FacilityType)}
+                className="w-full bg-navy-dark border border-white/20 px-4 py-3 text-white focus:border-orange"
+              >
+                <option value="greenhouse">Sera</option>
+                <option value="hotel">Otel</option>
+                <option value="industrial">Endüstriyel Tesis</option>
+                <option value="other">Diğer</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-navy-dark border border-orange/30 p-6 flex flex-col justify-center">
+            <div className="space-y-4">
+              <div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">Aylık Mevcut Maliyet</div>
+                <div className="font-display text-2xl font-bold text-white">{monthlyFuelCost.toLocaleString("tr-TR")} TL</div>
+              </div>
+              <div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">Tahmini Yıllık Tasarruf</div>
+                <div className="font-display text-3xl font-bold text-orange">{yearlySavings.toLocaleString("tr-TR")} TL</div>
+              </div>
+              <div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">Tahmini Amortisman Süresi</div>
+                <div className="font-display text-2xl font-bold text-white">{roiYears.toFixed(1)} yıl</div>
+              </div>
+              <p className="text-[11px] text-white/50 italic mt-2">
+                *Hesaplama tahmini olup gerçek değerler sistem büyüklüğüne göre değişir.
+              </p>
+              <a
+                href="/iletisim"
+                className="inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-6 py-3 mt-4"
+              >
+                Ücretsiz Tasarruf Analizi İste →
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

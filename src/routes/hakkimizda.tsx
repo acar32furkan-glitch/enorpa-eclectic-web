@@ -22,7 +22,7 @@ const CERTIFICATIONS = [
   { label: "CE", sub: "European Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png" },
   { label: "ASME", sub: "American Society", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png" },
   { label: "EAC", sub: "Eurasian Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png" },
-  { label: "GOST", sub: "Russian Standard", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/gost.png" },
+  { label: "GOST", sub: "Rusya Standardı" },
 ];
 
 const STEPS = [
@@ -109,17 +109,23 @@ function HakkimizdaPage() {
           <p className="text-muted-foreground text-sm mt-4 mb-6">
             Ürünlerimiz TSE, CE, ASME, EAC ve GOST standartlarına uygun üretilmektedir. Rusya, BDT ülkeleri ve Amerika pazarları için gerekli tüm sertifikasyonlara sahibiz.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {CERTIFICATIONS.map((c) => (
               <div key={c.label} className="bg-steel border border-border p-6 text-center">
-                <img
-                  src={c.image_url}
-                  alt={c.label}
-                  width="96"
-                  height="96"
-                  loading="lazy"
-                  className="h-12 w-12 object-contain mx-auto mb-3"
-                />
+                {c.image_url ? (
+                  <img
+                    src={c.image_url}
+                    alt={c.label}
+                    width="96"
+                    height="96"
+                    loading="lazy"
+                    className="h-12 w-12 object-contain mx-auto mb-3"
+                  />
+                ) : (
+                  <div className="h-12 w-12 mx-auto mb-3 flex items-center justify-center bg-navy text-white font-display font-bold text-lg">
+                    {c.label}
+                  </div>
+                )}
                 <div className="font-display text-navy text-lg font-bold uppercase">{c.label}</div>
                 <div className="text-xs text-muted-foreground mt-1">{c.sub}</div>
               </div>

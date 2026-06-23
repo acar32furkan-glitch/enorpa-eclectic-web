@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UrunlerRouteImport } from './routes/urunler'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
@@ -33,6 +34,11 @@ const UrunlerRoute = UrunlerRouteImport.update({
 const KvkkRoute = KvkkRouteImport.update({
   id: '/kvkk',
   path: '/kvkk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IletisimRoute = IletisimRouteImport.update({
+  id: '/iletisim',
+  path: '/iletisim',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HakkimizdaRoute = HakkimizdaRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin': typeof AdminProtectedRouteWithChildren
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/admin/login': typeof AdminLoginRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
+  '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
+    | '/iletisim'
     | '/kvkk'
     | '/urunler'
     | '/admin'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
+    | '/iletisim'
     | '/kvkk'
     | '/admin/login'
     | '/urunler/$slug'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
+    | '/iletisim'
     | '/kvkk'
     | '/urunler'
     | '/admin/_protected'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   CerezPolitikasiRoute: typeof CerezPolitikasiRoute
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
+  IletisimRoute: typeof IletisimRoute
   KvkkRoute: typeof KvkkRoute
   UrunlerRoute: typeof UrunlerRouteWithChildren
   AdminProtectedRoute: typeof AdminProtectedRouteWithChildren
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/kvkk'
       fullPath: '/kvkk'
       preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iletisim': {
+      id: '/iletisim'
+      path: '/iletisim'
+      fullPath: '/iletisim'
+      preLoaderRoute: typeof IletisimRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hakkimizda': {
@@ -362,6 +382,7 @@ const rootRouteChildren: RootRouteChildren = {
   CerezPolitikasiRoute: CerezPolitikasiRoute,
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
+  IletisimRoute: IletisimRoute,
   KvkkRoute: KvkkRoute,
   UrunlerRoute: UrunlerRouteWithChildren,
   AdminProtectedRoute: AdminProtectedRouteWithChildren,
