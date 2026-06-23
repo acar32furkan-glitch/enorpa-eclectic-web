@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Gauge, FileDown } from "lucide-react";
-import { fetchProductBySlug, fetchProductsFromSupabase, type Product } from "@/data/products";
+import { fetchProductBySlug, type Product, productCategories } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/urunler/$slug")({
@@ -27,16 +27,9 @@ function ProductDetailPage() {
   const [category, setCategory] = useState<string>("Diğer Ürün ve Hizmetler");
 
   useEffect(() => {
-    if (loaderData) {
-      (async () => {
-        const cats = await fetchProductsFromSupabase();
-        for (const cat of cats) {
-          if (cat.products.some((pr) => pr.slug === loaderData?.slug)) {
-            setCategory(cat.title);
-            break;
-          }
-        }
-      })();
+    if (loaderData && loaderData.category) {
+      const cat = productCategories.find((c) => c.id === loaderData.category);
+      if (cat) setCategory(cat.title);
     }
   }, [loaderData]);
 
@@ -72,35 +65,35 @@ function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Product Image Hero */}
-        <div className="relative h-64 md:h-96 mb-12 bg-navy-dark overflow-hidden">
-          {product.image_url ? (
-            <img
-              src={product.image_url}
-              alt={product.name}
-              fetchpriority="high"
-              style={{ maxWidth: '100%' }}
-              className="absolute inset-0 h-full w-full object-cover object-center"
-              image-rendering="auto"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
-              <Gauge className="h-20 w-20 text-white/20" />
+        {/* Product Image Hero - Edge to edge dark bg */}
+        <div className="bg-navy-dark mb-12">
+          <div className="max-w-4xl mx-auto relative h-64 md:h-80">
+            {product.image_url ? (
+              <img
+                src={product.image_url}
+                alt={product.name}
+                fetchpriority="high"
+                className="w-full h-64 md:h-80 object-cover object-center rounded-lg"
+              />
+            ) : (
+              <div className="w-full h-64 md:h-80 flex items-center justify-center bg-navy-dark">
+                <Gauge className="h-20 w-20 text-white/20" />
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/50 to-transparent rounded-lg" />
+            <div className="absolute top-6 left-6">
+              <span className="bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-3 py-1.5">
+                {category}
+              </span>
             </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/50 to-transparent" />
-          <div className="absolute top-6 left-6">
-            <span className="bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-3 py-1.5">
-              {category}
-            </span>
-          </div>
-          <div className="absolute bottom-6 left-6 right-6">
-            <h1 className="font-display text-white text-4xl md:text-5xl font-bold uppercase">
-              {product.name}
-            </h1>
-            <p className="text-white/70 text-lg font-medium mt-2 uppercase tracking-wide">
-              {product.type}
-            </p>
+            <div className="absolute bottom-6 left-6 right-6">
+              <h1 className="font-display text-white text-4xl md:text-5xl font-bold uppercase">
+                {product.name}
+              </h1>
+              <p className="text-white/70 text-lg font-medium mt-2 uppercase tracking-wide">
+                {product.type}
+              </p>
+            </div>
           </div>
         </div>
 

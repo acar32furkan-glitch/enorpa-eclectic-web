@@ -10,6 +10,7 @@ export type ProductSpecs = {
 export type Product = {
    name: string;
    type: string;
+   category?: string;
    capacity?: string;
    detail?: string;
    specs?: ProductSpecs;
@@ -178,10 +179,11 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
     const { data, error } = await supabase.from("products").select("*").eq("slug", slug).single();
     if (error || !data) return null;
     
-    const p: Product = {
-      name: data.name,
-      type: data.type,
-      capacity: data.capacity || undefined,
+const p: Product = {
+       name: data.name,
+       type: data.type,
+       category: data.category || undefined,
+       capacity: data.capacity || undefined,
       detail: data.detail || undefined,
       specs: data.specs ? (data.specs as unknown as ProductSpecs) : undefined,
       featured: data.featured || false,
