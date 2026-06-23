@@ -73,12 +73,15 @@ function ProductDetailPage() {
         </div>
 
         {/* Product Image Hero */}
-        <div className="relative h-96 md:h-[400px] mb-12 bg-navy-dark overflow-hidden">
+        <div className="relative h-64 md:h-96 mb-12 bg-navy-dark overflow-hidden">
           {product.image_url ? (
             <img
               src={product.image_url}
               alt={product.name}
-              className="absolute inset-0 h-full w-full object-cover"
+              fetchpriority="high"
+              style={{ maxWidth: '100%' }}
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              image-rendering="auto"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
