@@ -60,7 +60,7 @@ export function SiteHeader() {
     if (isIndex === 2) return "/hakkimizda";
     if (isIndex === 3) return "/#refs";
     if (isIndex === 4) return "/#docs";
-    if (isIndex === 5) return "/#contact";
+    if (isIndex === 5) return "/iletisim";
     return "#";
   };
 
@@ -190,12 +190,12 @@ export function SiteFooter() {
         </div>
 
         <FooterCol title="Ürünler" links={[{ label: "Ürünlerimiz", href: "/urunler" }]} />
-        <FooterCol title="Kurumsal" links={[
-          { label: "Hakkımızda", href: "/hakkimizda" },
-          { label: "Referanslar", href: "/#refs" },
-          { label: "Dokümanlar", href: "/#docs" },
-          { label: "İletişim", href: "/#contact" },
-        ]} />
+<FooterCol title="Kurumsal" links={[
+           { label: "Hakkımızda", href: "/hakkimizda" },
+           { label: "Referanslar", href: "/#refs" },
+           { label: "Dokümanlar", href: "/#docs" },
+           { label: "İletişim", href: "/iletisim" },
+         ]} />
 
         <div>
           <div className="text-xs uppercase tracking-[0.25em] text-orange font-display font-bold mb-4">
