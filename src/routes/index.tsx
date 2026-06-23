@@ -22,8 +22,9 @@ import {
   Send,
   Building2,
 } from "lucide-react";
-import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory } from "@/data/products";
+import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory, toSlug } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -156,19 +157,20 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-      {showHero && (
+{showHero && (
         <>
           {/* HERO */}
           <section className="relative">
-<div
-               className="absolute inset-0 bg-cover bg-center"
-               style={{
-                 backgroundImage:
-                   "url('https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp')",
-               }}
-             />
+            <img
+              src="https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp"
+              alt="Enorpa Enerji Hero"
+              fetchPriority="high"
+              width="1920"
+              height="800"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
             <div className="absolute inset-0" style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }} />
-            <div className="relative mx-auto max-w-7xl px-4 py-24 md:py-36 lg:py-44">
+            <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 md:py-36 lg:py-44">
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 border-l-4 border-orange pl-3 mb-6">
                   <span className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold">
@@ -295,15 +297,16 @@ function ProductCard({
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
         {product.image_url && !imgError ? (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            loading="lazy"
-            width="600"
-            height="450"
-            onError={() => setImgError(true)}
-            className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-          />
+<img
+             src={product.image_url}
+             alt={product.name}
+             loading="lazy"
+             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+             width="600"
+             height="450"
+             onError={() => setImgError(true)}
+             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
             <Factory className="h-16 w-16 text-white/20" />
@@ -336,20 +339,25 @@ function ProductCard({
           )}
         </div>
 
-        <div className="mt-5 flex items-center justify-between">
-          <button
-            onClick={onDetail}
-            className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
-          >
-            {hasDetail ? "Detay" : L.inspect}
-            <ArrowRight className="h-4 w-4" />
-          </button>
-          {hasDetail && (
-            <span className="text-[10px] uppercase tracking-wider text-orange font-display font-semibold flex items-center gap-1">
-              <Info className="h-3 w-3" /> Detaylı Bilgi
-            </span>
-          )}
-        </div>
+<div className="mt-5 flex items-center justify-between">
+           <div className="flex items-center gap-3">
+             <button
+               onClick={onDetail}
+               className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+             >
+               {hasDetail ? "Detay" : L.inspect}
+               <ArrowRight className="h-4 w-4" />
+             </button>
+             <Link
+               to="/urunler/$slug"
+               params={{ slug: product.slug || toSlug(product.name) }}
+               className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+             >
+               Tam Sayfa
+               <ArrowRight className="h-4 w-4" />
+             </Link>
+           </div>
+         </div>
       </div>
     </article>
   );
@@ -760,36 +768,40 @@ function CapacityCalculator() {
 }
 
 function QuickCallbackForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [error, setError] = useState<string | null>(null);
+   const [submitted, setSubmitted] = useState(false);
+   const [name, setName] = useState("");
+   const [phone, setPhone] = useState("");
+   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanName = name.trim();
-    const cleanPhone = phone.trim();
-    if (cleanName.length < 2 || cleanName.length > 80) {
-      setError("Lütfen geçerli bir ad girin.");
-      return;
-    }
-    if (!/^[0-9 +()-]{7,20}$/.test(cleanPhone)) {
-      setError("Lütfen geçerli bir telefon numarası girin.");
-      return;
-    }
-    setError(null);
-    const { error: dbError } = await supabase.from("leads").insert({
-      name: cleanName,
-      phone: cleanPhone,
-      source: "quick_callback",
-      interest: "Hızlı Geri Arama",
-    });
-    if (dbError) {
-      setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
-      return;
-    }
-    setSubmitted(true);
-  };
+   const onSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     const cleanName = name.trim();
+     const cleanPhone = phone.trim();
+     if (cleanName.length < 2 || cleanName.length > 80) {
+       setError("Lütfen geçerli bir ad girin.");
+       return;
+     }
+     if (!/^[0-9 +()-]{7,20}$/.test(cleanPhone)) {
+       setError("Lütfen geçerli bir telefon numarası girin.");
+       return;
+     }
+     setError(null);
+     const { error: dbError } = await supabase.from("leads").insert({
+       name: cleanName,
+       phone: cleanPhone,
+       source: "quick_callback",
+       interest: "Hızlı Geri Arama",
+     });
+     if (dbError) {
+       setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
+       return;
+     }
+     setSubmitted(true);
+     if (typeof window !== "undefined") {
+       if (window.fbq) window.fbq('track', 'Lead');
+       if (window.gtag) window.gtag('event', 'generate_lead', { event_category: 'Quick Callback' });
+     }
+   };
 
   return (
     <div className="bg-navy text-white h-full p-6 md:p-8 flex flex-col">
@@ -1178,26 +1190,30 @@ function DocCard({ d, onGated }: { d: Doc; onGated: () => void }) {
 }
 
 function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+   const [email, setEmail] = useState("");
+   const [done, setDone] = useState(false);
+   const [error, setError] = useState<string | null>(null);
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const clean = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean) || clean.length > 255) {
-      setError("Lütfen geçerli bir e-posta girin.");
-      return;
-    }
-    setError(null);
-    await supabase.from("leads").insert({
-      name: clean.split("@")[0],
-      email: clean,
-      source: "document_gate",
-      interest: `Belge: ${doc.title}`,
-    });
-    setDone(true);
-  };
+   const submit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     const clean = email.trim();
+     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean) || clean.length > 255) {
+       setError("Lütfen geçerli bir e-posta girin.");
+       return;
+     }
+     setError(null);
+     await supabase.from("leads").insert({
+       name: clean.split("@")[0],
+       email: clean,
+       source: "document_gate",
+       interest: `Belge: ${doc.title}`,
+     });
+     setDone(true);
+     if (typeof window !== "undefined") {
+       if (window.fbq) window.fbq('track', 'Lead', { content_name: doc.title });
+       if (window.gtag) window.gtag('event', 'generate_lead', { event_category: 'Document Gate' });
+     }
+   };
 
   return (
     <div
