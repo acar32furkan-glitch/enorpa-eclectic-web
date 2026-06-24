@@ -1,6 +1,5 @@
 // Supabase Edge Function — leads tablosuna INSERT olunca admin'e email bildirimi gönderir
 // Deploy: supabase functions deploy notify-lead --no-verify-jwt
-// Secret: supabase secrets set RESEND_API_KEY=re_TZuQHUDg_9eceZJ2DkMDjMHts92VMuQxZ
 
 // TODO: Gerçek admin email adresiyle değiştirin
 const ADMIN_EMAIL = "admin@enorpa-test.com";
@@ -24,6 +23,14 @@ interface WebhookPayload {
   schema: "public";
 }
 
+const escapeHtml = (str: string) =>
+  str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
 Deno.serve(async (req: Request) => {
   const payload: WebhookPayload = await req.json();
   const lead = payload.record;
@@ -41,12 +48,12 @@ Deno.serve(async (req: Request) => {
 <body style="font-family:sans-serif;padding:20px;max-width:600px;margin:auto;">
   <h2 style="color:#e05c1a;">Yeni Talep Geldi</h2>
   <table style="width:100%;border-collapse:collapse;margin-top:16px;">
-    <tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Ad Soyad</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.name}</td></tr>
-    ${lead.phone ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Telefon</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.phone}</td></tr>` : ""}
-    ${lead.email ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">E-posta</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.email}</td></tr>` : ""}
-    ${lead.interest ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">İlgi Alanı</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.interest}</td></tr>` : ""}
-    ${lead.message ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Mesaj</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.message}</td></tr>` : ""}
-    <tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Kaynak</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${lead.source}</td></tr>
+    <tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Ad Soyad</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.name)}</td></tr>
+    ${lead.phone ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Telefon</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.phone)}</td></tr>` : ""}
+    ${lead.email ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">E-posta</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.email)}</td></tr>` : ""}
+    ${lead.interest ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">İlgi Alanı</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.interest)}</td></tr>` : ""}
+    ${lead.message ? `<tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Mesaj</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.message)}</td></tr>` : ""}
+    <tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Kaynak</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${escapeHtml(lead.source)}</td></tr>
     <tr><td style="padding:8px 12px;background:#f4f6f9;font-weight:600;border:1px solid #dde3eb;">Tarih</td><td style="padding:8px 12px;border:1px solid #dde3eb;">${new Date(lead.created_at).toLocaleString("tr-TR")}</td></tr>
   </table>
   <p style="margin-top:20px;font-size:12px;color:#6b7a8d;">Bu e-posta Enorpa Enerji talep bildirim sistemi tarafından gönderilmiştir.</p>
@@ -62,7 +69,7 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify({
       from: "Enorpa Enerji <onboarding@resend.dev>",
       to: [ADMIN_EMAIL],
-      subject: `Yeni Talep: ${lead.name}`,
+      subject: `Yeni Talep: ${escapeHtml(lead.name)}`,
       html,
     }),
   });

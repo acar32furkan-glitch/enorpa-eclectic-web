@@ -21,6 +21,7 @@ import {
   Lock,
   Send,
   Building2,
+  Loader2,
 } from "lucide-react";
 import {
   productCategories as fallbackCategories,
@@ -54,6 +55,9 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://enorpa.com/" },
     ],
   }),
   component: Index,
@@ -840,6 +844,7 @@ function QuickCallbackForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -854,20 +859,25 @@ function QuickCallbackForm() {
       return;
     }
     setError(null);
-    const { error: dbError } = await supabase.from("leads").insert({
-      name: cleanName,
-      phone: cleanPhone,
-      source: "quick_callback",
-      interest: "Hızlı Geri Arama",
-    });
-    if (dbError) {
-      setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
-      return;
-    }
-    setSubmitted(true);
-    if (typeof window !== "undefined") {
-      if (window.fbq) window.fbq("track", "Lead");
-      if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Quick Callback" });
+    setLoading(true);
+    try {
+      const { error: dbError } = await supabase.from("leads").insert({
+        name: cleanName,
+        phone: cleanPhone,
+        source: "quick_callback",
+        interest: "Hızlı Geri Arama",
+      });
+      if (dbError) {
+        setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
+        return;
+      }
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        if (window.fbq) window.fbq("track", "Lead");
+        if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Quick Callback" });
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -924,17 +934,18 @@ function QuickCallbackForm() {
             />
           </div>
 
-          {error && <div className="text-orange text-sm">{error}</div>}
+{error && <div className="text-orange text-sm">{error}</div>}
 
-          <button
-            type="submit"
-            className="mt-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-5 py-4 transition-colors"
-          >
-            <Send className="h-4 w-4" />
-            Beni Arayın
-          </button>
+           <button
+             type="submit"
+             disabled={loading}
+             className="mt-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-5 py-4 transition-colors disabled:opacity-50"
+           >
+             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+             {loading ? "Gönderiliyor..." : "Beni Arayın"}
+           </button>
 
-          <div className="flex items-center gap-2 text-xs text-white/50 justify-center">
+           <div className="flex items-center gap-2 text-xs text-white/50 justify-center">
             <Clock className="h-3.5 w-3.5" />
             Pzt – Cum · 08:30 – 18:00
           </div>
@@ -1518,6 +1529,7 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1527,16 +1539,21 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
       return;
     }
     setError(null);
-    await supabase.from("leads").insert({
-      name: clean.split("@")[0],
-      email: clean,
-      source: "document_gate",
-      interest: `Belge: ${doc.title}`,
-    });
-    setDone(true);
-    if (typeof window !== "undefined") {
-      if (window.fbq) window.fbq("track", "Lead", { content_name: doc.title });
-      if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Document Gate" });
+    setLoading(true);
+    try {
+      await supabase.from("leads").insert({
+        name: clean.split("@")[0],
+        email: clean,
+        source: "document_gate",
+        interest: `Belge: ${doc.title}`,
+      });
+      setDone(true);
+      if (typeof window !== "undefined") {
+        if (window.fbq) window.fbq("track", "Lead", { content_name: doc.title });
+        if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Document Gate" });
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -1609,14 +1626,16 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
                   placeholder="ad@firma.com"
                 />
               </div>
-              {error && <div className="text-orange text-sm">{error}</div>}
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-5 py-3.5"
-              >
-                <Download className="h-4 w-4" /> Belgeyi Al
-              </button>
-              <p className="text-[11px] text-muted-foreground text-center">
+{error && <div className="text-orange text-sm">{error}</div>}
+               <button
+                 type="submit"
+                 disabled={loading}
+                 className="inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-5 py-3.5 disabled:opacity-50"
+               >
+                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                 {loading ? "Gönderiliyor..." : "Belgeyi Al"}
+               </button>
+               <p className="text-[11px] text-muted-foreground text-center">
                 E-posta adresiniz yalnızca bu belge ve ilgili teknik güncellemeler için kullanılır.
               </p>
             </form>

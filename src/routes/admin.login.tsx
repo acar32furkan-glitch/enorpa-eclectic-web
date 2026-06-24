@@ -11,7 +11,6 @@ export const Route = createFileRoute("/admin/login")({
 
 function AdminLogin() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,17 +27,8 @@ function AdminLogin() {
     setLoading(true);
     setErr(null);
     try {
-      if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/admin/dashboard` },
-        });
-        if (error) throw error;
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
       navigate({ to: "/admin/dashboard" });
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : "Bir hata oluştu");
@@ -51,7 +41,10 @@ function AdminLogin() {
     <div className="min-h-screen bg-navy flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white shadow-2xl">
         <div className="bg-navy-dark text-white px-5 py-6 sm:px-8 border-b-4 border-orange">
-          <Link to="/" className="flex items-center gap-2 mb-3 text-white/70 hover:text-orange text-xs uppercase tracking-[0.3em] font-display">
+          <Link
+            to="/"
+            className="flex items-center gap-2 mb-3 text-white/70 hover:text-orange text-xs uppercase tracking-[0.3em] font-display"
+          >
             ← Anasayfa
           </Link>
           <div className="flex items-center gap-3">
@@ -108,17 +101,7 @@ function AdminLogin() {
             className="w-full inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-bold uppercase tracking-wider px-5 py-3.5 disabled:opacity-50"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {mode === "signin" ? "Giriş Yap" : "Hesap Oluştur"}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="w-full text-xs text-muted-foreground hover:text-navy uppercase tracking-wider font-display"
-          >
-            {mode === "signin"
-              ? "İlk kurulum: Hesap oluştur (ilk kullanıcı admin olur)"
-              : "Hesabınız var mı? Giriş yapın"}
+            Giriş Yap
           </button>
         </form>
       </div>

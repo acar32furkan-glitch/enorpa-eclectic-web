@@ -5,14 +5,28 @@ import { fetchProductBySlug, type Product, productCategories } from "@/data/prod
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/urunler/$slug")({
-  head: () => ({
+  head: ({ params }) => ({
     meta: [
-      { title: "Ürün Detayı | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji ürün kataloğu" },
-      { property: "og:title", content: "Ürün Detayı | Enorpa Enerji" },
-      { property: "og:description", content: "Enorpa Enerji ürün kataloğu" },
+      { 
+        title: `${params.slug.replace(/-/g, " ")} | Enorpa Enerji`,
+      },
+      { 
+        name: "description", 
+        content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
+      },
+      { 
+        property: "og:title", 
+        content: `${params.slug.replace(/-/g, " ")} | Enorpa Enerji`,
+      },
+      { 
+        property: "og:description", 
+        content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
+      },
       { property: "og:type", content: "product" },
       { property: "og:locale", content: "tr_TR" },
+    ],
+    links: [
+      { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
     ],
   }),
   component: ProductDetailPage,
@@ -41,7 +55,10 @@ function ProductDetailPage() {
           <div className="text-center py-20">
             <h1 className="font-display text-3xl font-bold text-navy mb-4">Ürün Bulunamadı</h1>
             <p className="text-muted-foreground mb-6">Aradığınız ürün sistemde kayıtlı değil.</p>
-            <Link to="/urunler" className="inline-flex items-center gap-2 bg-orange text-white font-display uppercase tracking-wider text-sm px-5 py-2.5 hover:bg-orange-dark transition-colors">
+            <Link
+              to="/urunler"
+              className="inline-flex items-center gap-2 bg-orange text-white font-display uppercase tracking-wider text-sm px-5 py-2.5 hover:bg-orange-dark transition-colors"
+            >
               Ürün listesine dön
             </Link>
           </div>
@@ -52,7 +69,7 @@ function ProductDetailPage() {
   }
 
   const product = loaderData;
-  const hasSpecs = product.specs && Object.values(product.specs).some(v => v);
+  const hasSpecs = product.specs && Object.values(product.specs).some((v) => v);
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,32 +134,52 @@ function ProductDetailPage() {
             <dl className="space-y-3">
               {product.capacity && (
                 <div className="flex justify-between gap-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Kapasite</dt>
-                  <dd className="font-display text-navy font-semibold text-right text-sm">{product.capacity}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Kapasite
+                  </dt>
+                  <dd className="font-display text-navy font-semibold text-right text-sm">
+                    {product.capacity}
+                  </dd>
                 </div>
               )}
               {hasSpecs && product.specs?.yakit && (
                 <div className="flex justify-between gap-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Yakıt</dt>
-                  <dd className="font-display text-navy font-semibold text-right text-sm">{product.specs.yakit}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Yakıt
+                  </dt>
+                  <dd className="font-display text-navy font-semibold text-right text-sm">
+                    {product.specs.yakit}
+                  </dd>
                 </div>
               )}
               {hasSpecs && product.specs?.basinc && (
                 <div className="flex justify-between gap-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Basınç</dt>
-                  <dd className="font-display text-navy font-semibold text-right text-sm">{product.specs.basinc}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Basınç
+                  </dt>
+                  <dd className="font-display text-navy font-semibold text-right text-sm">
+                    {product.specs.basinc}
+                  </dd>
                 </div>
               )}
               {hasSpecs && product.specs?.cikisSicakligi && (
                 <div className="flex justify-between gap-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Çıkış Sıcaklığı</dt>
-                  <dd className="font-display text-navy font-semibold text-right text-sm">{product.specs.cikisSicakligi}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Çıkış Sıcaklığı
+                  </dt>
+                  <dd className="font-display text-navy font-semibold text-right text-sm">
+                    {product.specs.cikisSicakligi}
+                  </dd>
                 </div>
               )}
               {hasSpecs && product.specs?.standart && (
                 <div className="flex justify-between gap-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Standart</dt>
-                  <dd className="font-display text-navy font-semibold text-right text-sm">{product.specs.standart}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Standart
+                  </dt>
+                  <dd className="font-display text-navy font-semibold text-right text-sm">
+                    {product.specs.standart}
+                  </dd>
                 </div>
               )}
             </dl>

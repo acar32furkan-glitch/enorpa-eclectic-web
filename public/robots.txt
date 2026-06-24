@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://enorpa-eclectic-web.vercel.app/sitemap.xml
+Sitemap: https://enorpa.com/sitemap.xml
