@@ -22,7 +22,14 @@ import {
   Send,
   Building2,
 } from "lucide-react";
-import { productCategories as fallbackCategories, getFeaturedProducts, fetchProductsFromSupabase, type Product, type ProductCategory, toSlug } from "@/data/products";
+import {
+  productCategories as fallbackCategories,
+  getFeaturedProducts,
+  fetchProductsFromSupabase,
+  type Product,
+  type ProductCategory,
+  toSlug,
+} from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Link } from "@tanstack/react-router";
 
@@ -30,9 +37,20 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
-      { name: "description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri. 26 ülkede 138+ proje." },
-      { property: "og:title", content: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
-      { property: "og:description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri. 26 ülkede 138+ proje.",
+      },
+      {
+        property: "og:title",
+        content: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı",
+      },
+      {
+        property: "og:description",
+        content:
+          "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
@@ -128,7 +146,8 @@ function Index() {
 
   // Simple language detection for homepage - reads from localStorage only
   const getLang = (): Lang => {
-    const stored = typeof window !== "undefined" ? (localStorage.getItem("enorpa_lang") as Lang | null) : null;
+    const stored =
+      typeof window !== "undefined" ? (localStorage.getItem("enorpa_lang") as Lang | null) : null;
     if (stored === "TR" || stored === "EN" || stored === "RU") return stored;
     return "TR";
   };
@@ -157,7 +176,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-{showHero && (
+      {showHero && (
         <>
           {/* HERO */}
           <section className="relative">
@@ -169,7 +188,10 @@ function Index() {
               height="800"
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0" style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }} />
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }}
+            />
             <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 md:py-36 lg:py-44">
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 border-l-4 border-orange pl-3 mb-6">
@@ -205,9 +227,9 @@ function Index() {
       )}
 
       {show("show_stats") && <TrustBar L={L} />}
-{show("show_sectors") && <SectorsSection />}
-        <FuelSavingsCalculator />
-        <ProductsSection L={L} />
+      {show("show_sectors") && <SectorsSection />}
+      {show("show_roi_calculator") && <FuelSavingsCalculator />}
+      <ProductsSection L={L} />
       {show("show_references") && <ReferencesSection />}
       <LeadGenSection />
       {show("show_documents") && <DocumentCenter />}
@@ -259,7 +281,13 @@ function ProductsSection({ L }: { L: Dict }) {
         {/* Featured Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featured.map((p) => (
-            <ProductCard key={p.name} product={p} categoryTitle={p.categoryTitle} L={L} onDetail={() => setModalProduct(p)} />
+            <ProductCard
+              key={p.name}
+              product={p}
+              categoryTitle={p.categoryTitle}
+              L={L}
+              onDetail={() => setModalProduct(p)}
+            />
           ))}
         </div>
 
@@ -276,7 +304,9 @@ function ProductsSection({ L }: { L: Dict }) {
       </div>
 
       {/* Detail Modal */}
-      {modalProduct && <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />}
+      {modalProduct && (
+        <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />
+      )}
     </section>
   );
 }
@@ -298,16 +328,16 @@ function ProductCard({
     <article className="group bg-white border border-border hover:border-orange transition-all duration-200 hover:-translate-y-1 hover:shadow-xl flex flex-col">
       <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
         {product.image_url && !imgError ? (
-<img
-             src={product.image_url}
-             alt={product.name}
-             loading="lazy"
-             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-             width="600"
-             height="450"
-             onError={() => setImgError(true)}
-             className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-           />
+          <img
+            src={product.image_url}
+            alt={product.name}
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            width="600"
+            height="450"
+            onError={() => setImgError(true)}
+            className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
+          />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-navy-dark">
             <Factory className="h-16 w-16 text-white/20" />
@@ -333,32 +363,36 @@ function ProductCard({
             <div className="flex items-start gap-3">
               <Gauge className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
               <div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{L.capacity}</div>
-                <div className="font-display text-navy text-base font-semibold">{product.capacity}</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  {L.capacity}
+                </div>
+                <div className="font-display text-navy text-base font-semibold">
+                  {product.capacity}
+                </div>
               </div>
             </div>
           )}
         </div>
 
-<div className="mt-5 flex items-center justify-between">
-           <div className="flex items-center gap-3">
-             <button
-               onClick={onDetail}
-               className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
-             >
-               {hasDetail ? "Detay" : L.inspect}
-               <ArrowRight className="h-4 w-4" />
-             </button>
-             <Link
-               to="/urunler/$slug"
-               params={{ slug: product.slug || toSlug(product.name) }}
-               className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
-             >
-               Tam Sayfa
-               <ArrowRight className="h-4 w-4" />
-             </Link>
-           </div>
-         </div>
+        <div className="mt-5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onDetail}
+              className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+            >
+              {hasDetail ? "Detay" : L.inspect}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+            <Link
+              to="/urunler/$slug"
+              params={{ slug: product.slug || toSlug(product.name) }}
+              className="inline-flex items-center gap-1.5 font-display text-navy hover:text-orange font-semibold uppercase tracking-wider text-sm transition-colors"
+            >
+              Tam Sayfa
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
       </div>
     </article>
   );
@@ -366,9 +400,19 @@ function ProductCard({
 
 function ProductModal({ product, onClose }: { product: Product; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white max-w-lg w-full p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-3 right-3 text-muted-foreground hover:text-navy" aria-label="Kapat">
+    <div
+      className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white max-w-lg w-full p-6 md:p-8 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-muted-foreground hover:text-navy"
+          aria-label="Kapat"
+        >
           <X className="h-5 w-5" />
         </button>
 
@@ -380,7 +424,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
             <div className="text-[10px] uppercase tracking-[0.25em] text-orange font-display font-bold">
               {product.type}
             </div>
-            <h3 className="font-display text-navy text-xl font-bold uppercase leading-tight">{product.name}</h3>
+            <h3 className="font-display text-navy text-xl font-bold uppercase leading-tight">
+              {product.name}
+            </h3>
           </div>
         </div>
 
@@ -401,7 +447,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Yakıt</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Yakıt
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.yakit}</p>
                 </div>
               </div>
@@ -410,7 +458,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Gauge className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Basınç</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Basınç
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.basinc}</p>
                 </div>
               </div>
@@ -419,8 +469,12 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Çıkış Sıcaklığı</span>
-                  <p className="font-display text-navy font-semibold">{product.specs.cikisSicakligi}</p>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Çıkış Sıcaklığı
+                  </span>
+                  <p className="font-display text-navy font-semibold">
+                    {product.specs.cikisSicakligi}
+                  </p>
                 </div>
               </div>
             )}
@@ -428,7 +482,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <ShieldCheck className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Standart</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Standart
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.standart}</p>
                 </div>
               </div>
@@ -463,9 +519,17 @@ function TrustBar({ L }: { L: Dict }) {
             {L.certified}
           </div>
           <div className="flex items-center gap-6 md:gap-10 flex-wrap justify-center">
-            <CertBadge icon={<ShieldCheck className="h-6 w-6" />} label="CE" sub="European Conformity" />
+            <CertBadge
+              icon={<ShieldCheck className="h-6 w-6" />}
+              label="CE"
+              sub="European Conformity"
+            />
             <CertBadge icon={<Award className="h-6 w-6" />} label="TSE" sub="Türk Standartları" />
-            <CertBadge icon={<Factory className="h-6 w-6" />} label="ISO 9001" sub="Quality Management" />
+            <CertBadge
+              icon={<Factory className="h-6 w-6" />}
+              label="ISO 9001"
+              sub="Quality Management"
+            />
           </div>
         </div>
       </div>
@@ -552,7 +616,8 @@ function LeadGenSection() {
             İhtiyacınızı 30 Saniyede Belirleyin
           </h2>
           <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Tesisinize uygun kazan kapasitesini hesaplayın veya size hemen ulaşmamız için kısa formu doldurun.
+            Tesisinize uygun kazan kapasitesini hesaplayın veya size hemen ulaşmamız için kısa formu
+            doldurun.
           </p>
         </div>
 
@@ -729,7 +794,9 @@ function CapacityCalculator() {
               </div>
             </div>
             <div className="border-t border-white/20 pt-4">
-              <div className="text-white/60 text-xs uppercase tracking-wider mb-1">Önerilen Model</div>
+              <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                Önerilen Model
+              </div>
               <div className="font-display text-xl font-bold">{result.recommended}</div>
             </div>
             <div className="mt-6 text-[11px] text-white/60 italic">
@@ -769,40 +836,40 @@ function CapacityCalculator() {
 }
 
 function QuickCallbackForm() {
-   const [submitted, setSubmitted] = useState(false);
-   const [name, setName] = useState("");
-   const [phone, setPhone] = useState("");
-   const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-   const onSubmit = async (e: React.FormEvent) => {
-     e.preventDefault();
-     const cleanName = name.trim();
-     const cleanPhone = phone.trim();
-     if (cleanName.length < 2 || cleanName.length > 80) {
-       setError("Lütfen geçerli bir ad girin.");
-       return;
-     }
-     if (!/^[0-9 +()-]{7,20}$/.test(cleanPhone)) {
-       setError("Lütfen geçerli bir telefon numarası girin.");
-       return;
-     }
-     setError(null);
-     const { error: dbError } = await supabase.from("leads").insert({
-       name: cleanName,
-       phone: cleanPhone,
-       source: "quick_callback",
-       interest: "Hızlı Geri Arama",
-     });
-     if (dbError) {
-       setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
-       return;
-     }
-     setSubmitted(true);
-     if (typeof window !== "undefined") {
-       if (window.fbq) window.fbq('track', 'Lead');
-       if (window.gtag) window.gtag('event', 'generate_lead', { event_category: 'Quick Callback' });
-     }
-   };
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanName = name.trim();
+    const cleanPhone = phone.trim();
+    if (cleanName.length < 2 || cleanName.length > 80) {
+      setError("Lütfen geçerli bir ad girin.");
+      return;
+    }
+    if (!/^[0-9 +()-]{7,20}$/.test(cleanPhone)) {
+      setError("Lütfen geçerli bir telefon numarası girin.");
+      return;
+    }
+    setError(null);
+    const { error: dbError } = await supabase.from("leads").insert({
+      name: cleanName,
+      phone: cleanPhone,
+      source: "quick_callback",
+      interest: "Hızlı Geri Arama",
+    });
+    if (dbError) {
+      setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
+      return;
+    }
+    setSubmitted(true);
+    if (typeof window !== "undefined") {
+      if (window.fbq) window.fbq("track", "Lead");
+      if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Quick Callback" });
+    }
+  };
 
   return (
     <div className="bg-navy text-white h-full p-6 md:p-8 flex flex-col">
@@ -882,10 +949,30 @@ function QuickCallbackForm() {
 ========================================================================= */
 
 const REFERENCES = [
-  { name: "Bursa Tekstil A.Ş.", sector: "Tekstil", year: "2023", desc: "2 adet Kuvars Serisi buhar kazanı, 8.000 kg/h kapasite" },
-  { name: "Ege Gıda Sanayi", sector: "Gıda", year: "2024", desc: "Akuamarin Serisi sıcak su kazanı, 12.000 kW" },
-  { name: "Anadolu Sera İşletmesi", sector: "Sera", year: "2023", desc: "HAS NG Serisi sıcak hava sistemi, 800.000 kcal/h" },
-  { name: "Marmara Kimya Tesisleri", sector: "Kimya", year: "2024", desc: "Turmalin Serisi buhar kazanı, 5.000 kg/h" },
+  {
+    name: "Bursa Tekstil A.Ş.",
+    sector: "Tekstil",
+    year: "2023",
+    desc: "2 adet Kuvars Serisi buhar kazanı, 8.000 kg/h kapasite",
+  },
+  {
+    name: "Ege Gıda Sanayi",
+    sector: "Gıda",
+    year: "2024",
+    desc: "Akuamarin Serisi sıcak su kazanı, 12.000 kW",
+  },
+  {
+    name: "Anadolu Sera İşletmesi",
+    sector: "Sera",
+    year: "2023",
+    desc: "HAS NG Serisi sıcak hava sistemi, 800.000 kcal/h",
+  },
+  {
+    name: "Marmara Kimya Tesisleri",
+    sector: "Kimya",
+    year: "2024",
+    desc: "Turmalin Serisi buhar kazanı, 5.000 kg/h",
+  },
 ];
 
 /* =========================================================================
@@ -894,9 +981,21 @@ const REFERENCES = [
 
 const SECTORS = [
   { icon: "🌱", title: "Sera Isıtma Sistemleri", desc: "Sera ısıtma tesisatı proje ve kurulumu" },
-  { icon: "🏭", title: "Endüstriyel Buhar Sistemleri", desc: "Endüstriyel tesislerde kullanılan yüksek verimli ısıtma sistemleri" },
-  { icon: "💨", title: "Kurutma Sistemleri", desc: "Nemin azaltılması için kullanılan teknolojik çözümler" },
-  { icon: "🏢", title: "Mahal Isıtma Sistemleri", desc: "Yapı içindeki sıcaklık düzenlemesi için kullanılan sistemler" },
+  {
+    icon: "🏭",
+    title: "Endüstriyel Buhar Sistemleri",
+    desc: "Endüstriyel tesislerde kullanılan yüksek verimli ısıtma sistemleri",
+  },
+  {
+    icon: "💨",
+    title: "Kurutma Sistemleri",
+    desc: "Nemin azaltılması için kullanılan teknolojik çözümler",
+  },
+  {
+    icon: "🏢",
+    title: "Mahal Isıtma Sistemleri",
+    desc: "Yapı içindeki sıcaklık düzenlemesi için kullanılan sistemler",
+  },
 ];
 
 function SectorsSection() {
@@ -911,13 +1010,17 @@ function SectorsSection() {
             Sektörler
           </h2>
           <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Kazan, ısıtma ve buhar sistemleri çözümlerimizle dünyanın birçok noktasında farklı sektörlerdeki müşterilerimize profesyonel çözümler sunuyoruz.
+            Kazan, ısıtma ve buhar sistemleri çözümlerimizle dünyanın birçok noktasında farklı
+            sektörlerdeki müşterilerimize profesyonel çözümler sunuyoruz.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {SECTORS.map((s) => (
-            <div key={s.title} className="bg-steel border border-border p-6 text-center hover:border-orange transition-colors">
+            <div
+              key={s.title}
+              className="bg-steel border border-border p-6 text-center hover:border-orange transition-colors"
+            >
               <div className="text-4xl mb-4">{s.icon}</div>
               <h3 className="font-display text-navy text-lg font-bold uppercase mb-2">{s.title}</h3>
               <p className="text-sm text-muted-foreground">{s.desc}</p>
@@ -951,7 +1054,7 @@ function FuelSavingsCalculator() {
 
   const monthlyFuelCost = consumption * unitPrice;
   const yearlyFuelCost = monthlyFuelCost * 12;
-  const savingsRate = EFFICIENCY_RATES[fuelType] + 0.10;
+  const savingsRate = EFFICIENCY_RATES[fuelType] + 0.1;
   const yearlySavings = yearlyFuelCost * savingsRate;
   const monthlySavings = yearlySavings / 12;
   const roiYears = SYSTEM_COSTS[facilityType] / yearlySavings;
@@ -1035,16 +1138,28 @@ function FuelSavingsCalculator() {
           <div className="bg-navy-dark border border-orange/30 p-6 flex flex-col justify-center">
             <div className="space-y-4">
               <div>
-                <div className="text-white/60 text-xs uppercase tracking-wider">Aylık Mevcut Maliyet</div>
-                <div className="font-display text-2xl font-bold text-white">{monthlyFuelCost.toLocaleString("tr-TR")} TL</div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">
+                  Aylık Mevcut Maliyet
+                </div>
+                <div className="font-display text-2xl font-bold text-white">
+                  {monthlyFuelCost.toLocaleString("tr-TR")} TL
+                </div>
               </div>
               <div>
-                <div className="text-white/60 text-xs uppercase tracking-wider">Tahmini Yıllık Tasarruf</div>
-                <div className="font-display text-3xl font-bold text-orange">{yearlySavings.toLocaleString("tr-TR")} TL</div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">
+                  Tahmini Yıllık Tasarruf
+                </div>
+                <div className="font-display text-3xl font-bold text-orange">
+                  {yearlySavings.toLocaleString("tr-TR")} TL
+                </div>
               </div>
               <div>
-                <div className="text-white/60 text-xs uppercase tracking-wider">Tahmini Amortisman Süresi</div>
-                <div className="font-display text-2xl font-bold text-white">{roiYears.toFixed(1)} yıl</div>
+                <div className="text-white/60 text-xs uppercase tracking-wider">
+                  Tahmini Amortisman Süresi
+                </div>
+                <div className="font-display text-2xl font-bold text-white">
+                  {roiYears.toFixed(1)} yıl
+                </div>
               </div>
               <p className="text-[11px] text-white/50 italic mt-2">
                 *Hesaplama tahmini olup gerçek değerler sistem büyüklüğüne göre değişir.
@@ -1085,15 +1200,22 @@ function ReferencesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {REFERENCES.map((r) => (
-            <div key={r.name} className="border border-border bg-steel p-6 hover:border-orange transition-colors">
+            <div
+              key={r.name}
+              className="border border-border bg-steel p-6 hover:border-orange transition-colors"
+            >
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <div className="text-xs uppercase tracking-wider text-orange font-display font-semibold">
                     {r.sector}
                   </div>
-                  <h3 className="font-display text-navy text-xl font-bold uppercase mt-1">{r.name}</h3>
+                  <h3 className="font-display text-navy text-xl font-bold uppercase mt-1">
+                    {r.name}
+                  </h3>
                 </div>
-                <span className="text-xs text-muted-foreground font-display uppercase tracking-wider">{r.year}</span>
+                <span className="text-xs text-muted-foreground font-display uppercase tracking-wider">
+                  {r.year}
+                </span>
               </div>
               <p className="text-sm text-muted-foreground">{r.desc}</p>
             </div>
@@ -1118,12 +1240,54 @@ type Doc = {
 };
 
 const DOCS: Doc[] = [
-  { id: "kuvars-spec", title: "Kuvars Serisi Teknik Föy", sub: "PDF · Buhar Kazanları", size: "1.2 MB", gated: false, url: "/docs/kuvars-spec.pdf" },
-  { id: "oniks-spec", title: "Oniks Serisi Teknik Föy", sub: "PDF · Sıcak Su Kazanları", size: "1.8 MB", gated: false, url: "/docs/oniks-spec.pdf" },
-  { id: "has-spec", title: "HAS NG Teknik Föy", sub: "PDF · Sıcak Hava Sistemleri", size: "0.9 MB", gated: false, url: "/docs/has-spec.pdf" },
-  { id: "certificates", title: "Sertifikalar Paketi", sub: "CE · TSE · ISO 9001", size: "3.4 MB", gated: false, url: "/docs/certificates.pdf" },
-  { id: "catalog-2026", title: "2026 Genel Katalog", sub: "Tüm Ürün Yelpazesi", size: "18 MB", gated: true, url: "/docs/catalog-2026.pdf" },
-  { id: "engineering-guide", title: "Mühendislik Tasarım Kılavuzu", sub: "Premium Rehber", size: "8.7 MB", gated: true, url: "/docs/engineering-guide.pdf" },
+  {
+    id: "kuvars-spec",
+    title: "Kuvars Serisi Teknik Föy",
+    sub: "PDF · Buhar Kazanları",
+    size: "1.2 MB",
+    gated: false,
+    url: "/docs/kuvars-spec.pdf",
+  },
+  {
+    id: "oniks-spec",
+    title: "Oniks Serisi Teknik Föy",
+    sub: "PDF · Sıcak Su Kazanları",
+    size: "1.8 MB",
+    gated: false,
+    url: "/docs/oniks-spec.pdf",
+  },
+  {
+    id: "has-spec",
+    title: "HAS NG Teknik Föy",
+    sub: "PDF · Sıcak Hava Sistemleri",
+    size: "0.9 MB",
+    gated: false,
+    url: "/docs/has-spec.pdf",
+  },
+  {
+    id: "certificates",
+    title: "Sertifikalar Paketi",
+    sub: "CE · TSE · ISO 9001",
+    size: "3.4 MB",
+    gated: false,
+    url: "/docs/certificates.pdf",
+  },
+  {
+    id: "catalog-2026",
+    title: "2026 Genel Katalog",
+    sub: "Tüm Ürün Yelpazesi",
+    size: "18 MB",
+    gated: true,
+    url: "/docs/catalog-2026.pdf",
+  },
+  {
+    id: "engineering-guide",
+    title: "Mühendislik Tasarım Kılavuzu",
+    sub: "Premium Rehber",
+    size: "8.7 MB",
+    gated: true,
+    url: "/docs/engineering-guide.pdf",
+  },
 ];
 
 /* =========================================================================
@@ -1131,10 +1295,30 @@ const DOCS: Doc[] = [
 ========================================================================= */
 
 const PROJECTS = [
-  { title: "Özbekistan / Taşkent", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
-  { title: "Özbekistan / Harezm", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.webp" },
-  { title: "Türkiye / Manisa", sub: "Buhar Kazanı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.webp" },
-  { title: "Türkiye / İzmir", sub: "Sera Isıtma Tesisatı Kurulumu", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.webp" },
+  {
+    title: "Özbekistan / Taşkent",
+    sub: "Sera Isıtma Tesisatı Kurulumu",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp",
+  },
+  {
+    title: "Özbekistan / Harezm",
+    sub: "Sera Isıtma Tesisatı Kurulumu",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.webp",
+  },
+  {
+    title: "Türkiye / Manisa",
+    sub: "Buhar Kazanı Kurulumu",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.webp",
+  },
+  {
+    title: "Türkiye / İzmir",
+    sub: "Sera Isıtma Tesisatı Kurulumu",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.webp",
+  },
 ];
 
 function ProjectGallery() {
@@ -1152,7 +1336,10 @@ function ProjectGallery() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {PROJECTS.map((p) => (
-            <div key={p.title} className="group bg-white border border-border hover:border-orange transition-all overflow-hidden">
+            <div
+              key={p.title}
+              className="group bg-white border border-border hover:border-orange transition-all overflow-hidden"
+            >
               <div className="relative aspect-[4/3] bg-navy-dark overflow-hidden">
                 <img
                   src={p.image_url}
@@ -1185,22 +1372,26 @@ function ProjectGallery() {
 
 const TESTIMONIALS = [
   {
-    quote: "Müşterilerimize sağladığımız kaliteli ve zamanında teknik destek, işlerini kesintisiz sürdürmelerini sağlıyor. Saha ekiplerimiz her projede profesyonel yaklaşımları ve yenilikçi çözümleriyle fark yaratıyor.",
+    quote:
+      "Müşterilerimize sağladığımız kaliteli ve zamanında teknik destek, işlerini kesintisiz sürdürmelerini sağlıyor. Saha ekiplerimiz her projede profesyonel yaklaşımları ve yenilikçi çözümleriyle fark yaratıyor.",
     name: "Mevlüt A.",
     title: "Servis & Saha Sorumlusu",
   },
   {
-    quote: "Yenilikçi stratejiler ve sektörel uzmanlıkla enerji çözümlerinde öncü konumdayız. Müşteri odaklı yaklaşımımızla sürdürülebilirlik ve verimlilik alanlarında öncü projelere imza atıyoruz.",
+    quote:
+      "Yenilikçi stratejiler ve sektörel uzmanlıkla enerji çözümlerinde öncü konumdayız. Müşteri odaklı yaklaşımımızla sürdürülebilirlik ve verimlilik alanlarında öncü projelere imza atıyoruz.",
     name: "Onur K.",
     title: "Proje & Pazarlama Müdürü",
   },
   {
-    quote: "Enerji sektöründe sağlam bir iz bırakmanın gururunu yaşıyoruz. Yenilikçi projelerimiz ve müşteri odaklı yaklaşımımızla sektördeki değişimi liderlik ederek yönlendiriyoruz.",
+    quote:
+      "Enerji sektöründe sağlam bir iz bırakmanın gururunu yaşıyoruz. Yenilikçi projelerimiz ve müşteri odaklı yaklaşımımızla sektördeki değişimi liderlik ederek yönlendiriyoruz.",
     name: "İbrahim Ç.",
     title: "Yönetim Kurulu Üyesi",
   },
   {
-    quote: "Isıtma sektöründe kalite ve yenilik standartlarını belirlemekteyiz. Yaratıcı çözümlerimizle üretimde verimlilik ve sürdürülebilirlik sağlayarak müşterilerimize mükemmel ürünler sunmayı hedefliyoruz.",
+    quote:
+      "Isıtma sektöründe kalite ve yenilik standartlarını belirlemekteyiz. Yaratıcı çözümlerimizle üretimde verimlilik ve sürdürülebilirlik sağlayarak müşterilerimize mükemmel ürünler sunmayı hedefliyoruz.",
     name: "Aykut M.",
     title: "Yönetim Kurulu Üyesi",
   },
@@ -1225,9 +1416,7 @@ function TestimonialsSection() {
               <svg className="h-6 w-6 text-orange mb-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
-              <p className="text-white/80 text-sm leading-relaxed mb-6 italic">
-                "{t.quote}"
-              </p>
+              <p className="text-white/80 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
               <div>
                 <div className="font-display text-white font-bold uppercase text-sm">{t.name}</div>
                 <div className="text-xs text-white/50 mt-0.5">{t.title}</div>
@@ -1258,7 +1447,8 @@ function DocumentCenter() {
             Teknik Belgeler & Kataloglar
           </h2>
           <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Teknik föyler doğrudan indirilebilir. Premium kılavuzlarımız için kısa bir form doldurmanız yeterlidir.
+            Teknik föyler doğrudan indirilebilir. Premium kılavuzlarımız için kısa bir form
+            doldurmanız yeterlidir.
           </p>
         </div>
 
@@ -1325,30 +1515,30 @@ function DocCard({ d, onGated }: { d: Doc; onGated: () => void }) {
 }
 
 function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
-   const [email, setEmail] = useState("");
-   const [done, setDone] = useState(false);
-   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-   const submit = async (e: React.FormEvent) => {
-     e.preventDefault();
-     const clean = email.trim();
-     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean) || clean.length > 255) {
-       setError("Lütfen geçerli bir e-posta girin.");
-       return;
-     }
-     setError(null);
-     await supabase.from("leads").insert({
-       name: clean.split("@")[0],
-       email: clean,
-       source: "document_gate",
-       interest: `Belge: ${doc.title}`,
-     });
-     setDone(true);
-     if (typeof window !== "undefined") {
-       if (window.fbq) window.fbq('track', 'Lead', { content_name: doc.title });
-       if (window.gtag) window.gtag('event', 'generate_lead', { event_category: 'Document Gate' });
-     }
-   };
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const clean = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean) || clean.length > 255) {
+      setError("Lütfen geçerli bir e-posta girin.");
+      return;
+    }
+    setError(null);
+    await supabase.from("leads").insert({
+      name: clean.split("@")[0],
+      email: clean,
+      source: "document_gate",
+      interest: `Belge: ${doc.title}`,
+    });
+    setDone(true);
+    if (typeof window !== "undefined") {
+      if (window.fbq) window.fbq("track", "Lead", { content_name: doc.title });
+      if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Document Gate" });
+    }
+  };
 
   return (
     <div
@@ -1453,14 +1643,33 @@ function ContactSection() {
             Mühendislerimize Ulaşın
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Projeniz için doğru kazanı birlikte belirleyelim. Saha ekibimiz Türkiye genelinde hizmet verir.
+            Projeniz için doğru kazanı birlikte belirleyelim. Saha ekibimiz Türkiye genelinde hizmet
+            verir.
           </p>
         </div>
         <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <ContactCard icon={<Phone className="h-5 w-5" />} title="Telefon" body="+90 850 471 2100" href="tel:+908504712100" />
-          <ContactCard icon={<Mail className="h-5 w-5" />} title="E-posta" body="turuncu@enorpa.com" href="mailto:turuncu@enorpa.com" />
-          <ContactCard icon={<MapPin className="h-5 w-5" />} title="Fabrika" body="Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA" />
-          <ContactCard icon={<Building2 className="h-5 w-5" />} title="Mesai" body="Pzt – Cum · 08:30 – 18:00" />
+          <ContactCard
+            icon={<Phone className="h-5 w-5" />}
+            title="Telefon"
+            body="+90 850 471 2100"
+            href="tel:+908504712100"
+          />
+          <ContactCard
+            icon={<Mail className="h-5 w-5" />}
+            title="E-posta"
+            body="turuncu@enorpa.com"
+            href="mailto:turuncu@enorpa.com"
+          />
+          <ContactCard
+            icon={<MapPin className="h-5 w-5" />}
+            title="Fabrika"
+            body="Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA"
+          />
+          <ContactCard
+            icon={<Building2 className="h-5 w-5" />}
+            title="Mesai"
+            body="Pzt – Cum · 08:30 – 18:00"
+          />
         </div>
       </div>
     </section>
