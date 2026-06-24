@@ -2,17 +2,28 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { MapPin, Phone, Mail, Send, Clock, MessageCircle, Building2 } from "lucide-react";
+import { MapPin, Phone, Mail, Send, Clock, MessageCircle, Building2, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/iletisim")({
   head: () => ({
     meta: [
       { title: "İletişim | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji iletişim bilgileri. Isparta ve Karaman fabrikalarımız için telefon, e-posta ve teklif formu ile ulaşın." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji iletişim bilgileri. Isparta ve Karaman fabrikalarımız için telefon, e-posta ve teklif formu ile ulaşın.",
+      },
       { property: "og:title", content: "İletişim | Enorpa Enerji" },
-      { property: "og:description", content: "Enorpa Enerji iletişim bilgileri. Isparta ve Karaman fabrikalarımız için telefon, e-posta ve teklif formu ile ulaşın." },
+      {
+        property: "og:description",
+        content:
+          "Enorpa Enerji iletişim bilgileri. Isparta ve Karaman fabrikalarımız için telefon, e-posta ve teklif formu ile ulaşın.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://enorpa.com/iletisim" },
     ],
   }),
   component: IletisimPage,
@@ -35,6 +46,7 @@ function IletisimPage() {
   const [message, setMessage] = useState("");
   const [interest, setInterest] = useState(INTEREST_OPTIONS[0]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,19 +57,24 @@ function IletisimPage() {
       return;
     }
     setError(null);
-    const { error: dbError } = await supabase.from("leads").insert({
-      name: cleanName,
-      phone: cleanPhone,
-      email: email.trim() || undefined,
-      message: message.trim() || undefined,
-      interest,
-      source: "contact_page",
-    });
-    if (dbError) {
-      setError("Bir hata oluştu, lütfen tekrar deneyin.");
-      return;
+    setLoading(true);
+    try {
+      const { error: dbError } = await supabase.from("leads").insert({
+        name: cleanName,
+        phone: cleanPhone,
+        email: email.trim() || undefined,
+        message: message.trim() || undefined,
+        interest,
+        source: "contact_page",
+      });
+      if (dbError) {
+        setError("Bir hata oluştu, lütfen tekrar deneyin.");
+        return;
+      }
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
     }
-    setSubmitted(true);
   };
 
   return (
@@ -87,7 +104,9 @@ function IletisimPage() {
                   <div className="h-16 w-16 mx-auto rounded-full bg-orange flex items-center justify-center mb-4">
                     <Send className="h-8 w-8 text-white" />
                   </div>
-                  <p className="text-muted-foreground">Mesajınız alındı, en kısa sürede size döneceğiz.</p>
+                  <p className="text-muted-foreground">
+                    Mesajınız alındı, en kısa sürede size döneceğiz.
+                  </p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -154,21 +173,24 @@ function IletisimPage() {
                       className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none bg-white"
                     >
                       {INTEREST_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
                       ))}
                     </select>
                   </div>
-                  {error && <div className="text-orange text-sm">{error}</div>}
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider py-3 transition-colors"
-                  >
-                    <Send className="h-4 w-4" />
-                    Gönder
-                  </button>
-                </div>
-              )}
-            </form>
+{error && <div className="text-orange text-sm">{error}</div>}
+                   <button
+                     type="submit"
+                     disabled={loading}
+                     className="w-full inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider py-3 transition-colors disabled:opacity-50"
+                   >
+                     {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                     {submitted ? "Gönderildi" : loading ? "Gönderiliyor..." : "Gönder"}
+                   </button>
+                 </div>
+               )}
+             </form>
           </div>
 
           <div className="lg:col-span-2 space-y-6">
@@ -193,15 +215,28 @@ function IletisimPage() {
         </div>
 
         <div className="mt-12 bg-navy-dark text-white p-6 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm">
-          <a href="https://wa.me/908504712100" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-orange">
+          <a
+            href="https://wa.me/908504712100"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 hover:text-orange"
+          >
             <MessageCircle className="h-4 w-4" />
             WhatsApp: +90 850 471 2100
           </a>
-          <a href="mailto:turuncu@enorpa.com" className="inline-flex items-center gap-2 hover:text-orange">
+          <a
+            href="mailto:turuncu@enorpa.com"
+            className="inline-flex items-center gap-2 hover:text-orange"
+          >
             <Mail className="h-4 w-4" />
             turuncu@enorpa.com
           </a>
-          <a href="https://instagram.com/enorpaenerji" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-orange">
+          <a
+            href="https://instagram.com/enorpaenerji"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 hover:text-orange"
+          >
             <Building2 className="h-4 w-4" />
             Instagram: @enorpaenerji
           </a>
@@ -239,13 +274,19 @@ function LocationCard({
         </div>
       </div>
       {phone && (
-        <a href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-navy hover:text-orange mb-2">
+        <a
+          href={`tel:${phone.replace(/\s/g, "")}`}
+          className="flex items-center gap-2 text-sm text-navy hover:text-orange mb-2"
+        >
           <Phone className="h-4 w-4" />
           {phone}
         </a>
       )}
       {email && (
-        <a href={`mailto:${email}`} className="flex items-center gap-2 text-sm text-navy hover:text-orange mb-3">
+        <a
+          href={`mailto:${email}`}
+          className="flex items-center gap-2 text-sm text-navy hover:text-orange mb-3"
+        >
           <Mail className="h-4 w-4" />
           {email}
         </a>

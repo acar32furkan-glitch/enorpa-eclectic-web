@@ -1,19 +1,36 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Gauge, Flame, Factory, ArrowRight, X, Info, ShieldCheck } from "lucide-react";
-import { productCategories as fallbackCategories, fetchProductsFromSupabase, type Product, type ProductCategory, toSlug } from "@/data/products";
+import {
+  productCategories as fallbackCategories,
+  fetchProductsFromSupabase,
+  type Product,
+  type ProductCategory,
+  toSlug,
+} from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/urunler/")({
   head: () => ({
     meta: [
       { title: "Ürünlerimiz | Enorpa Enerji" },
-      { name: "description", content: "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar - sıcak su, buhar, sıcak hava ve kızgın su kazanı çözümleri." },
+      {
+        name: "description",
+        content:
+          "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar - sıcak su, buhar, sıcak hava ve kızgın su kazanı çözümleri.",
+      },
       { property: "og:title", content: "Ürünlerimiz | Enorpa Enerji" },
-      { property: "og:description", content: "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar." },
+      {
+        property: "og:description",
+        content:
+          "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://enorpa.com/urunler" },
     ],
     script: [
       {
@@ -22,7 +39,8 @@ export const Route = createFileRoute("/urunler/")({
           "@context": "https://schema.org",
           "@type": "ProductCollection",
           name: "Enorpa Enerji Ürün Kataloğu",
-          description: "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar",
+          description:
+            "Kalsedon, Obsidyen, Akuamarin, Kuvars, Turmalin ve HAS Turbo serisi endüstriyel kazanlar",
           brand: {
             "@type": "Brand",
             name: "Enorpa Enerji",
@@ -38,7 +56,7 @@ export const Route = createFileRoute("/urunler/")({
               manufacturer: { "@type": "Organization", name: "Enorpa Enerji" },
               ...(p.image_url && { image: p.image_url }),
               ...(p.capacity && { weight: p.capacity }),
-            }))
+            })),
           ),
         }),
       },
@@ -72,7 +90,8 @@ function UrunlerPage() {
             Ürünlerimiz
           </h1>
           <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Her tesis için özel mühendislik. Tüm modellerimiz TSE, CE ve ISO 9001 standartlarında üretilir.
+            Her tesis için özel mühendislik. Tüm modellerimiz TSE, CE ve ISO 9001 standartlarında
+            üretilir.
           </p>
         </div>
 
@@ -104,7 +123,9 @@ function UrunlerPage() {
         </div>
       </div>
 
-      {modalProduct && <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />}
+      {modalProduct && (
+        <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />
+      )}
       <SiteFooter />
     </div>
   );
@@ -161,8 +182,12 @@ function ProductCard({
             <div className="flex items-start gap-3">
               <Gauge className="h-5 w-5 text-orange flex-shrink-0 mt-0.5" strokeWidth={2.25} />
               <div>
-                <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Kapasite</dt>
-                <dd className="font-display text-navy text-base font-semibold">{product.capacity}</dd>
+                <dt className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  Kapasite
+                </dt>
+                <dd className="font-display text-navy text-base font-semibold">
+                  {product.capacity}
+                </dd>
               </div>
             </div>
           )}
@@ -194,9 +219,19 @@ function ProductCard({
 
 function ProductModal({ product, onClose }: { product: Product; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white max-w-lg w-full p-6 md:p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-3 right-3 text-muted-foreground hover:text-navy" aria-label="Kapat">
+    <div
+      className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white max-w-lg w-full p-6 md:p-8 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-muted-foreground hover:text-navy"
+          aria-label="Kapat"
+        >
           <X className="h-5 w-5" />
         </button>
 
@@ -208,7 +243,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
             <div className="text-[10px] uppercase tracking-[0.25em] text-orange font-display font-bold">
               {product.type}
             </div>
-            <h3 className="font-display text-navy text-xl font-bold uppercase leading-tight">{product.name}</h3>
+            <h3 className="font-display text-navy text-xl font-bold uppercase leading-tight">
+              {product.name}
+            </h3>
           </div>
         </div>
 
@@ -229,7 +266,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Yakıt</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Yakıt
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.yakit}</p>
                 </div>
               </div>
@@ -238,7 +277,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Gauge className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Basınç</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Basınç
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.basinc}</p>
                 </div>
               </div>
@@ -247,8 +288,12 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <Flame className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Çıkış Sıcaklığı</span>
-                  <p className="font-display text-navy font-semibold">{product.specs.cikisSicakligi}</p>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Çıkış Sıcaklığı
+                  </span>
+                  <p className="font-display text-navy font-semibold">
+                    {product.specs.cikisSicakligi}
+                  </p>
                 </div>
               </div>
             )}
@@ -256,7 +301,9 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
               <div className="flex items-start gap-2 text-sm">
                 <ShieldCheck className="h-4 w-4 text-orange flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Standart</span>
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                    Standart
+                  </span>
                   <p className="font-display text-navy font-semibold">{product.specs.standart}</p>
                 </div>
               </div>

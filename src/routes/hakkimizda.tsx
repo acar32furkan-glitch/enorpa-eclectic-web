@@ -6,22 +6,53 @@ export const Route = createFileRoute("/hakkimizda")({
   head: () => ({
     meta: [
       { title: "Hakkımızda | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi. AR-GE odaklı, dünya çapında 347+ müşteriye hizmet." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi. AR-GE odaklı, dünya çapında 347+ müşteriye hizmet.",
+      },
       { property: "og:title", content: "Hakkımızda | Enorpa Enerji" },
-      { property: "og:description", content: "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi." },
+      {
+        property: "og:description",
+        content:
+          "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://enorpa.com/hakkimizda" },
     ],
   }),
   component: HakkimizdaPage,
 });
 
 const CERTIFICATIONS = [
-  { label: "TSE", sub: "Türk Standartları", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/tse.png" },
-  { label: "CE", sub: "European Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png" },
-  { label: "ASME", sub: "American Society", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png" },
-  { label: "EAC", sub: "Eurasian Conformity", image_url: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png" },
+  {
+    label: "TSE",
+    sub: "Türk Standartları",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/tse.png",
+  },
+  {
+    label: "CE",
+    sub: "European Conformity",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png",
+  },
+  {
+    label: "ASME",
+    sub: "American Society",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png",
+  },
+  {
+    label: "EAC",
+    sub: "Eurasian Conformity",
+    image_url:
+      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png",
+  },
   { label: "GOST", sub: "Rusya Standardı" },
 ];
 
@@ -62,7 +93,9 @@ function HakkimizdaPage() {
             Hakkımızda
           </h1>
           <p className="mt-6 text-muted-foreground text-base md:text-lg leading-relaxed">
-            Enorpa, ısıtma kazanları, buhar kazanları, akaryakıt tankları ve sıcak hava kazanları gibi endüstriyel ısıtma ekipmanları üreten ve dünya genelinde müşterilerine çözüm sunan öncü bir firmadır.
+            Enorpa, ısıtma kazanları, buhar kazanları, akaryakıt tankları ve sıcak hava kazanları
+            gibi endüstriyel ısıtma ekipmanları üreten ve dünya genelinde müşterilerine çözüm sunan
+            öncü bir firmadır.
           </p>
         </div>
 
@@ -74,7 +107,8 @@ function HakkimizdaPage() {
             </div>
             <h2 className="font-display text-navy text-2xl font-bold uppercase mb-3">Misyon</h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Sürdürülebilir enerji çözümleri sunarak endüstriyel süreçleri daha verimli hale getirmek ve müşterilere yenilikçi, güvenilir ve çevre dostu teknolojiler sağlamak.
+              Sürdürülebilir enerji çözümleri sunarak endüstriyel süreçleri daha verimli hale
+              getirmek ve müşterilere yenilikçi, güvenilir ve çevre dostu teknolojiler sağlamak.
             </p>
           </div>
           <div className="bg-steel border border-border p-8">
@@ -83,7 +117,8 @@ function HakkimizdaPage() {
             </div>
             <h2 className="font-display text-navy text-2xl font-bold uppercase mb-3">Vizyon</h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Dünya çapında enerji alanında dönüşüme liderlik ederek ileri teknoloji ve sürdürülebilir çözümlerle müşterilere değer katmak.
+              Dünya çapında enerji alanında dönüşüme liderlik ederek ileri teknoloji ve
+              sürdürülebilir çözümlerle müşterilere değer katmak.
             </p>
           </div>
         </div>
@@ -97,7 +132,9 @@ function HakkimizdaPage() {
             <h2 className="font-display text-white text-2xl font-bold uppercase">AR-GE & ÜR-GE</h2>
           </div>
           <p className="text-white/80 text-sm leading-relaxed max-w-4xl">
-            AR-GE departmanımız enerji verimliliğini artırmak ve çevresel etkiyi azaltmak için yenilikçi tasarımlar geliştirir. ÜR-GE süreçlerimiz müşteri ihtiyaçlarına özel ürünler ve sürekli performans optimizasyonu sağlar.
+            AR-GE departmanımız enerji verimliliğini artırmak ve çevresel etkiyi azaltmak için
+            yenilikçi tasarımlar geliştirir. ÜR-GE süreçlerimiz müşteri ihtiyaçlarına özel ürünler
+            ve sürekli performans optimizasyonu sağlar.
           </p>
         </div>
 
@@ -107,7 +144,8 @@ function HakkimizdaPage() {
             Standartlar & Sertifikalar
           </div>
           <p className="text-muted-foreground text-sm mt-4 mb-6">
-            Ürünlerimiz TSE, CE, ASME, EAC ve GOST standartlarına uygun üretilmektedir. Rusya, BDT ülkeleri ve Amerika pazarları için gerekli tüm sertifikasyonlara sahibiz.
+            Ürünlerimiz TSE, CE, ASME, EAC ve GOST standartlarına uygun üretilmektedir. Rusya, BDT
+            ülkeleri ve Amerika pazarları için gerekli tüm sertifikasyonlara sahibiz.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {CERTIFICATIONS.map((c) => (
@@ -147,7 +185,9 @@ function HakkimizdaPage() {
                 <div className="h-10 w-10 bg-steel text-navy flex items-center justify-center mb-3 mt-1">
                   <s.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-display text-navy text-lg font-bold uppercase mb-2">{s.title}</h3>
+                <h3 className="font-display text-navy text-lg font-bold uppercase mb-2">
+                  {s.title}
+                </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>
             ))}
@@ -160,12 +200,22 @@ function HakkimizdaPage() {
             3 Üretim Tesisi
           </div>
           <p className="text-muted-foreground text-sm mt-4 mb-6 max-w-4xl">
-            Isparta'daki iki fabrikamız ve Karaman'daki modern üretim tesisimizle toplam 3 üretim merkezinde kesintisiz üretim kapasitesine sahibiz.
+            Isparta'daki iki fabrikamız ve Karaman'daki modern üretim tesisimizle toplam 3 üretim
+            merkezinde kesintisiz üretim kapasitesine sahibiz.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FactoryCard title="Fabrika 1 — Merkez Ofis" address="Sanayi Mah. 3231 Sk. No:12 Merkez / ISPARTA" />
-            <FactoryCard title="Fabrika 2 — Isparta OSB" address="Vatan OSB Mah. 304. Cad. No:12 Merkez / ISPARTA" />
-            <FactoryCard title="Fabrika 3 — Karaman OSB" address="OSB Mah. 17. Cad. No:49 Merkez / KARAMAN (2024'te açıldı)" />
+            <FactoryCard
+              title="Fabrika 1 — Merkez Ofis"
+              address="Sanayi Mah. 3231 Sk. No:12 Merkez / ISPARTA"
+            />
+            <FactoryCard
+              title="Fabrika 2 — Isparta OSB"
+              address="Vatan OSB Mah. 304. Cad. No:12 Merkez / ISPARTA"
+            />
+            <FactoryCard
+              title="Fabrika 3 — Karaman OSB"
+              address="OSB Mah. 17. Cad. No:49 Merkez / KARAMAN (2024'te açıldı)"
+            />
           </div>
         </div>
       </div>
