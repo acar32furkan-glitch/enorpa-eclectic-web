@@ -59,19 +59,26 @@ function IletisimPage() {
     setError(null);
     setLoading(true);
     try {
-      const { error: dbError } = await supabase.from("leads").insert({
+      const response = await supabase.from("leads").insert({
         name: cleanName,
-        phone: cleanPhone,
+        phone: cleanPhone || undefined,
         email: email.trim() || undefined,
         message: message.trim() || undefined,
         interest,
         source: "contact_page",
+        status: "new",
       });
-      if (dbError) {
-        setError("Bir hata oluştu, lütfen tekrar deneyin.");
+      console.error("Supabase response:", response);
+      if (response.error) {
+        console.error("Form error:", response.error);
+        console.error("Error details:", response.error.message, response.error.details, response.error.hint);
+        setError(`Hata: ${response.error.message || "Lütfen tekrar deneyin."}`);
         return;
       }
       setSubmitted(true);
+    } catch (err) {
+      console.error("Form error:", err);
+      setError("Bir hata oluştu, lütfen tekrar deneyin.");
     } finally {
       setLoading(false);
     }

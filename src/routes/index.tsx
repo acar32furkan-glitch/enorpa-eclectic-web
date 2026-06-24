@@ -861,13 +861,16 @@ function QuickCallbackForm() {
     setError(null);
     setLoading(true);
     try {
-      const { error: dbError } = await supabase.from("leads").insert({
+      const response = await supabase.from("leads").insert({
         name: cleanName,
         phone: cleanPhone,
         source: "quick_callback",
         interest: "Hızlı Geri Arama",
+        status: "new",
       });
-      if (dbError) {
+      console.error("QuickCallback response:", response);
+      if (response.error) {
+        console.error("QuickCallback form error:", response.error.message, response.error.details);
         setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
         return;
       }
@@ -876,6 +879,9 @@ function QuickCallbackForm() {
         if (window.fbq) window.fbq("track", "Lead");
         if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Quick Callback" });
       }
+    } catch (err) {
+      console.error("QuickCallback form error:", err);
+      setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);
     }
@@ -1541,17 +1547,27 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
     setError(null);
     setLoading(true);
     try {
-      await supabase.from("leads").insert({
+      const response = await supabase.from("leads").insert({
         name: clean.split("@")[0],
         email: clean,
         source: "document_gate",
         interest: `Belge: ${doc.title}`,
+        status: "new",
       });
+      console.error("GateModal response:", response);
+      if (response.error) {
+        console.error("GateModal form error:", response.error.message, response.error.details);
+        setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+        return;
+      }
       setDone(true);
       if (typeof window !== "undefined") {
         if (window.fbq) window.fbq("track", "Lead", { content_name: doc.title });
         if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Document Gate" });
       }
+    } catch (err) {
+      console.error("GateModal form error:", err);
+      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);
     }
