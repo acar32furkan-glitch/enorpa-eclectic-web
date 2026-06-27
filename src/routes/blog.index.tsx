@@ -3,9 +3,33 @@ import { Calendar, ArrowRight, FileText } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
-const stripShortcodes = (html: string) => {
-  return html.replace(/\[vc_[^\]]+\]|\[\/vc_[^\]]+\]|\[\w+-[^\]]+\]/g, "").replace(/\s+/g, " ").trim();
+const cleanContent = (html: string) => {
+  return html
+    .replace(/\[vc_[^\]]*\]/g, '')
+    .replace(/\[\/vc_[^\]]*\]/g, '')
+    .replace(/\[[^\]]*\]/g, '')
+    .replace(/&#8221;/g, '"')
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8230;/g, '...')
+    .replace(/&#[0-9]+;/g, '')
+    .replace(/\s*data-start=["'][^"']*["']/g, '')
+    .replace(/\s*data-end=["'][^"']*["']/g, '')
+    .replace(/<p>\s*<\/p>/g, '')
+    .trim();
 };
+
+const trOnlySlugs = [
+  'kondenser-nedir-calisma-prensibi-verim-ve-uygulamalar-2',
+  'has-serisi-sicak-hava-kazanlari',
+  'turmalin-serisi-buhar-kazani-endustriyel-isitmanin-yeni-yuzu',
+  'neden-enorpa',
+  'domat-expo-antalya-2019',
+  'greenhouse-almatin-kazakistan',
+  'growtech-antalya-23',
+  'agroworld-ozbekistan'
+];
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
@@ -20,11 +44,9 @@ export const Route = createFileRoute("/blog/")({
     const { data } = await supabase
       .from("blog_posts")
       .select("*")
+      .in('slug', trOnlySlugs)
       .order("published_at", { ascending: false });
-    return (data || []).map((post) => ({
-      ...post,
-      slug: decodeURIComponent(post.slug),
-    }));
+    return data || [];
   },
 });
 
@@ -90,7 +112,7 @@ function BlogListPage() {
                 </h2>
 {post.excerpt && (
                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                     {stripShortcodes(post.excerpt)}
+                     {cleanContent(post.excerpt)}
                    </p>
                  )}
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
