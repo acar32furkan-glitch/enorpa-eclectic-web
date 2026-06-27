@@ -20,7 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UrunlerIndexRouteImport } from './routes/urunler.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
-import { Route as BlogPostRouteImport } from './routes/blog.post'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
 import { Route as AdminProtectedIndexRouteImport } from './routes/admin._protected.index'
@@ -84,9 +84,9 @@ const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => UrunlerRoute,
 } as any)
-const BlogPostRoute = BlogPostRouteImport.update({
-  id: '/post',
-  path: '/post',
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -136,7 +136,7 @@ export interface FileRoutesByFullPath {
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
-  '/blog/post': typeof BlogPostRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -154,7 +154,7 @@ export interface FileRoutesByTo {
   '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/admin/login': typeof AdminLoginRoute
-  '/blog/post': typeof BlogPostRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog': typeof BlogIndexRoute
   '/urunler': typeof UrunlerIndexRoute
@@ -176,7 +176,7 @@ export interface FileRoutesById {
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
-  '/blog/post': typeof BlogPostRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -199,7 +199,7 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin'
     | '/admin/login'
-    | '/blog/post'
+    | '/blog/$slug'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -217,7 +217,7 @@ export interface FileRouteTypes {
     | '/iletisim'
     | '/kvkk'
     | '/admin/login'
-    | '/blog/post'
+    | '/blog/$slug'
     | '/urunler/$slug'
     | '/blog'
     | '/urunler'
@@ -238,7 +238,7 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
-    | '/blog/post'
+    | '/blog/$slug'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -341,11 +341,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerSlugRouteImport
       parentRoute: typeof UrunlerRoute
     }
-    '/blog/post': {
-      id: '/blog/post'
-      path: '/post'
-      fullPath: '/blog/post'
-      preLoaderRoute: typeof BlogPostRouteImport
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
     '/admin/login': {
@@ -401,12 +401,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface BlogRouteChildren {
-  BlogPostRoute: typeof BlogPostRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
-  BlogPostRoute: BlogPostRoute,
+  BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 
