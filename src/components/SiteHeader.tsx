@@ -18,9 +18,9 @@ type NavDict = {
 };
 
 const t: Record<Lang, NavDict> = {
-  TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Blog", "Referanslar", "Belgeler", "İletişim"], quote: "Teklif Al" },
-  EN: { nav: ["Home", "Products", "About", "Blog", "References", "Documents", "Contact"], quote: "Get Quote" },
-  RU: { nav: ["Главная", "Продукция", "О компании", "Блог", "Проекты", "Документы", "Контакты"], quote: "Запросить цену" },
+  TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Referanslar", "Belgeler", "İletişim"], quote: "Teklif Al" },
+  EN: { nav: ["Home", "Products", "About", "References", "Documents", "Contact"], quote: "Get Quote" },
+  RU: { nav: ["Главная", "Продукция", "О компании", "Проекты", "Документы", "Контакты"], quote: "Запросить цену" },
 };
 
 const WHATSAPP = "908504712100";
@@ -58,10 +58,9 @@ export function SiteHeader() {
     if (isIndex === 0) return "/";
     if (isIndex === 1) return "/urunler";
     if (isIndex === 2) return "/hakkimizda";
-    if (isIndex === 3) return "/blog";
-    if (isIndex === 4) return "/#refs";
-    if (isIndex === 5) return "/#docs";
-    if (isIndex === 6) return "/iletisim";
+    if (isIndex === 3) return "/#refs";
+    if (isIndex === 4) return "/#docs";
+    if (isIndex === 5) return "/iletisim";
     return "#";
   };
 
@@ -193,7 +192,6 @@ export function SiteFooter() {
         <FooterCol title="Ürünler" links={[{ label: "Ürünlerimiz", href: "/urunler" }]} />
 <FooterCol title="Kurumsal" links={[
             { label: "Hakkımızda", href: "/hakkimizda" },
-            { label: "Blog", href: "/blog" },
             { label: "Referanslar", href: "/#refs" },
             { label: "Dokümanlar", href: "/#docs" },
             { label: "İletişim", href: "/iletisim" },
