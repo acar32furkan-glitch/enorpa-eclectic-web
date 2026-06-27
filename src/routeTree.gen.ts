@@ -15,9 +15,12 @@ import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UrunlerIndexRouteImport } from './routes/urunler.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
+import { Route as BlogPostRouteImport } from './routes/blog.post'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
 import { Route as AdminProtectedIndexRouteImport } from './routes/admin._protected.index'
@@ -56,6 +59,11 @@ const CerezPolitikasiRoute = CerezPolitikasiRouteImport.update({
   path: '/cerez-politikasi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -66,10 +74,20 @@ const UrunlerIndexRoute = UrunlerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => UrunlerRoute,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
 const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => UrunlerRoute,
+} as any)
+const BlogPostRoute = BlogPostRouteImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => BlogRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
@@ -109,6 +127,7 @@ const AdminProtectedDashboardRoute = AdminProtectedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
@@ -117,7 +136,9 @@ export interface FileRoutesByFullPath {
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/blog/post': typeof BlogPostRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
@@ -133,7 +154,9 @@ export interface FileRoutesByTo {
   '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
   '/admin/login': typeof AdminLoginRoute
+  '/blog/post': typeof BlogPostRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/urunler': typeof UrunlerIndexRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
@@ -144,6 +167,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
@@ -152,7 +176,9 @@ export interface FileRoutesById {
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/blog/post': typeof BlogPostRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
   '/admin/_protected/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/_protected/leads': typeof AdminProtectedLeadsRoute
@@ -164,6 +190,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/blog'
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
@@ -172,7 +199,9 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin'
     | '/admin/login'
+    | '/blog/post'
     | '/urunler/$slug'
+    | '/blog/'
     | '/urunler/'
     | '/admin/dashboard'
     | '/admin/leads'
@@ -188,7 +217,9 @@ export interface FileRouteTypes {
     | '/iletisim'
     | '/kvkk'
     | '/admin/login'
+    | '/blog/post'
     | '/urunler/$slug'
+    | '/blog'
     | '/urunler'
     | '/admin/dashboard'
     | '/admin/leads'
@@ -198,6 +229,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/blog'
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
@@ -206,7 +238,9 @@ export interface FileRouteTypes {
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
+    | '/blog/post'
     | '/urunler/$slug'
+    | '/blog/'
     | '/urunler/'
     | '/admin/_protected/dashboard'
     | '/admin/_protected/leads'
@@ -217,6 +251,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CerezPolitikasiRoute: typeof CerezPolitikasiRoute
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
@@ -271,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CerezPolitikasiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -285,12 +327,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerIndexRouteImport
       parentRoute: typeof UrunlerRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/urunler/$slug': {
       id: '/urunler/$slug'
       path: '/$slug'
       fullPath: '/urunler/$slug'
       preLoaderRoute: typeof UrunlerSlugRouteImport
       parentRoute: typeof UrunlerRoute
+    }
+    '/blog/post': {
+      id: '/blog/post'
+      path: '/post'
+      fullPath: '/blog/post'
+      preLoaderRoute: typeof BlogPostRouteImport
+      parentRoute: typeof BlogRoute
     }
     '/admin/login': {
       id: '/admin/login'
@@ -344,6 +400,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BlogRouteChildren {
+  BlogPostRoute: typeof BlogPostRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogPostRoute: BlogPostRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 interface UrunlerRouteChildren {
   UrunlerSlugRoute: typeof UrunlerSlugRoute
   UrunlerIndexRoute: typeof UrunlerIndexRoute
@@ -379,6 +447,7 @@ const AdminProtectedRouteWithChildren = AdminProtectedRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogRoute: BlogRouteWithChildren,
   CerezPolitikasiRoute: CerezPolitikasiRoute,
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
