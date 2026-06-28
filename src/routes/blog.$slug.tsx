@@ -6,7 +6,8 @@ import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 function cleanContent(html: string): string {
   let result = html;
   result = result
-    .replace(/\[vc_[^]]*\]([\s\S]*?)?\[\/vc_[^]]*\]/g, '')
+    .replace(/\[vc_[^\]]*\]/g, '')
+    .replace(/\[\/vc_[^\]]*\]/g, '')
     .replace(/\[[^\]]*\]/g, '');
   return result
     .replace(/&#8221;|&#8220;/g, '"')
