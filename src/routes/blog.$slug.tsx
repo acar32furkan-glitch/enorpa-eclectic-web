@@ -1,24 +1,27 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Calendar, ArrowLeft, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
-const cleanContent = (html: string) => {
+function cleanContent(html: string): string {
   return html
-    .replace(/\[vc_[^\]]*\]/g, '')
-    .replace(/\[\/vc_[^\]]*\]/g, '')
-    .replace(/\[[^\]]*\]/g, '')
-    .replace(/&#8221;/g, '"')
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8216;/g, "'")
-    .replace(/&#8220;/g, '"')
+    .replace(/\[[\s\S]*?\]/g, '')
+    .replace(/&#8221;|&#8220;/g, '"')
+    .replace(/&#8217;|&#8216;/g, "'")
     .replace(/&#8230;/g, '...')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
     .replace(/&#[0-9]+;/g, '')
-    .replace(/\s*data-start=["'][^"']*["']/g, '')
-    .replace(/\s*data-end=["'][^"']*["']/g, '')
+    .replace(/&[a-z]+;/g, '')
+    .replace(/\s*data-\w+="[^"]*"/g, '')
+    .replace(/\s*data-\w+='[^']*'/g, '')
     .replace(/<p>\s*<\/p>/g, '')
+    .replace(/<h[1-6]>\s*<\/h[1-6]>/g, '')
+    .replace(/Lorem ipsum[\s\S]*?(?=<|$)/g, '')
+    .replace(/\n{3,}/g, '\n\n')
     .trim();
-};
+}
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => ({
@@ -108,7 +111,7 @@ function BlogDetailPage() {
             </time>
           </div>
 
-          {post.featured_image_url && (
+          {post.featured_image_url ? (
             <figure className="mb-8">
               <img
                 src={post.featured_image_url}
@@ -116,6 +119,12 @@ function BlogDetailPage() {
                 fetchpriority="high"
                 className="w-full rounded-lg"
               />
+            </figure>
+          ) : (
+            <figure className="mb-8">
+              <div className="w-full h-64 bg-navy-dark rounded-lg flex items-center justify-center">
+                <Factory className="h-16 w-16 text-orange/30" />
+              </div>
             </figure>
           )}
 
