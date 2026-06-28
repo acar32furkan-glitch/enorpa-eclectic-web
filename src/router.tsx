@@ -30,6 +30,14 @@ import { Route as EnContactRouteImport } from "./routes/en/contact";
 import { Route as RuAboutRouteImport } from "./routes/ru/about";
 import { Route as RuProductsRouteImport } from "./routes/ru/products";
 import { Route as RuContactRouteImport } from "./routes/ru/contact";
+import { Route as EnBlogRouteImport } from "./routes/en/blog";
+import { Route as EnBlogSlugRouteImport } from "./routes/en/blog.$slug";
+import { Route as RuBlogRouteImport } from "./routes/ru/blog";
+import { Route as RuBlogSlugRouteImport } from "./routes/ru/blog.$slug";
+import { Route as EnPortfolioRouteImport } from "./routes/en/portfolio";
+import { Route as EnPortfolioSlugRouteImport } from "./routes/en/portfolio.$slug";
+import { Route as RuPortfolioRouteImport } from "./routes/ru/portfolio";
+import { Route as RuPortfolioSlugRouteImport } from "./routes/ru/portfolio.$slug";
 
 const queryClient = new QueryClient();
 
@@ -51,13 +59,29 @@ const routeTree = __rootImport._addFileChildren({
   } as any),
   EnRoute: EnRouteImport.update({ getId: () => '/en', path: '/en', getParentRoute: () => __rootImport } as any)._addFileChildren({
     EnAboutRoute: EnAboutRouteImport.update({ getId: () => '/about', path: '/about', getParentRoute: () => EnRouteImport } as any),
-    EnProductsRoute: EnProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => EnRouteImport } as any),
+    EnProductsRoute: EnProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
+      EnProductsSlugRoute: EnProductsSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => EnProductsRouteImport } as any),
+    } as any),
     EnContactRoute: EnContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => EnRouteImport } as any),
+    EnBlogRoute: EnBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
+      EnBlogSlugRoute: EnBlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => EnBlogRouteImport } as any),
+    } as any),
+    EnPortfolioRoute: EnPortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
+      EnPortfolioSlugRoute: EnPortfolioSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => EnPortfolioRouteImport } as any),
+    } as any),
   } as any),
   RuRoute: RuRouteImport.update({ getId: () => '/ru', path: '/ru', getParentRoute: () => __rootImport } as any)._addFileChildren({
     RuAboutRoute: RuAboutRouteImport.update({ getId: () => '/about', path: '/about', getParentRoute: () => RuRouteImport } as any),
-    RuProductsRoute: RuProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => RuRouteImport } as any),
+    RuProductsRoute: RuProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
+      RuProductsSlugRoute: RuProductsSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => RuProductsRouteImport } as any),
+    } as any),
     RuContactRoute: RuContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => RuRouteImport } as any),
+    RuBlogRoute: RuBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
+      RuBlogSlugRoute: RuBlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => RuBlogRouteImport } as any),
+    } as any),
+    RuPortfolioRoute: RuPortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
+      RuPortfolioSlugRoute: RuPortfolioSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => RuPortfolioRouteImport } as any),
+    } as any),
   } as any),
   BlogRoute: BlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => __rootImport } as any)._addFileChildren({
     BlogIndexRoute: BlogIndexRouteImport.update({ getId: () => '/', path: '/', getParentRoute: () => BlogRouteImport } as any),
