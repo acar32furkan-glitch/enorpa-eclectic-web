@@ -1,4 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
+import type { SupportedLang } from "./i18n";
+import { SUPPORTED_LANGS } from "./i18n";
 
 export const SITE = {
   name: "Enorpa Enerji",
@@ -8,6 +10,7 @@ export const SITE = {
   email: "turuncu@enorpa.com",
   instagram: "https://instagram.com/enorpaenerji",
   defaultOgImage: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png",
+  defaultLang: "tr" as SupportedLang,
 };
 
 export interface SeoConfig {
@@ -180,12 +183,17 @@ export function generateOrganizationSchema() {
 }
 
 export function generateHreflangTags(path: string) {
-  return [
-    { rel: "alternate", hrefLang: "tr", href: `${SITE.url}${path}` },
-    { rel: "alternate", hrefLang: "en", href: `${SITE.url}/en${path}` },
-    { rel: "alternate", hrefLang: "ru", href: `${SITE.url}/ru${path}` },
-    { rel: "alternate", hrefLang: "x-default", href: `${SITE.url}${path}` },
-  ];
+  const links = SUPPORTED_LANGS.map((lang) => ({
+    rel: "alternate",
+    hrefLang: lang,
+    href: `${SITE.url}${lang === "tr" ? "" : "/" + lang}${path}`,
+  }));
+  links.push({
+    rel: "alternate",
+    hrefLang: "x-default",
+    href: `${SITE.url}${path}`,
+  });
+  return links;
 }
 
 export function generateFaqSchema(faqs: { question: string; answer: string }[]) {
