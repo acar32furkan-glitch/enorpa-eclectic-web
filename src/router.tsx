@@ -6,6 +6,11 @@ import { Route as HakkimizdaRouteImport } from "./routes/hakkimizda";
 import { Route as KvkkRouteImport } from "./routes/kvkk";
 import { Route as IletisimRouteImport } from "./routes/iletisim";
 import { Route as AdminLoginRouteImport } from "./routes/admin.login";
+import { Route as AdminProtectedRouteImport } from "./routes/admin._protected";
+import { Route as AdminDashboardRouteImport } from "./routes/admin._protected.dashboard";
+import { Route as AdminLeadsRouteImport } from "./routes/admin._protected.leads";
+import { Route as AdminProductsRouteImport } from "./routes/admin._protected.products";
+import { Route as AdminSettingsRouteImport } from "./routes/admin._protected.settings";
 import { Route as UrunlerRouteImport } from "./routes/urunler";
 import { Route as UrunlerSlugRouteImport } from "./routes/urunler.$slug";
 import { Route as UrunlerIndexRouteImport } from "./routes/urunler.index";
@@ -21,6 +26,12 @@ const routeTree = __rootImport._addFileChildren({
   KvkkRoute: KvkkRouteImport.update({ getId: () => '/kvkk', path: '/kvkk', getParentRoute: () => __rootImport } as any),
   IletisimRoute: IletisimRouteImport.update({ getId: () => '/iletisim', path: '/iletisim', getParentRoute: () => __rootImport } as any),
   AdminLoginRoute: AdminLoginRouteImport.update({ getId: () => '/admin/login', path: '/admin/login', getParentRoute: () => __rootImport } as any),
+  AdminProtectedRoute: AdminProtectedRouteImport.update({ getId: () => '/admin', path: '/admin', getParentRoute: () => __rootImport } as any)._addFileChildren({
+    AdminDashboardRoute: AdminDashboardRouteImport.update({ getId: () => '/dashboard', path: '/dashboard', getParentRoute: () => AdminProtectedRouteImport } as any),
+    AdminLeadsRoute: AdminLeadsRouteImport.update({ getId: () => '/leads', path: '/leads', getParentRoute: () => AdminProtectedRouteImport } as any),
+    AdminProductsRoute: AdminProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => AdminProtectedRouteImport } as any),
+    AdminSettingsRoute: AdminSettingsRouteImport.update({ getId: () => '/settings', path: '/settings', getParentRoute: () => AdminProtectedRouteImport } as any),
+  } as any),
   BlogRoute: BlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => __rootImport } as any)._addFileChildren({
     BlogIndexRoute: BlogIndexRouteImport.update({ getId: () => '/', path: '/', getParentRoute: () => BlogRouteImport } as any),
     BlogSlugRoute: BlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => BlogRouteImport } as any),
