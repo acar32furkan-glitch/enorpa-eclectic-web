@@ -23,6 +23,7 @@ import { Route as PortfolioSlugRouteImport } from "./routes/portfolio.$slug";
 import { Route as ReferanslarRouteImport } from "./routes/referanslar";
 import { Route as GizlilikPolitikasiRouteImport } from "./routes/gizlilik-politikasi";
 import { Route as CerezPolitikasiRouteImport } from "./routes/cerez-politikasi";
+import { Route as SssRouteImport } from "./routes/sss";
 import { Route as EnRouteImport } from "./routes/en";
 import { Route as EnAboutRouteImport } from "./routes/en/about";
 import { Route as EnProductsRouteImport } from "./routes/en/products";
@@ -50,6 +51,7 @@ const routeTree = __rootImport._addFileChildren({
   ReferanslarRoute: ReferanslarRouteImport.update({ getId: () => '/referanslar', path: '/referanslar', getParentRoute: () => __rootImport } as any),
   GizlilikPolitikasiRoute: GizlilikPolitikasiRouteImport.update({ getId: () => '/gizlilik-politikasi', path: '/gizlilik-politikasi', getParentRoute: () => __rootImport } as any),
   CerezPolitikasiRoute: CerezPolitikasiRouteImport.update({ getId: () => '/cerez-politikasi', path: '/cerez-politikasi', getParentRoute: () => __rootImport } as any),
+  SssRoute: SssRouteImport.update({ getId: () => '/sss', path: '/sss', getParentRoute: () => __rootImport } as any),
   AdminLoginRoute: AdminLoginRouteImport.update({ getId: () => '/admin/login', path: '/admin/login', getParentRoute: () => __rootImport } as any),
   AdminProtectedRoute: AdminProtectedRouteImport.update({ getId: () => '/admin', path: '/admin', getParentRoute: () => __rootImport } as any)._addFileChildren({
     AdminDashboardRoute: AdminDashboardRouteImport.update({ getId: () => '/dashboard', path: '/dashboard', getParentRoute: () => AdminProtectedRouteImport } as any),

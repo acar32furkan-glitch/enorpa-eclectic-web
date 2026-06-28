@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Gauge, FileDown, ArrowLeft } from "lucide-react";
 import { fetchProductBySlug, productCategories, type Product } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
+import { generateProductSchema, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/en/products/$slug")({
   head: ({ params }) => {
@@ -25,6 +25,12 @@ export const Route = createFileRoute("/en/products/$slug")({
         { name: "twitter:image", content: SITE.defaultOgImage },
       ],
       links: [{ rel: "canonical", href: `https://enorpa.com/en/products/${params.slug}` }],
+      scripts: loaderData ? [{ type: "application/ld+json", children: JSON.stringify(generateProductSchema({
+        name: loaderData.name,
+        description: loaderData.detail || loaderData.type,
+        image: loaderData.image_url,
+        slug: params.slug,
+      })) }] : [],
     };
   },
   component: EnProductDetailPage,

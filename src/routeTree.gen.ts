@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UrunlerRouteImport } from './routes/urunler'
+import { Route as SssRouteImport } from './routes/sss'
 import { Route as RuRouteImport } from './routes/ru'
 import { Route as ReferanslarRouteImport } from './routes/referanslar'
 import { Route as ProjelerRouteImport } from './routes/projeler'
@@ -57,6 +58,11 @@ import { Route as AdminProtectedDashboardRouteImport } from './routes/admin._pro
 const UrunlerRoute = UrunlerRouteImport.update({
   id: '/urunler',
   path: '/urunler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SssRoute = SssRouteImport.update({
+  id: '/sss',
+  path: '/sss',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RuRoute = RuRouteImport.update({
@@ -288,6 +294,7 @@ export interface FileRoutesByFullPath {
   '/projeler': typeof ProjelerRoute
   '/referanslar': typeof ReferanslarRoute
   '/ru': typeof RuRouteWithChildren
+  '/sss': typeof SssRoute
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -330,6 +337,7 @@ export interface FileRoutesByTo {
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
   '/referanslar': typeof ReferanslarRoute
+  '/sss': typeof SssRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/en/about': typeof EnAboutRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/projeler': typeof ProjelerRoute
   '/referanslar': typeof ReferanslarRoute
   '/ru': typeof RuRouteWithChildren
+  '/sss': typeof SssRoute
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
@@ -422,6 +431,7 @@ export interface FileRouteTypes {
     | '/projeler'
     | '/referanslar'
     | '/ru'
+    | '/sss'
     | '/urunler'
     | '/admin/login'
     | '/blog/$slug'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/projeler'
     | '/referanslar'
+    | '/sss'
     | '/admin/login'
     | '/blog/$slug'
     | '/en/about'
@@ -507,6 +518,7 @@ export interface FileRouteTypes {
     | '/projeler'
     | '/referanslar'
     | '/ru'
+    | '/sss'
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
@@ -554,6 +566,7 @@ export interface RootRouteChildren {
   ProjelerRoute: typeof ProjelerRoute
   ReferanslarRoute: typeof ReferanslarRoute
   RuRoute: typeof RuRouteWithChildren
+  SssRoute: typeof SssRoute
   UrunlerRoute: typeof UrunlerRouteWithChildren
 }
 
@@ -564,6 +577,13 @@ declare module '@tanstack/react-router' {
       path: '/urunler'
       fullPath: '/urunler'
       preLoaderRoute: typeof UrunlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sss': {
+      id: '/sss'
+      path: '/sss'
+      fullPath: '/sss'
+      preLoaderRoute: typeof SssRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ru': {
@@ -1063,6 +1083,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjelerRoute: ProjelerRoute,
   ReferanslarRoute: ReferanslarRoute,
   RuRoute: RuRouteWithChildren,
+  SssRoute: SssRoute,
   UrunlerRoute: UrunlerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
