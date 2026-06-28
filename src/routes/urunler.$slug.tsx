@@ -5,30 +5,25 @@ import { fetchProductBySlug, type Product, productCategories } from "@/data/prod
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/urunler/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { 
-        title: `${params.slug.replace(/-/g, " ")} | Enorpa Enerji`,
-      },
-      { 
-        name: "description", 
-        content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
-      },
-      { 
-        property: "og:title", 
-        content: `${params.slug.replace(/-/g, " ")} | Enorpa Enerji`,
-      },
+  head: ({ params }) => {
+    const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    return {
+      meta: [
+        { title: `${title} | Enorpa Enerji` },
+        { name: "description", content: `${title} - Enorpa Enerji ürün kataloğu` },
+        { property: "og:title", content: `${title} | Enorpa Enerji` },
       { 
         property: "og:description", 
         content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
       },
       { property: "og:type", content: "product" },
       { property: "og:locale", content: "tr_TR" },
-    ],
-    links: [
-      { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
-    ],
-  }),
+      ],
+      links: [
+        { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
+      ],
+    };
+  },
   component: ProductDetailPage,
   loader: async ({ params }) => {
     const product = await fetchProductBySlug(params.slug);
