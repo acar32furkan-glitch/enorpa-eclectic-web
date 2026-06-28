@@ -1,65 +1,589 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- ANASAYFA -->
   <url>
     <loc>https://enorpa.com/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://enorpa.com/"/>
   </url>
   <url>
-    <loc>https://enorpa.com/urunler</loc>
-    <lastmod>2026-06-14</lastmod>
-    <priority>0.8</priority>
+    <loc>https://enorpa.com/en</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://enorpa.com/"/>
   </url>
+  <url>
+    <loc>https://enorpa.com/ru</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://enorpa.com/"/>
+  </url>
+
+  <!-- STATİK SAYFALAR -->
   <url>
     <loc>https://enorpa.com/hakkimizda</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/about"/>
   </url>
-  
-<!-- Product Detail Pages -->
-   <url><loc>https://enorpa.com/urunler/obsidyen-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/akuamarin-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/ametist-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/turkuaz-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kalsedon-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kuvars-serisi-tek-kulhanli</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kuvars-serisi-cift-kulhanli</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kuvars-ng-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/turmalin-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/has-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/has-ng-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/has-turbo-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/akuamarin-ks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/turkuaz-ks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kat-kaloriferi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/anahtar-teslim-sera-isitma-sistemi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/brulorler</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/baca</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kondenser</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/ekonomizer</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kazan-otomasyon-sistemi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/kazan-kontrol-panosu</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/oniks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-   <url><loc>https://enorpa.com/urunler/yedek-parca</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  
   <url>
-    <loc>https://enorpa.com/gizlilik-politikasi</loc>
-    <lastmod>2026-06-14</lastmod>
-    <priority>0.5</priority>
+    <loc>https://enorpa.com/en/about</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/about"/>
   </url>
+  <url>
+    <loc>https://enorpa.com/ru/about</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/hakkimizda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/about"/>
+  </url>
+
+  <url>
+    <loc>https://enorpa.com/iletisim</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/iletisim"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/contact"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/en/contact</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/iletisim"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/contact"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/ru/contact</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/iletisim"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/contact"/>
+  </url>
+
+  <url>
+    <loc>https://enorpa.com/urunler</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/en/products</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/ru/products</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products"/>
+  </url>
+
+  <url>
+    <loc>https://enorpa.com/blog</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/en/blog</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/ru/blog</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog"/>
+  </url>
+
+  <url>
+    <loc>https://enorpa.com/projeler</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/projeler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/projects"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/en/projects</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/projeler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/projects"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/ru/projects</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/projeler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/projects"/>
+  </url>
+
+  <url>
+    <loc>https://enorpa.com/referanslar</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/referanslar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/references"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/references"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/en/references</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/referanslar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/references"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/references"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/ru/references</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/referanslar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/references"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/references"/>
+  </url>
+
   <url>
     <loc>https://enorpa.com/kvkk</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/kvkk"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/kvkk"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/kvkk"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/gizlilik-politikasi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/gizlilik-politikasi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/privacy-policy"/>
   </url>
   <url>
     <loc>https://enorpa.com/cerez-politikasi</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-29</lastmod>
     <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/cerez-politikasi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/cookie-policy"/>
+  </url>
+
+  <!-- ÜRÜN DETAY SAYFALAR -->
+  <url>
+    <loc>https://enorpa.com/urunler/akuamarin-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/akuamarin-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/akuamarin-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/akuamarin-series"/>
   </url>
   <url>
-    <loc>https://enorpa.com/iletisim</loc>
-    <lastmod>2026-06-24</lastmod>
-    <priority>0.8</priority>
+    <loc>https://enorpa.com/urunler/akuamarin-ks-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/akuamarin-ks-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/akuamarin-ks-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/akuamarin-ks-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/ametist-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/ametist-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/ametist-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/ametist-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/anahtar-teslim-sera-isitma-sistemi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/anahtar-teslim-sera-isitma-sistemi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/turnkey-greenhouse-heating"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/turnkey-greenhouse-heating"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/baca</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/baca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/chimney"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/chimney"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/brulorler</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/brulorler"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/burners"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/burners"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/ekonomizer</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/ekonomizer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/economizer"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/economizer"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/has-ng-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/has-ng-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/has-ng-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/has-ng-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/has-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/has-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/has-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/has-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/has-turbo-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/has-turbo-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/has-turbo-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/has-turbo-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/jasper-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/jasper-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/jasper-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/jasper-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kalsedon-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kalsedon-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/kalsedon-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/kalsedon-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kat-kaloriferi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kat-kaloriferi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/central-heating"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/central-heating"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kazan-kontrol-panosu</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kazan-kontrol-panosu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/boiler-control-panel"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/boiler-control-panel"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kazan-otomasyon-sistemi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kazan-otomasyon-sistemi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/boiler-automation-system"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/boiler-automation-system"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kondenser</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kondenser"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/condenser"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/condenser"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kuvars-ng-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kuvars-ng-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/kuvars-ng-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/kuvars-ng-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kuvars-serisi-cift-kulhanli</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kuvars-serisi-cift-kulhanli"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/kuvars-series-double"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/kuvars-series-double"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/kuvars-serisi-tek-kulhanli</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/kuvars-serisi-tek-kulhanli"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/kuvars-series-single"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/kuvars-series-single"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/obsidyen-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/obsidyen-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/obsidyen-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/obsidyen-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/oniks-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/oniks-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/oniks-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/oniks-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/turkuaz-ks-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/turkuaz-ks-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/turkuaz-ks-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/turkuaz-ks-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/turkuaz-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/turkuaz-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/turkuaz-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/turkuaz-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/turmalin-serisi</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/turmalin-serisi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/turmalin-series"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/turmalin-series"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/urunler/yedek-parca</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/urunler/yedek-parca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/products/spare-parts"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/products/spare-parts"/>
+  </url>
+
+  <!-- PROJE DETAY SAYFALAR -->
+  <url>
+    <loc>https://enorpa.com/portfolio/ozbekistan-taskent</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/portfolio/ozbekistan-taskent"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/portfolio/uzbekistan-tashkent"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/portfolio/uzbekistan-tashkent"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/portfolio/ozbekistan-harezm</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/portfolio/ozbekistan-harezm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/portfolio/uzbekistan-kharezm"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/portfolio/uzbekistan-kharezm"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/portfolio/turkiye-manisa</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/portfolio/turkiye-manisa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/portfolio/turkey-manisa"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/portfolio/turkey-manisa"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/portfolio/turkiye-izmir</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/portfolio/turkiye-izmir"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/portfolio/turkey-izmir"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/portfolio/turkey-izmir"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/portfolio/turkiye-isparta</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/portfolio/turkiye-isparta"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/portfolio/turkey-isparta"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/portfolio/turkey-isparta"/>
+  </url>
+
+  <!-- BLOG YAZILARI -->
+  <url>
+    <loc>https://enorpa.com/blog/neden-enorpa</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/neden-enorpa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/why-enorpa"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/why-enorpa"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/has-serisi-sicak-hava-kazanlari</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/has-serisi-sicak-hava-kazanlari"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/has-series-hot-air-boilers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/has-series-hot-air-boilers"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/turmalin-serisi-buhar-kazani-endustriyel-isitmanin-yeni-yuzu</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/turmalin-serisi-buhar-kazani-endustriyel-isitmanin-yeni-yuzu"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/turmalin-series-steam-boiler"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/turmalin-series-steam-boiler"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/kondenser-nedir-calisma-prensibi-verim-ve-uygulamalar-2</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/kondenser-nedir-calisma-prensibi-verim-ve-uygulamalar-2"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/what-is-condenser"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/what-is-condenser"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/growtech-antalya-23</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/growtech-antalya-23"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/growtech-antalya-2023"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/growtech-antalya-2023"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/greenhouse-almati-kazakistan</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/greenhouse-almati-kazakistan"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/greenhouse-almaty-kazakhstan"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/greenhouse-almaty-kazakhstan"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/agroworld-ozbekistan</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/agroworld-ozbekistan"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/agroworld-uzbekistan"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/agroworld-uzbekistan"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/domat-expo-antalya-2019</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/domat-expo-antalya-2019"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/domat-expo-antalya-2019"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/domat-expo-antalya-2019"/>
+  </url>
+  <url>
+    <loc>https://enorpa.com/blog/enorpa-at-greentech-amsterdam-2025</loc>
+    <lastmod>2026-06-29</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/blog/enorpa-at-greentech-amsterdam-2025"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://enorpa.com/en/blog/enorpa-at-greentech-amsterdam-2025"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://enorpa.com/ru/blog/enorpa-at-greentech-amsterdam-2025"/>
   </url>
 </urlset>

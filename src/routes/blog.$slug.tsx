@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, ArrowLeft, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { generateBlogPostSchema, SITE } from "@/lib/seo";
+import { generateExcerpt } from "@/lib/cleanContent";
 
 function cleanContent(html: string): string {
   let result = html;
@@ -29,6 +31,13 @@ function cleanContent(html: string): string {
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
+    const schema = generateBlogPostSchema({
+      title: params.slug.replace(/-/g, " "),
+      excerpt: "Blog yazısı",
+      slug: params.slug,
+      publishedAt: new Date().toISOString().split("T")[0],
+    });
+
     return {
       meta: [
         { title: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
@@ -36,16 +45,19 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
         { property: "og:description", content: "Blog yazısı" },
         { property: "og:type", content: "article" },
-        { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+        { property: "og:image", content: SITE.defaultOgImage },
         { property: "og:url", content: `https://enorpa.com/blog/${params.slug}` },
         { property: "og:locale", content: "tr_TR" },
-        { property: "og:site_name", content: "Enorpa Enerji" },
+        { property: "og:site_name", content: SITE.name },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
         { name: "twitter:description", content: "Blog yazısı" },
-        { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+        { name: "twitter:image", content: SITE.defaultOgImage },
       ],
-      links: [{ rel: "canonical", href: `https://enorpa.com/blog/${params.slug}` }],
+      links: [
+        { rel: "canonical", href: `https://enorpa.com/blog/${params.slug}` },
+      ],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(schema) }],
     };
   },
   component: BlogDetailPage,
