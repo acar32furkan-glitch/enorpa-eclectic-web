@@ -183,7 +183,7 @@ export function generateOrganizationSchema() {
 }
 
 export function generateHreflangTags(path: string) {
-  const links = SUPPORTED_LANGS.map((lang) => ({
+  const links: { rel: string; hrefLang: string; href: string }[] = SUPPORTED_LANGS.map((lang) => ({
     rel: "alternate",
     hrefLang: lang,
     href: `${SITE.url}${lang === "tr" ? "" : "/" + lang}${path}`,

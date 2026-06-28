@@ -23,6 +23,13 @@ import { Route as PortfolioSlugRouteImport } from "./routes/portfolio.$slug";
 import { Route as ReferanslarRouteImport } from "./routes/referanslar";
 import { Route as GizlilikPolitikasiRouteImport } from "./routes/gizlilik-politikasi";
 import { Route as CerezPolitikasiRouteImport } from "./routes/cerez-politikasi";
+import { Route as EnRouteImport } from "./routes/en";
+import { Route as EnAboutRouteImport } from "./routes/en/about";
+import { Route as EnProductsRouteImport } from "./routes/en/products";
+import { Route as EnContactRouteImport } from "./routes/en/contact";
+import { Route as RuAboutRouteImport } from "./routes/ru/about";
+import { Route as RuProductsRouteImport } from "./routes/ru/products";
+import { Route as RuContactRouteImport } from "./routes/ru/contact";
 
 const queryClient = new QueryClient();
 
@@ -32,9 +39,6 @@ const routeTree = __rootImport._addFileChildren({
   KvkkRoute: KvkkRouteImport.update({ getId: () => '/kvkk', path: '/kvkk', getParentRoute: () => __rootImport } as any),
   IletisimRoute: IletisimRouteImport.update({ getId: () => '/iletisim', path: '/iletisim', getParentRoute: () => __rootImport } as any),
   ProjelerRoute: ProjelerRouteImport.update({ getId: () => '/projeler', path: '/projeler', getParentRoute: () => __rootImport } as any),
-  PortfolioRoute: PortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => __rootImport } as any)._addFileChildren({
-    PortfolioSlugRoute: PortfolioSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => PortfolioRouteImport } as any),
-  } as any),
   ReferanslarRoute: ReferanslarRouteImport.update({ getId: () => '/referanslar', path: '/referanslar', getParentRoute: () => __rootImport } as any),
   GizlilikPolitikasiRoute: GizlilikPolitikasiRouteImport.update({ getId: () => '/gizlilik-politikasi', path: '/gizlilik-politikasi', getParentRoute: () => __rootImport } as any),
   CerezPolitikasiRoute: CerezPolitikasiRouteImport.update({ getId: () => '/cerez-politikasi', path: '/cerez-politikasi', getParentRoute: () => __rootImport } as any),
@@ -45,6 +49,16 @@ const routeTree = __rootImport._addFileChildren({
     AdminProductsRoute: AdminProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => AdminProtectedRouteImport } as any),
     AdminSettingsRoute: AdminSettingsRouteImport.update({ getId: () => '/settings', path: '/settings', getParentRoute: () => AdminProtectedRouteImport } as any),
   } as any),
+  EnRoute: EnRouteImport.update({ getId: () => '/en', path: '/en', getParentRoute: () => __rootImport } as any)._addFileChildren({
+    EnAboutRoute: EnAboutRouteImport.update({ getId: () => '/about', path: '/about', getParentRoute: () => EnRouteImport } as any),
+    EnProductsRoute: EnProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => EnRouteImport } as any),
+    EnContactRoute: EnContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => EnRouteImport } as any),
+  } as any),
+  RuRoute: RuRouteImport.update({ getId: () => '/ru', path: '/ru', getParentRoute: () => __rootImport } as any)._addFileChildren({
+    RuAboutRoute: RuAboutRouteImport.update({ getId: () => '/about', path: '/about', getParentRoute: () => RuRouteImport } as any),
+    RuProductsRoute: RuProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => RuRouteImport } as any),
+    RuContactRoute: RuContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => RuRouteImport } as any),
+  } as any),
   BlogRoute: BlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => __rootImport } as any)._addFileChildren({
     BlogIndexRoute: BlogIndexRouteImport.update({ getId: () => '/', path: '/', getParentRoute: () => BlogRouteImport } as any),
     BlogSlugRoute: BlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => BlogRouteImport } as any),
@@ -53,6 +67,9 @@ const routeTree = __rootImport._addFileChildren({
     UrunlerSlugRoute: UrunlerSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => UrunlerRouteImport } as any),
     UrunlerIndexRoute: UrunlerIndexRouteImport.update({ getId: () => '/', path: '/', getParentRoute: () => UrunlerRouteImport } as any),
   } as any),
-} as any)._addFileTypes({} as any);
+  PortfolioRoute: PortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => __rootImport } as any)._addFileChildren({
+    PortfolioSlugRoute: PortfolioSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => PortfolioRouteImport } as any),
+  } as any),
+} as any)._addFileTypes({} as any)._addFileTypes({} as any);
 
 export const getRouter = () => createRouter({ routeTree, context: { queryClient }, scrollRestoration: true, defaultPreloadStaleTime: 0 });

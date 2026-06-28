@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UrunlerRouteImport } from './routes/urunler'
+import { Route as RuRouteImport } from './routes/ru'
 import { Route as ReferanslarRouteImport } from './routes/referanslar'
 import { Route as ProjelerRouteImport } from './routes/projeler'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
@@ -17,14 +18,23 @@ import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
+import { Route as EnRouteImport } from './routes/en'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UrunlerIndexRouteImport } from './routes/urunler.index'
+import { Route as RuIndexRouteImport } from './routes/ru/index'
+import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
+import { Route as RuProductsRouteImport } from './routes/ru/products'
+import { Route as RuContactRouteImport } from './routes/ru/contact'
+import { Route as RuAboutRouteImport } from './routes/ru/about'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
+import { Route as EnProductsRouteImport } from './routes/en/products'
+import { Route as EnContactRouteImport } from './routes/en/contact'
+import { Route as EnAboutRouteImport } from './routes/en/about'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
@@ -37,6 +47,11 @@ import { Route as AdminProtectedDashboardRouteImport } from './routes/admin._pro
 const UrunlerRoute = UrunlerRouteImport.update({
   id: '/urunler',
   path: '/urunler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RuRoute = RuRouteImport.update({
+  id: '/ru',
+  path: '/ru',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReferanslarRoute = ReferanslarRouteImport.update({
@@ -74,6 +89,11 @@ const GizlilikPolitikasiRoute = GizlilikPolitikasiRouteImport.update({
   path: '/gizlilik-politikasi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnRoute = EnRouteImport.update({
+  id: '/en',
+  path: '/en',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CerezPolitikasiRoute = CerezPolitikasiRouteImport.update({
   id: '/cerez-politikasi',
   path: '/cerez-politikasi',
@@ -99,6 +119,16 @@ const UrunlerIndexRoute = UrunlerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => UrunlerRoute,
 } as any)
+const RuIndexRoute = RuIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RuRoute,
+} as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnRoute,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -109,10 +139,40 @@ const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => UrunlerRoute,
 } as any)
+const RuProductsRoute = RuProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => RuRoute,
+} as any)
+const RuContactRoute = RuContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => RuRoute,
+} as any)
+const RuAboutRoute = RuAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => RuRoute,
+} as any)
 const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => PortfolioRoute,
+} as any)
+const EnProductsRoute = EnProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => EnRoute,
+} as any)
+const EnContactRoute = EnContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => EnRoute,
+} as any)
+const EnAboutRoute = EnAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => EnRoute,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
@@ -159,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
+  '/en': typeof EnRouteWithChildren
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
@@ -166,12 +227,21 @@ export interface FileRoutesByFullPath {
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
   '/referanslar': typeof ReferanslarRoute
+  '/ru': typeof RuRouteWithChildren
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/products': typeof EnProductsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/ru/about': typeof RuAboutRoute
+  '/ru/contact': typeof RuContactRoute
+  '/ru/products': typeof RuProductsRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/en/': typeof EnIndexRoute
+  '/ru/': typeof RuIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
@@ -192,9 +262,17 @@ export interface FileRoutesByTo {
   '/referanslar': typeof ReferanslarRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/products': typeof EnProductsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/ru/about': typeof RuAboutRoute
+  '/ru/contact': typeof RuContactRoute
+  '/ru/products': typeof RuProductsRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/en': typeof EnIndexRoute
+  '/ru': typeof RuIndexRoute
   '/urunler': typeof UrunlerIndexRoute
   '/admin/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/leads': typeof AdminProtectedLeadsRoute
@@ -207,6 +285,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
+  '/en': typeof EnRouteWithChildren
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
@@ -214,13 +293,22 @@ export interface FileRoutesById {
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
   '/referanslar': typeof ReferanslarRoute
+  '/ru': typeof RuRouteWithChildren
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/en/about': typeof EnAboutRoute
+  '/en/contact': typeof EnContactRoute
+  '/en/products': typeof EnProductsRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
+  '/ru/about': typeof RuAboutRoute
+  '/ru/contact': typeof RuContactRoute
+  '/ru/products': typeof RuProductsRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/en/': typeof EnIndexRoute
+  '/ru/': typeof RuIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
   '/admin/_protected/dashboard': typeof AdminProtectedDashboardRoute
   '/admin/_protected/leads': typeof AdminProtectedLeadsRoute
@@ -235,6 +323,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/cerez-politikasi'
+    | '/en'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
@@ -242,12 +331,21 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/projeler'
     | '/referanslar'
+    | '/ru'
     | '/urunler'
     | '/admin/login'
     | '/blog/$slug'
+    | '/en/about'
+    | '/en/contact'
+    | '/en/products'
     | '/portfolio/$slug'
+    | '/ru/about'
+    | '/ru/contact'
+    | '/ru/products'
     | '/urunler/$slug'
     | '/blog/'
+    | '/en/'
+    | '/ru/'
     | '/urunler/'
     | '/admin/dashboard'
     | '/admin/leads'
@@ -268,9 +366,17 @@ export interface FileRouteTypes {
     | '/referanslar'
     | '/admin/login'
     | '/blog/$slug'
+    | '/en/about'
+    | '/en/contact'
+    | '/en/products'
     | '/portfolio/$slug'
+    | '/ru/about'
+    | '/ru/contact'
+    | '/ru/products'
     | '/urunler/$slug'
     | '/blog'
+    | '/en'
+    | '/ru'
     | '/urunler'
     | '/admin/dashboard'
     | '/admin/leads'
@@ -282,6 +388,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/blog'
     | '/cerez-politikasi'
+    | '/en'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
@@ -289,13 +396,22 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/projeler'
     | '/referanslar'
+    | '/ru'
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
     | '/blog/$slug'
+    | '/en/about'
+    | '/en/contact'
+    | '/en/products'
     | '/portfolio/$slug'
+    | '/ru/about'
+    | '/ru/contact'
+    | '/ru/products'
     | '/urunler/$slug'
     | '/blog/'
+    | '/en/'
+    | '/ru/'
     | '/urunler/'
     | '/admin/_protected/dashboard'
     | '/admin/_protected/leads'
@@ -309,6 +425,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   BlogRoute: typeof BlogRouteWithChildren
   CerezPolitikasiRoute: typeof CerezPolitikasiRoute
+  EnRoute: typeof EnRouteWithChildren
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
   IletisimRoute: typeof IletisimRoute
@@ -316,6 +433,7 @@ export interface RootRouteChildren {
   PortfolioRoute: typeof PortfolioRouteWithChildren
   ProjelerRoute: typeof ProjelerRoute
   ReferanslarRoute: typeof ReferanslarRoute
+  RuRoute: typeof RuRouteWithChildren
   UrunlerRoute: typeof UrunlerRouteWithChildren
 }
 
@@ -326,6 +444,13 @@ declare module '@tanstack/react-router' {
       path: '/urunler'
       fullPath: '/urunler'
       preLoaderRoute: typeof UrunlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ru': {
+      id: '/ru'
+      path: '/ru'
+      fullPath: '/ru'
+      preLoaderRoute: typeof RuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/referanslar': {
@@ -377,6 +502,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GizlilikPolitikasiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en': {
+      id: '/en'
+      path: '/en'
+      fullPath: '/en'
+      preLoaderRoute: typeof EnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cerez-politikasi': {
       id: '/cerez-politikasi'
       path: '/cerez-politikasi'
@@ -412,6 +544,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerIndexRouteImport
       parentRoute: typeof UrunlerRoute
     }
+    '/ru/': {
+      id: '/ru/'
+      path: '/'
+      fullPath: '/ru/'
+      preLoaderRoute: typeof RuIndexRouteImport
+      parentRoute: typeof RuRoute
+    }
+    '/en/': {
+      id: '/en/'
+      path: '/'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof EnRoute
+    }
     '/blog/': {
       id: '/blog/'
       path: '/'
@@ -426,12 +572,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerSlugRouteImport
       parentRoute: typeof UrunlerRoute
     }
+    '/ru/products': {
+      id: '/ru/products'
+      path: '/products'
+      fullPath: '/ru/products'
+      preLoaderRoute: typeof RuProductsRouteImport
+      parentRoute: typeof RuRoute
+    }
+    '/ru/contact': {
+      id: '/ru/contact'
+      path: '/contact'
+      fullPath: '/ru/contact'
+      preLoaderRoute: typeof RuContactRouteImport
+      parentRoute: typeof RuRoute
+    }
+    '/ru/about': {
+      id: '/ru/about'
+      path: '/about'
+      fullPath: '/ru/about'
+      preLoaderRoute: typeof RuAboutRouteImport
+      parentRoute: typeof RuRoute
+    }
     '/portfolio/$slug': {
       id: '/portfolio/$slug'
       path: '/$slug'
       fullPath: '/portfolio/$slug'
       preLoaderRoute: typeof PortfolioSlugRouteImport
       parentRoute: typeof PortfolioRoute
+    }
+    '/en/products': {
+      id: '/en/products'
+      path: '/products'
+      fullPath: '/en/products'
+      preLoaderRoute: typeof EnProductsRouteImport
+      parentRoute: typeof EnRoute
+    }
+    '/en/contact': {
+      id: '/en/contact'
+      path: '/contact'
+      fullPath: '/en/contact'
+      preLoaderRoute: typeof EnContactRouteImport
+      parentRoute: typeof EnRoute
+    }
+    '/en/about': {
+      id: '/en/about'
+      path: '/about'
+      fullPath: '/en/about'
+      preLoaderRoute: typeof EnAboutRouteImport
+      parentRoute: typeof EnRoute
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -536,6 +724,22 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface EnRouteChildren {
+  EnAboutRoute: typeof EnAboutRoute
+  EnContactRoute: typeof EnContactRoute
+  EnProductsRoute: typeof EnProductsRoute
+  EnIndexRoute: typeof EnIndexRoute
+}
+
+const EnRouteChildren: EnRouteChildren = {
+  EnAboutRoute: EnAboutRoute,
+  EnContactRoute: EnContactRoute,
+  EnProductsRoute: EnProductsRoute,
+  EnIndexRoute: EnIndexRoute,
+}
+
+const EnRouteWithChildren = EnRoute._addFileChildren(EnRouteChildren)
+
 interface PortfolioRouteChildren {
   PortfolioSlugRoute: typeof PortfolioSlugRoute
 }
@@ -547,6 +751,22 @@ const PortfolioRouteChildren: PortfolioRouteChildren = {
 const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
   PortfolioRouteChildren,
 )
+
+interface RuRouteChildren {
+  RuAboutRoute: typeof RuAboutRoute
+  RuContactRoute: typeof RuContactRoute
+  RuProductsRoute: typeof RuProductsRoute
+  RuIndexRoute: typeof RuIndexRoute
+}
+
+const RuRouteChildren: RuRouteChildren = {
+  RuAboutRoute: RuAboutRoute,
+  RuContactRoute: RuContactRoute,
+  RuProductsRoute: RuProductsRoute,
+  RuIndexRoute: RuIndexRoute,
+}
+
+const RuRouteWithChildren = RuRoute._addFileChildren(RuRouteChildren)
 
 interface UrunlerRouteChildren {
   UrunlerSlugRoute: typeof UrunlerSlugRoute
@@ -566,6 +786,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   BlogRoute: BlogRouteWithChildren,
   CerezPolitikasiRoute: CerezPolitikasiRoute,
+  EnRoute: EnRouteWithChildren,
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
   IletisimRoute: IletisimRoute,
@@ -573,6 +794,7 @@ const rootRouteChildren: RootRouteChildren = {
   PortfolioRoute: PortfolioRouteWithChildren,
   ProjelerRoute: ProjelerRoute,
   ReferanslarRoute: ReferanslarRoute,
+  RuRoute: RuRouteWithChildren,
   UrunlerRoute: UrunlerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
