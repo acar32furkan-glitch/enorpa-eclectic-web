@@ -18,9 +18,9 @@ type NavDict = {
 };
 
 const t: Record<Lang, NavDict> = {
-  TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Referanslar", "Belgeler", "İletişim"], quote: "Teklif Al" },
-  EN: { nav: ["Home", "Products", "About", "References", "Documents", "Contact"], quote: "Get Quote" },
-  RU: { nav: ["Главная", "Продукция", "О компании", "Проекты", "Документы", "Контакты"], quote: "Запросить цену" },
+  TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Blog", "Projeler", "Referanslar", "İletişim"], quote: "Teklif Al" },
+  EN: { nav: ["Home", "Products", "About", "Blog", "Projects", "References", "Contact"], quote: "Get Quote" },
+  RU: { nav: ["Главная", "Продукция", "О компании", "Блог", "Проекты", "Проекты", "Контакты"], quote: "Запросить цену" },
 };
 
 const WHATSAPP = "908504712100";
@@ -58,9 +58,10 @@ export function SiteHeader() {
     if (isIndex === 0) return "/";
     if (isIndex === 1) return "/urunler";
     if (isIndex === 2) return "/hakkimizda";
-    if (isIndex === 3) return "/#refs";
-    if (isIndex === 4) return "/#docs";
-    if (isIndex === 5) return "/iletisim";
+    if (isIndex === 3) return "/blog";
+    if (isIndex === 4) return "/projeler";
+    if (isIndex === 5) return "/referanslar";
+    if (isIndex === 6) return "/iletisim";
     return "#";
   };
 

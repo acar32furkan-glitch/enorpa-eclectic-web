@@ -28,16 +28,26 @@ function cleanContent(html: string): string {
 }
 
 export const Route = createFileRoute("/blog/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
-      { name: "description", content: "Blog yazısı" },
-      { property: "og:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
-      { property: "og:type", content: "article" },
-      { property: "og:locale", content: "tr_TR" },
-    ],
-    links: [{ rel: "canonical", href: `https://enorpa.com/blog/${params.slug}` }],
-  }),
+  head: ({ params }) => {
+    return {
+      meta: [
+        { title: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { name: "description", content: "Blog yazısı" },
+        { property: "og:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { property: "og:description", content: "Blog yazısı" },
+        { property: "og:type", content: "article" },
+        { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+        { property: "og:url", content: `https://enorpa.com/blog/${params.slug}` },
+        { property: "og:locale", content: "tr_TR" },
+        { property: "og:site_name", content: "Enorpa Enerji" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { name: "twitter:description", content: "Blog yazısı" },
+        { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      ],
+      links: [{ rel: "canonical", href: `https://enorpa.com/blog/${params.slug}` }],
+    };
+  },
   component: BlogDetailPage,
   loader: async ({ params }) => {
     const { slug } = params;
