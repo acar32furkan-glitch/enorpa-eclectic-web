@@ -41,8 +41,15 @@
     { "source": "/tr/kazan-kontrol-panosu/", "destination": "/urunler/kazan-kontrol-panosu", "statusCode": 301 },
     { "source": "/tr/yedek-parca/", "destination": "/urunler/yedek-parca", "statusCode": 301 },
     { "source": "/tr/portfolio/(.*)", "destination": "/portfolio/$1", "statusCode": 301 },
-    { "source": "/en/(.*)", "destination": "/", "statusCode": 301 },
-    { "source": "/ru/(.*)", "destination": "/", "statusCode": 301 }
+    { "source": "/tr/hakkimizda/", "destination": "/hakkimizda", "statusCode": 301 },
+    { "source": "/tr/iletisim/", "destination": "/iletisim", "statusCode": 301 },
+    { "source": "/tr/urunler/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/blog-2/", "destination": "/blog", "statusCode": 301 },
+    { "source": "/tr/blog-2/(.*)", "destination": "/blog/$1", "statusCode": 301 },
+    { "source": "/tr/projeler/", "destination": "/projeler", "statusCode": 301 },
+    { "source": "/tr/referanslarimiz/", "destination": "/referanslar", "statusCode": 301 },
+    { "source": "/tr/neden-enorpa/", "destination": "/blog/neden-enorpa", "statusCode": 301 },
+    { "source": "/tr/(.*)", "destination": "/$1", "statusCode": 301 }
   ],
   "headers": [
     {

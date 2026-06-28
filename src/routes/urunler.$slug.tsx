@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Gauge, FileDown } from "lucide-react";
 import { fetchProductBySlug, type Product, productCategories } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { generateProductSchema, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/urunler/$slug")({
   head: ({ params }) => {
@@ -22,6 +23,12 @@ export const Route = createFileRoute("/urunler/$slug")({
       links: [
         { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
       ],
+      scripts: product ? [{ type: "application/ld+json", children: JSON.stringify(generateProductSchema({
+        name: product.name,
+        description: product.detail || product.type,
+        image: product.image_url,
+        slug: params.slug,
+      })) }] : [],
     };
   },
   component: ProductDetailPage,
