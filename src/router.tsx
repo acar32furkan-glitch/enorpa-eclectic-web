@@ -17,6 +17,10 @@ import { Route as UrunlerIndexRouteImport } from "./routes/urunler.index";
 import { Route as BlogRouteImport } from "./routes/blog";
 import { Route as BlogIndexRouteImport } from "./routes/blog.index";
 import { Route as BlogSlugRouteImport } from "./routes/blog.$slug";
+import { Route as ProjelerRouteImport } from "./routes/projeler";
+import { Route as ReferanslarRouteImport } from "./routes/referanslar";
+import { Route as GizlilikPolitikasiRouteImport } from "./routes/gizlilik-politikasi";
+import { Route as CerezPolitikasiRouteImport } from "./routes/cerez-politikasi";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +29,10 @@ const routeTree = __rootImport._addFileChildren({
   HakkimizdaRoute: HakkimizdaRouteImport.update({ getId: () => '/hakkimizda', path: '/hakkimizda', getParentRoute: () => __rootImport } as any),
   KvkkRoute: KvkkRouteImport.update({ getId: () => '/kvkk', path: '/kvkk', getParentRoute: () => __rootImport } as any),
   IletisimRoute: IletisimRouteImport.update({ getId: () => '/iletisim', path: '/iletisim', getParentRoute: () => __rootImport } as any),
+  ProjelerRoute: ProjelerRouteImport.update({ getId: () => '/projeler', path: '/projeler', getParentRoute: () => __rootImport } as any),
+  ReferanslarRoute: ReferanslarRouteImport.update({ getId: () => '/referanslar', path: '/referanslar', getParentRoute: () => __rootImport } as any),
+  GizlilikPolitikasiRoute: GizlilikPolitikasiRouteImport.update({ getId: () => '/gizlilik-politikasi', path: '/gizlilik-politikasi', getParentRoute: () => __rootImport } as any),
+  CerezPolitikasiRoute: CerezPolitikasiRouteImport.update({ getId: () => '/cerez-politikasi', path: '/cerez-politikasi', getParentRoute: () => __rootImport } as any),
   AdminLoginRoute: AdminLoginRouteImport.update({ getId: () => '/admin/login', path: '/admin/login', getParentRoute: () => __rootImport } as any),
   AdminProtectedRoute: AdminProtectedRouteImport.update({ getId: () => '/admin', path: '/admin', getParentRoute: () => __rootImport } as any)._addFileChildren({
     AdminDashboardRoute: AdminDashboardRouteImport.update({ getId: () => '/dashboard', path: '/dashboard', getParentRoute: () => AdminProtectedRouteImport } as any),
