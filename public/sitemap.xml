@@ -16,31 +16,31 @@
     <priority>0.8</priority>
   </url>
   
-  <!-- Product Detail Pages (2026-06-23) -->
-  <url><loc>https://enorpa.com/urunler/oniks-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/obsidyen-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/akuamarin-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/ametist-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/turkuaz-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kalsedon-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kuvars-serisi-tek-kulhanli</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kuvars-serisi-cift-kulhanli</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kuvars-ng-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/turmalin-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/has-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/has-ng-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/has-turbo-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/akuamarin-ks-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/turkuaz-ks-serisi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kat-kaloriferi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/anahtar-teslim-sera-isitma-sistemi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/brulorler</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/baca</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kondenser</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/ekonomizer</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kazan-otomasyon-sistemi</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/kazan-kontrol-panosu</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
-  <url><loc>https://enorpa.com/urunler/yedek-parca</loc><lastmod>2026-06-23</lastmod><priority>0.7</priority></url>
+<!-- Product Detail Pages -->
+   <url><loc>https://enorpa.com/urunler/obsidyen-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/akuamarin-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/ametist-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/turkuaz-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kalsedon-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kuvars-serisi-tek-kulhanli</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kuvars-serisi-cift-kulhanli</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kuvars-ng-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/turmalin-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/has-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/has-ng-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/has-turbo-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/akuamarin-ks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/turkuaz-ks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kat-kaloriferi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/anahtar-teslim-sera-isitma-sistemi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/brulorler</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/baca</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kondenser</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/ekonomizer</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kazan-otomasyon-sistemi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/kazan-kontrol-panosu</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/oniks-serisi</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+   <url><loc>https://enorpa.com/urunler/yedek-parca</loc><lastmod>2026-06-28</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
   
   <url>
     <loc>https://enorpa.com/gizlilik-politikasi</loc>
