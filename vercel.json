@@ -40,6 +40,7 @@
     { "source": "/tr/kazan-otomasyon-sistemi/", "destination": "/urunler/kazan-otomasyon-sistemi", "statusCode": 301 },
     { "source": "/tr/kazan-kontrol-panosu/", "destination": "/urunler/kazan-kontrol-panosu", "statusCode": 301 },
     { "source": "/tr/yedek-parca/", "destination": "/urunler/yedek-parca", "statusCode": 301 },
+    { "source": "/tr/portfolio/(.*)", "destination": "/portfolio/$1", "statusCode": 301 },
     { "source": "/en/(.*)", "destination": "/", "statusCode": 301 },
     { "source": "/ru/(.*)", "destination": "/", "statusCode": 301 }
   ],
