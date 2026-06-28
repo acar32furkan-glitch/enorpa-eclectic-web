@@ -4,8 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 function cleanContent(html: string): string {
-  return html
-    .replace(/\[[\s\S]*?\]/g, '')
+  let result = html;
+  result = result
+    .replace(/\[vc_[^]]*\]([\s\S]*?)?\[\/vc_[^]]*\]/g, '')
+    .replace(/\[[^\]]*\]/g, '');
+  return result
     .replace(/&#8221;|&#8220;/g, '"')
     .replace(/&#8217;|&#8216;/g, "'")
     .replace(/&#8230;/g, '...')
