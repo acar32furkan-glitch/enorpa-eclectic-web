@@ -1,52 +1,57 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".vercel/output/static",
-  "installCommand": "npm install",
   "redirects": [
-    { "source": "/urunler/", "destination": "/urunler", "permanent": true },
-    { "source": "/hakkimizda/", "destination": "/hakkimizda", "permanent": true },
-    { "source": "/iletisim/", "destination": "/iletisim", "permanent": true },
-    { "source": "/kazanlar/", "destination": "/urunler", "permanent": true },
-    { "source": "/buhar-kazanlari/", "destination": "/urunler", "permanent": true },
-    { "source": "/sicak-su-kazanlari/", "destination": "/urunler", "permanent": true },
-    { "source": "/sicak-hava-kazanlari/", "destination": "/urunler", "permanent": true },
-    { "source": "/kizgin-su-kazanlari/", "destination": "/urunler", "permanent": true },
-    { "source": "/has-serisi/", "destination": "/urunler/has-serisi", "permanent": true },
-    { "source": "/kalsedon-serisi/", "destination": "/urunler/kalsedon-serisi", "permanent": true },
-    { "source": "/obsidyen-serisi/", "destination": "/urunler/obsidyen-serisi", "permanent": true },
-    { "source": "/akuamarin-serisi/", "destination": "/urunler/akuamarin-serisi", "permanent": true },
-    { "source": "/turmalin-serisi/", "destination": "/urunler/turmalin-serisi", "permanent": true },
-    { "source": "/kuvars-serisi-tek-kulhanli/", "destination": "/urunler/kuvars-serisi-tek-kulhanli", "permanent": true },
-    { "source": "/kuvars-serisi-cift-kulhanli/", "destination": "/urunler/kuvars-serisi-cift-kulhanli", "permanent": true },
-    { "source": "/kuvars-ng-serisi/", "destination": "/urunler/kuvars-ng-serisi", "permanent": true },
-    { "source": "/has-turbo-serisi/", "destination": "/urunler/has-turbo-serisi", "permanent": true },
-    { "source": "/has-ng-serisi/", "destination": "/urunler/has-ng-serisi", "permanent": true },
-    { "source": "/ametist-serisi/", "destination": "/urunler/ametist-serisi", "permanent": true },
-    { "source": "/turkuaz-serisi/", "destination": "/urunler/turkuaz-serisi", "permanent": true },
-    { "source": "/oniks-serisi/", "destination": "/urunler/oniks-serisi", "permanent": true },
-    { "source": "/kondenser/", "destination": "/urunler/kondenser", "permanent": true },
-    { "source": "/anahtar-teslim-sera-isitma-sistemi/", "destination": "/urunler/anahtar-teslim-sera-isitma-sistemi", "permanent": true }
+    { "source": "/tr/", "destination": "/", "statusCode": 301 },
+    { "source": "/en/", "destination": "/", "statusCode": 301 },
+    { "source": "/ru/", "destination": "/", "statusCode": 301 },
+    { "source": "/tr/hakkimizda/", "destination": "/hakkimizda", "statusCode": 301 },
+    { "source": "/tr/iletisim/", "destination": "/iletisim", "statusCode": 301 },
+    { "source": "/tr/urunler/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/projeler/", "destination": "/projeler", "statusCode": 301 },
+    { "source": "/tr/referanslarimiz/", "destination": "/referanslar", "statusCode": 301 },
+    { "source": "/tr/jasper-serisi/", "destination": "/urunler/jasper-serisi", "statusCode": 301 },
+    { "source": "/tr/sicak-hava-kazanlari/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/sicak-su-kazanlari/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/buhar-kazanlari/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/kizgin-su-kazanlari/", "destination": "/urunler", "statusCode": 301 },
+    { "source": "/tr/blog-2/", "destination": "/blog", "statusCode": 301 },
+    { "source": "/tr/blog-2/(.*)", "destination": "/blog/$1", "statusCode": 301 },
+    { "source": "/tr/neden-enorpa/", "destination": "/blog/neden-enorpa", "statusCode": 301 },
+    { "source": "/tr/has-serisi/", "destination": "/urunler/has-serisi", "statusCode": 301 },
+    { "source": "/tr/has-ng-serisi/", "destination": "/urunler/has-ng-serisi", "statusCode": 301 },
+    { "source": "/tr/has-turbo-serisi/", "destination": "/urunler/has-turbo-serisi", "statusCode": 301 },
+    { "source": "/tr/akuamarin-serisi/", "destination": "/urunler/akuamarin-serisi", "statusCode": 301 },
+    { "source": "/tr/ametist-serisi/", "destination": "/urunler/ametist-serisi", "statusCode": 301 },
+    { "source": "/tr/turkuaz-serisi/", "destination": "/urunler/turkuaz-serisi", "statusCode": 301 },
+    { "source": "/tr/kalsedon-serisi/", "destination": "/urunler/kalsedon-serisi", "statusCode": 301 },
+    { "source": "/tr/obsidyen-serisi/", "destination": "/urunler/obsidyen-serisi", "statusCode": 301 },
+    { "source": "/tr/kuvars-serisi-tek-kulhanli/", "destination": "/urunler/kuvars-serisi-tek-kulhanli", "statusCode": 301 },
+    { "source": "/tr/kuvars-serisi-cift-kulhanli/", "destination": "/urunler/kuvars-serisi-cift-kulhanli", "statusCode": 301 },
+    { "source": "/tr/kuvars-ng-serisi/", "destination": "/urunler/kuvars-ng-serisi", "statusCode": 301 },
+    { "source": "/tr/turmalin-serisi/", "destination": "/urunler/turmalin-serisi", "statusCode": 301 },
+    { "source": "/tr/akuamarin-ks-serisi/", "destination": "/urunler/akuamarin-ks-serisi", "statusCode": 301 },
+    { "source": "/tr/turkuaz-ks-serisi/", "destination": "/urunler/turkuaz-ks-serisi", "statusCode": 301 },
+    { "source": "/tr/oniks-serisi/", "destination": "/urunler/oniks-serisi", "statusCode": 301 },
+    { "source": "/tr/kat-kaloriferi/", "destination": "/urunler/kat-kaloriferi", "statusCode": 301 },
+    { "source": "/tr/anahtar-teslim-sera-isitma-sistemi/", "destination": "/urunler/anahtar-teslim-sera-isitma-sistemi", "statusCode": 301 },
+    { "source": "/tr/brulorler/", "destination": "/urunler/brulorler", "statusCode": 301 },
+    { "source": "/tr/baca/", "destination": "/urunler/baca", "statusCode": 301 },
+    { "source": "/tr/kondenser/", "destination": "/urunler/kondenser", "statusCode": 301 },
+    { "source": "/tr/ekonomizer/", "destination": "/urunler/ekonomizer", "statusCode": 301 },
+    { "source": "/tr/kazan-otomasyon-sistemi/", "destination": "/urunler/kazan-otomasyon-sistemi", "statusCode": 301 },
+    { "source": "/tr/kazan-kontrol-panosu/", "destination": "/urunler/kazan-kontrol-panosu", "statusCode": 301 },
+    { "source": "/tr/yedek-parca/", "destination": "/urunler/yedek-parca", "statusCode": 301 },
+    { "source": "/en/(.*)", "destination": "/", "statusCode": 301 },
+    { "source": "/ru/(.*)", "destination": "/", "statusCode": 301 }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ]

@@ -55,6 +55,19 @@ export const productCategories: ProductCategory[] = [
         specs: { yakit: "Kömür/Pelet/Prina", basinc: "3 barG", standart: "TS EN 497" },
         featured: true,
       },
+      {
+        name: "Jasper Serisi",
+        type: "Sıvı-Gaz Yakıtlı Buhar Jeneratörü",
+        capacity: "349 kW – 2.093 kW",
+        detail:
+          "Sıvı – Gaz Yakıtlı, Su Borulu Serpantinli, 3 Geçişli, CE Belgeli, TS – 12952 ve 2014/68/EU Basınçlı Kaplar Direktifine Uygun. Buhar seperatörü sayesinde %96 kurulukta buhar üretir. 2 ila 5 dakika arasında buhar üreterek prosese iletir.",
+        specs: {
+          yakit: "Sıvı-Gaz Yakıtlar",
+          standart: "CE Belgeli; TS – 12952 ve 2014/68/EU",
+          cikisSicakligi: "%91'e Varan Termal Verim",
+        },
+        featured: true,
+      },
     ],
   },
   {
