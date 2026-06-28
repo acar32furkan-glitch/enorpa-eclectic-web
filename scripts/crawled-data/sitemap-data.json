@@ -1,0 +1,392 @@
+[
+  {
+    "loc": "https://enorpa.com/",
+    "priority": "1.0",
+    "changefreq": "weekly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en",
+    "priority": "1.0",
+    "changefreq": "weekly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru",
+    "priority": "1.0",
+    "changefreq": "weekly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/hakkimizda",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/about",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/about",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/iletisim",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/contact",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/contact",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/urunler",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/products",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/products",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/has-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/has-ng-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/has-turbo-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/akuamarin-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/ametist-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/turkuaz-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kalsedon-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/obsidyen-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kuvars-serisi-tek-kulhanli",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kuvars-serisi-cift-kulhanli",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kuvars-ng-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/turmalin-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/akuamarin-ks-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/turkuaz-ks-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/oniks-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kat-kaloriferi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/anahtar-teslim-sera-isitma-sistemi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/brulorler",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/baca",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kondenser",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/ekonomizer",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kazan-otomasyon-sistemi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kazan-kontrol-panosu",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/yedek-parca",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/jasper-serisi",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/has-series-hot-air-boilers",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/en/condenser",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/en/superheated-water-boilers",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/en/hot-air-boilers",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/en/kuvars-ng-series",
+    "priority": "0.7",
+    "changefreq": "monthly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/tr/projeler",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/projects",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/projects",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/portfolio/ozbekistan-taskent",
+    "priority": "0.7",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/portfolio/ozbekistan-harezm",
+    "priority": "0.7",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/portfolio/turkiye-manisa",
+    "priority": "0.7",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/portfolio/turkiye-izmir",
+    "priority": "0.7",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/portfolio/turkiye-isparta",
+    "priority": "0.7",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/referanslarimiz",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/references",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/references",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/blog-2",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/en/blog",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "en"
+  },
+  {
+    "loc": "https://enorpa.com/ru/blog",
+    "priority": "0.5",
+    "changefreq": "yearly",
+    "language": "ru"
+  },
+  {
+    "loc": "https://enorpa.com/tr/neden-enorpa",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/has-serisi-sicak-hava-kazanlari",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/turmalin-serisi-buhar-kazani-endustriyel-isitmanin-yeni-yuzu",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/kondenser-nedir-calisma-prensibi-verim-ve-uygulamalar-2",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/growtech-antalya-23",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/greenhouse-almati-kazakistan",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/agroworld-ozbekistan",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/domat-expo-antalya-2019",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  },
+  {
+    "loc": "https://enorpa.com/tr/enorpa-at-greentech-amsterdam-2025",
+    "priority": "0.6",
+    "changefreq": "monthly",
+    "language": "tr"
+  }
+]
