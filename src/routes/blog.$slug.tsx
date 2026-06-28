@@ -40,9 +40,9 @@ export const Route = createFileRoute("/blog/$slug")({
 
     return {
       meta: [
-        { title: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { title: `${params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")} | Enorpa Blog` },
         { name: "description", content: "Blog yazısı" },
-        { property: "og:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { property: "og:title", content: `${params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")} | Enorpa Blog` },
         { property: "og:description", content: "Blog yazısı" },
         { property: "og:type", content: "article" },
         { property: "og:image", content: SITE.defaultOgImage },
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:locale", content: "tr_TR" },
         { property: "og:site_name", content: SITE.name },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: `${params.slug.replace(/-/g, " ")} | Enorpa Blog` },
+        { name: "twitter:title", content: `${params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")} | Enorpa Blog` },
         { name: "twitter:description", content: "Blog yazısı" },
         { name: "twitter:image", content: SITE.defaultOgImage },
       ],

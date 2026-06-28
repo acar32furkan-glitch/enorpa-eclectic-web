@@ -1,0 +1,204 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - link "+90 850 471 2100" [ref=e7] [cursor=pointer]:
+            - /url: tel:+908504712100
+            - img [ref=e8]
+            - generic [ref=e10]: +90 850 471 2100
+          - link "turuncu@enorpa.com" [ref=e11] [cursor=pointer]:
+            - /url: mailto:turuncu@enorpa.com
+            - img [ref=e12]
+            - generic [ref=e15]: turuncu@enorpa.com
+        - generic [ref=e16]:
+          - button "TR" [ref=e18]
+          - generic [ref=e19]:
+            - generic [ref=e20]: "|"
+            - button "EN" [ref=e21]
+          - generic [ref=e22]:
+            - generic [ref=e23]: "|"
+            - button "RU" [ref=e24]
+      - generic [ref=e26]:
+        - link "ENORPA" [ref=e27] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e28]: ENORPA
+        - navigation [ref=e30]:
+          - link "Anasayfa" [ref=e31] [cursor=pointer]:
+            - /url: /
+          - link "Ürünler" [ref=e32] [cursor=pointer]:
+            - /url: /urunler
+          - link "Hakkımızda" [ref=e33] [cursor=pointer]:
+            - /url: /hakkimizda
+          - link "Blog" [ref=e34] [cursor=pointer]:
+            - /url: /blog
+          - link "Projeler" [ref=e35] [cursor=pointer]:
+            - /url: /projeler
+          - link "Referanslar" [ref=e36] [cursor=pointer]:
+            - /url: /referanslar
+          - link "İletişim" [ref=e37] [cursor=pointer]:
+            - /url: /iletisim
+        - link "Teklif Al" [ref=e39] [cursor=pointer]:
+          - /url: /referanslar
+          - text: Teklif Al
+          - img [ref=e40]
+      - generic [ref=e42]:
+        - navigation "Breadcrumb" [ref=e43]:
+          - list [ref=e44]:
+            - listitem [ref=e45]:
+              - link "Anasayfa" [ref=e46] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e47]:
+              - generic [ref=e48]: /
+              - generic [ref=e49]: Referanslar
+        - generic [ref=e50]:
+          - generic [ref=e51]: Referanslar
+          - heading "Referanslarımız" [level=1] [ref=e52]
+          - paragraph [ref=e53]: 26 ülkede 138+ proje ve 347+ müşteriye hizmet vermekteyiz. Müşterilerimizin deneyimleri ve başarı hikayeleri.
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - generic [ref=e56]: "26"
+            - generic [ref=e57]: Ülke
+          - generic [ref=e58]:
+            - generic [ref=e59]: 138+
+            - generic [ref=e60]: Proje
+          - generic [ref=e61]:
+            - generic [ref=e62]: 347+
+            - generic [ref=e63]: Müşteri
+        - generic [ref=e64]:
+          - heading "Müşteri Yorumları" [level=2] [ref=e65]
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - img [ref=e69]
+                - img [ref=e71]
+                - img [ref=e73]
+                - img [ref=e75]
+                - img [ref=e77]
+              - generic [ref=e79]:
+                - img [ref=e80]
+                - paragraph [ref=e83]: Enorpa HAS Serisi kazan ile yakıt tüketimimiz %30 azaldı. Profesyonel ekip ve kaliteli ürün için teşekkürler.
+              - generic [ref=e84]:
+                - generic [ref=e85]: H
+                - generic [ref=e86]:
+                  - generic [ref=e87]: Hasan Yılmaz
+                  - generic [ref=e88]: Aktaş Tarım Ltd.Şti · Konya, Türkiye
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - img [ref=e91]
+                - img [ref=e93]
+                - img [ref=e95]
+                - img [ref=e97]
+                - img [ref=e99]
+              - generic [ref=e101]:
+                - img [ref=e102]
+                - paragraph [ref=e105]: Jasper Serisi buhar jeneratörü ile üretimimizi %20 artırdık. Enorpa ekibi çok ilgili ve profesyonel.
+              - generic [ref=e106]:
+                - generic [ref=e107]: M
+                - generic [ref=e108]:
+                  - generic [ref=e109]: Mehmet Demir
+                  - generic [ref=e110]: Demir Sera İşletmeleri · Antalya, Türkiye
+            - generic [ref=e111]:
+              - generic [ref=e112]:
+                - img [ref=e113]
+                - img [ref=e115]
+                - img [ref=e117]
+                - img [ref=e119]
+                - img [ref=e121]
+              - generic [ref=e123]:
+                - img [ref=e124]
+                - paragraph [ref=e127]: Kondenser sayesinde enerji tasarrufu sağladık. Kurulum hızlı, servis mükemmel.
+              - generic [ref=e128]:
+                - generic [ref=e129]: A
+                - generic [ref=e130]:
+                  - generic [ref=e131]: Ali Kaya
+                  - generic [ref=e132]: Kaya Gıda A.Ş. · İzmir, Türkiye
+            - generic [ref=e133]:
+              - generic [ref=e134]:
+                - img [ref=e135]
+                - img [ref=e137]
+                - img [ref=e139]
+                - img [ref=e141]
+                - img [ref=e143]
+              - generic [ref=e145]:
+                - img [ref=e146]
+                - paragraph [ref=e149]: Anahtar teslim sera ısıtma sistemi ile zaman tasarrufu sağladık. Tavsiye ederim.
+              - generic [ref=e150]:
+                - generic [ref=e151]: F
+                - generic [ref=e152]:
+                  - generic [ref=e153]: Fatma Öztürk
+                  - generic [ref=e154]: Öztürk Tarım · Bursa, Türkiye
+        - generic [ref=e155]:
+          - heading "Sıradaki Projeniz İçin Hazırız" [level=2] [ref=e156]
+          - paragraph [ref=e157]: 25+ yıllık tecrübemiz ve 138+ başarılı projemizle tesisinizin ısıtma ihtiyacına en uygun çözümü sunalım.
+          - link "Teklif Alın" [ref=e158] [cursor=pointer]:
+            - /url: /iletisim
+      - generic [ref=e159]:
+        - generic [ref=e160]:
+          - generic [ref=e161]:
+            - generic [ref=e163]: ENORPA
+            - paragraph [ref=e165]: Endüstriyel buhar, sıcak su ve sıcak hava sistemlerinde 25+ yıllık üretim deneyimi.
+            - generic [ref=e166]:
+              - generic [ref=e167]: Sertifikalar
+              - generic [ref=e168]: CE
+              - generic [ref=e169]: TSE
+              - generic [ref=e170]: ISO
+          - generic [ref=e171]:
+            - generic [ref=e172]: Ürünler
+            - list [ref=e173]:
+              - listitem [ref=e174]:
+                - link "Ürünlerimiz" [ref=e175] [cursor=pointer]:
+                  - /url: /urunler
+          - generic [ref=e176]:
+            - generic [ref=e177]: Kurumsal
+            - list [ref=e178]:
+              - listitem [ref=e179]:
+                - link "Hakkımızda" [ref=e180] [cursor=pointer]:
+                  - /url: /hakkimizda
+              - listitem [ref=e181]:
+                - link "Referanslar" [ref=e182] [cursor=pointer]:
+                  - /url: /#refs
+              - listitem [ref=e183]:
+                - link "Dokümanlar" [ref=e184] [cursor=pointer]:
+                  - /url: /#docs
+              - listitem [ref=e185]:
+                - link "İletişim" [ref=e186] [cursor=pointer]:
+                  - /url: /iletisim
+          - generic [ref=e187]:
+            - generic [ref=e188]: Fabrika & İletişim
+            - generic [ref=e189]:
+              - generic [ref=e190]:
+                - img [ref=e191]
+                - generic [ref=e194]: Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA
+              - link "+90 850 471 2100" [ref=e195] [cursor=pointer]:
+                - /url: tel:+908504712100
+                - img [ref=e196]
+                - text: +90 850 471 2100
+              - link "turuncu@enorpa.com" [ref=e198] [cursor=pointer]:
+                - /url: mailto:turuncu@enorpa.com
+                - img [ref=e199]
+                - text: turuncu@enorpa.com
+            - generic [ref=e202]:
+              - img [ref=e203]
+              - text: Google Maps
+        - generic [ref=e207]:
+          - generic [ref=e208]: © 2026 Enorpa Enerji. Tüm hakları saklıdır.
+          - generic [ref=e209]:
+            - link "Gizlilik" [ref=e210] [cursor=pointer]:
+              - /url: /gizlilik-politikasi
+            - link "KVKK" [ref=e211] [cursor=pointer]:
+              - /url: /kvkk
+            - link "Çerezler" [ref=e212] [cursor=pointer]:
+              - /url: /cerez-politikasi
+  - generic [ref=e213]:
+    - paragraph [ref=e214]:
+      - text: Bu site, deneyiminizi geliştirmek ve site trafiğini analiz etmek için çerezler kullanır. Detaylar için
+      - link "Çerez Politikamızı" [ref=e215] [cursor=pointer]:
+        - /url: /cerez-politikasi
+      - text: inceleyebilirsiniz.
+    - generic [ref=e216]:
+      - button "Reddet" [ref=e217]
+      - button "Kabul Et" [ref=e218]
+  - link "WhatsApp" [ref=e219] [cursor=pointer]:
+    - /url: https://wa.me/908504712100
+    - img [ref=e220]
