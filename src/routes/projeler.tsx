@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, Globe, Calendar } from "lucide-react";
 
 const projects = [
   {
+    slug: "ozbekistan-taskent",
     title: "Özbekistan/Taşkent",
     subtitle: "Sera Isıtma Tesisatı Kurulumu",
     description: "Taşkent'te sera ısıtma tesisatı kurulumu gerçekleştirdik. Enorpa HAS Serisi kazanlar ile donatılan tesis, yüksek verimlilik sağlamaktadır.",
@@ -13,6 +14,7 @@ const projects = [
     icon: Globe,
   },
   {
+    slug: "ozbekistan-harezm",
     title: "Özbekistan/Harezm",
     subtitle: "Sera Isıtma Tesisatı Kurulumu",
     description: "Harezm'de sera ısıtma tesisatı kurulumu. Sıcak iklim koşullarına uygun özel tasarım.",
@@ -21,6 +23,7 @@ const projects = [
     icon: Globe,
   },
   {
+    slug: "turkiye-manisa",
     title: "Türkiye/Manisa",
     subtitle: "Buhar Kazanı Kurulumu",
     description: "Manisa'da buhar kazanı kurulumu. Sanayi tesisine özel buhar kazanı devreye alındı.",
@@ -29,6 +32,7 @@ const projects = [
     icon: MapPin,
   },
   {
+    slug: "turkiye-izmir",
     title: "Türkiye/İzmir",
     subtitle: "Sera Isıtma Tesisatı Kurulumu",
     description: "İzmir'de sera ısıtma tesisatı kurulumu. Seracılık sektörüne özel çözümler.",
@@ -37,6 +41,7 @@ const projects = [
     icon: MapPin,
   },
   {
+    slug: "turkiye-isparta",
     title: "Türkiye/Isparta",
     subtitle: "Orman Ürünlerinin Kurutulması",
     description: "Isparta'da orman ürünleri kurutma sistemi kurulumu. Enerji verimliliği odaklı tasarım.",
@@ -100,28 +105,30 @@ function ProjelerPage() {
           {projects.map((project, i) => {
             const Icon = project.icon;
             return (
-              <div key={i} className="bg-white border border-border p-6 hover:border-orange transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 bg-orange/10 flex items-center justify-center flex-shrink-0">
-                    <Icon className="h-6 w-6 text-orange" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-1">
-                      <h3 className="font-display text-navy font-bold uppercase">{project.title}</h3>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {project.year}
-                      </span>
+              <Link key={i} to="/portfolio/$slug" params={{ slug: project.slug }} className="block">
+                <div className="bg-white border border-border p-6 hover:border-orange transition-colors cursor-pointer">
+                  <div className="flex items-start gap-4">
+                    <div className="h-12 w-12 bg-orange/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="h-6 w-6 text-orange" />
                     </div>
-                    <div className="text-sm text-orange font-medium mb-2">{project.subtitle}</div>
-                    <p className="text-sm text-muted-foreground">{project.description}</p>
-                    <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {project.location}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-display text-navy font-bold uppercase group-hover:text-orange transition-colors">{project.title}</h3>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {project.year}
+                        </span>
+                      </div>
+                      <div className="text-sm text-orange font-medium mb-2">{project.subtitle}</div>
+                      <p className="text-sm text-muted-foreground">{project.description}</p>
+                      <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {project.location}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
