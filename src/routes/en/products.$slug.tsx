@@ -1,0 +1,148 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Gauge, FileDown, ArrowLeft } from "lucide-react";
+import { fetchProductBySlug, productCategories, type Product } from "@/data/products";
+import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { SITE } from "@/lib/seo";
+
+export const Route = createFileRoute("/en/products/$slug")({
+  head: ({ params }) => {
+    const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    return {
+      meta: [
+        { title: `${title} | Enorpa Energy` },
+        { name: "description", content: `${title} - Enorpa Energy product catalog. High efficiency, reliable, and eco-friendly.` },
+        { property: "og:title", content: `${title} | Enorpa Energy` },
+        { property: "og:description", content: `${title} - Enorpa Energy industrial boiler.` },
+        { property: "og:type", content: "product" },
+        { property: "og:image", content: SITE.defaultOgImage },
+        { property: "og:url", content: `https://enorpa.com/en/products/${params.slug}` },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:site_name", content: SITE.name },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${title} | Enorpa Energy` },
+        { name: "twitter:description", content: `${title} - Enorpa Energy.` },
+        { name: "twitter:image", content: SITE.defaultOgImage },
+      ],
+      links: [{ rel: "canonical", href: `https://enorpa.com/en/products/${params.slug}` }],
+    };
+  },
+  component: EnProductDetailPage,
+  loader: async ({ params }) => {
+    const product = await fetchProductBySlug(params.slug);
+    return product;
+  },
+});
+
+function EnProductDetailPage() {
+  const loaderData = Route.useLoaderData() as Product | null;
+  const [category, setCategory] = useState<string>("Other Products");
+
+  useEffect(() => {
+    if (loaderData && loaderData.category) {
+      const cat = productCategories.find((c) => c.id === loaderData.category);
+      if (cat) setCategory(cat.title);
+    }
+  }, [loaderData]);
+
+  if (!loaderData) {
+    return (
+      <div className="min-h-screen bg-background">
+        <SiteHeader />
+        <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
+          <div className="text-center py-20">
+            <h1 className="font-display text-3xl font-bold text-navy mb-4">Product Not Found</h1>
+            <Link to="/en/products" className="inline-flex items-center gap-2 bg-orange text-white font-display uppercase tracking-wider text-sm px-5 py-2.5 hover:bg-orange-dark transition-colors">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Products
+            </Link>
+          </div>
+        </div>
+        <SiteFooter />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">
+        <Link to="/en/products" className="inline-flex items-center gap-2 text-sm font-display uppercase tracking-wider text-navy-dark hover:text-orange mb-6">
+          <ArrowLeft className="h-4 w-4" />
+          Products
+        </Link>
+
+        <article>
+          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
+            {category}
+          </div>
+          <h1 className="font-display text-navy text-3xl md:text-4xl font-bold uppercase mb-4">
+            {loaderData.name}
+          </h1>
+          <p className="text-muted-foreground mb-4">{loaderData.type}</p>
+
+          {loaderData.capacity && (
+            <div className="flex items-center gap-2 text-sm text-orange font-medium mb-6">
+              <Gauge className="h-4 w-4" />
+              {loaderData.capacity}
+            </div>
+          )}
+
+          {loaderData.detail && (
+            <div className="prose prose-lg max-w-none mb-8">
+              <p className="text-muted-foreground leading-relaxed">{loaderData.detail}</p>
+            </div>
+          )}
+
+          {loaderData.specs && (
+            <div className="bg-white border border-border p-6 mb-8">
+              <h2 className="font-display text-navy text-lg font-bold uppercase mb-4">Technical Specifications</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                {loaderData.specs.yakit && (
+                  <div>
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Fuel</span>
+                    <p className="text-navy font-medium mt-1">{loaderData.specs.yakit}</p>
+                  </div>
+                )}
+                {loaderData.specs.basinc && (
+                  <div>
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Pressure</span>
+                    <p className="text-navy font-medium mt-1">{loaderData.specs.basinc}</p>
+                  </div>
+                )}
+                {loaderData.specs.standart && (
+                  <div>
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Standard</span>
+                    <p className="text-navy font-medium mt-1">{loaderData.specs.standart}</p>
+                  </div>
+                )}
+                {loaderData.specs.cikisSicakligi && (
+                  <div>
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Output Temperature</span>
+                    <p className="text-navy font-medium mt-1">{loaderData.specs.cikisSicakligi}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {loaderData.pdf_url && (
+            <a href={loaderData.pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-orange font-display uppercase tracking-wider text-sm hover:underline mb-8">
+              <FileDown className="h-4 w-4" />
+              Product Info (PDF)
+            </a>
+          )}
+
+          <div className="bg-navy-dark text-white p-6 text-center">
+            <h2 className="font-display text-lg font-bold uppercase mb-2">Interested in this product?</h2>
+            <p className="text-white/80 text-sm mb-4">Contact us for a customized quote.</p>
+            <a href="/en/contact" className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-5 py-2.5 transition-colors">
+              Get a Quote
+            </a>
+          </div>
+        </article>
+      </div>
+      <SiteFooter />
+    </div>
+  );
+}

@@ -29,16 +29,26 @@ import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
 import { Route as RuProductsRouteImport } from './routes/ru/products'
+import { Route as RuPortfolioRouteImport } from './routes/ru/portfolio'
 import { Route as RuContactRouteImport } from './routes/ru/contact'
+import { Route as RuBlogRouteImport } from './routes/ru/blog'
 import { Route as RuAboutRouteImport } from './routes/ru/about'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as EnProductsRouteImport } from './routes/en/products'
+import { Route as EnPortfolioRouteImport } from './routes/en/portfolio'
 import { Route as EnContactRouteImport } from './routes/en/contact'
+import { Route as EnBlogRouteImport } from './routes/en/blog'
 import { Route as EnAboutRouteImport } from './routes/en/about'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
 import { Route as AdminProtectedIndexRouteImport } from './routes/admin._protected.index'
+import { Route as RuProductsSlugRouteImport } from './routes/ru/products.$slug'
+import { Route as RuPortfolioSlugRouteImport } from './routes/ru/portfolio.$slug'
+import { Route as RuBlogSlugRouteImport } from './routes/ru/blog.$slug'
+import { Route as EnProductsSlugRouteImport } from './routes/en/products.$slug'
+import { Route as EnPortfolioSlugRouteImport } from './routes/en/portfolio.$slug'
+import { Route as EnBlogSlugRouteImport } from './routes/en/blog.$slug'
 import { Route as AdminProtectedSettingsRouteImport } from './routes/admin._protected.settings'
 import { Route as AdminProtectedProductsRouteImport } from './routes/admin._protected.products'
 import { Route as AdminProtectedLeadsRouteImport } from './routes/admin._protected.leads'
@@ -144,9 +154,19 @@ const RuProductsRoute = RuProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => RuRoute,
 } as any)
+const RuPortfolioRoute = RuPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => RuRoute,
+} as any)
 const RuContactRoute = RuContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => RuRoute,
+} as any)
+const RuBlogRoute = RuBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => RuRoute,
 } as any)
 const RuAboutRoute = RuAboutRouteImport.update({
@@ -164,9 +184,19 @@ const EnProductsRoute = EnProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => EnRoute,
 } as any)
+const EnPortfolioRoute = EnPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => EnRoute,
+} as any)
 const EnContactRoute = EnContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => EnRoute,
+} as any)
+const EnBlogRoute = EnBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => EnRoute,
 } as any)
 const EnAboutRoute = EnAboutRouteImport.update({
@@ -192,6 +222,36 @@ const AdminProtectedIndexRoute = AdminProtectedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminProtectedRoute,
+} as any)
+const RuProductsSlugRoute = RuProductsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => RuProductsRoute,
+} as any)
+const RuPortfolioSlugRoute = RuPortfolioSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => RuPortfolioRoute,
+} as any)
+const RuBlogSlugRoute = RuBlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => RuBlogRoute,
+} as any)
+const EnProductsSlugRoute = EnProductsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => EnProductsRoute,
+} as any)
+const EnPortfolioSlugRoute = EnPortfolioSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => EnPortfolioRoute,
+} as any)
+const EnBlogSlugRoute = EnBlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => EnBlogRoute,
 } as any)
 const AdminProtectedSettingsRoute = AdminProtectedSettingsRouteImport.update({
   id: '/settings',
@@ -232,12 +292,16 @@ export interface FileRoutesByFullPath {
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/en/about': typeof EnAboutRoute
+  '/en/blog': typeof EnBlogRouteWithChildren
   '/en/contact': typeof EnContactRoute
-  '/en/products': typeof EnProductsRoute
+  '/en/portfolio': typeof EnPortfolioRouteWithChildren
+  '/en/products': typeof EnProductsRouteWithChildren
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
+  '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
-  '/ru/products': typeof RuProductsRoute
+  '/ru/portfolio': typeof RuPortfolioRouteWithChildren
+  '/ru/products': typeof RuProductsRouteWithChildren
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/en/': typeof EnIndexRoute
@@ -247,6 +311,12 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
   '/admin/settings': typeof AdminProtectedSettingsRoute
+  '/en/blog/$slug': typeof EnBlogSlugRoute
+  '/en/portfolio/$slug': typeof EnPortfolioSlugRoute
+  '/en/products/$slug': typeof EnProductsSlugRoute
+  '/ru/blog/$slug': typeof RuBlogSlugRoute
+  '/ru/portfolio/$slug': typeof RuPortfolioSlugRoute
+  '/ru/products/$slug': typeof RuProductsSlugRoute
   '/admin/': typeof AdminProtectedIndexRoute
 }
 export interface FileRoutesByTo {
@@ -263,12 +333,16 @@ export interface FileRoutesByTo {
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/en/about': typeof EnAboutRoute
+  '/en/blog': typeof EnBlogRouteWithChildren
   '/en/contact': typeof EnContactRoute
-  '/en/products': typeof EnProductsRoute
+  '/en/portfolio': typeof EnPortfolioRouteWithChildren
+  '/en/products': typeof EnProductsRouteWithChildren
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
+  '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
-  '/ru/products': typeof RuProductsRoute
+  '/ru/portfolio': typeof RuPortfolioRouteWithChildren
+  '/ru/products': typeof RuProductsRouteWithChildren
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog': typeof BlogIndexRoute
   '/en': typeof EnIndexRoute
@@ -278,6 +352,12 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
   '/admin/settings': typeof AdminProtectedSettingsRoute
+  '/en/blog/$slug': typeof EnBlogSlugRoute
+  '/en/portfolio/$slug': typeof EnPortfolioSlugRoute
+  '/en/products/$slug': typeof EnProductsSlugRoute
+  '/ru/blog/$slug': typeof RuBlogSlugRoute
+  '/ru/portfolio/$slug': typeof RuPortfolioSlugRoute
+  '/ru/products/$slug': typeof RuProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -299,12 +379,16 @@ export interface FileRoutesById {
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/en/about': typeof EnAboutRoute
+  '/en/blog': typeof EnBlogRouteWithChildren
   '/en/contact': typeof EnContactRoute
-  '/en/products': typeof EnProductsRoute
+  '/en/portfolio': typeof EnPortfolioRouteWithChildren
+  '/en/products': typeof EnProductsRouteWithChildren
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
+  '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
-  '/ru/products': typeof RuProductsRoute
+  '/ru/portfolio': typeof RuPortfolioRouteWithChildren
+  '/ru/products': typeof RuProductsRouteWithChildren
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/en/': typeof EnIndexRoute
@@ -314,6 +398,12 @@ export interface FileRoutesById {
   '/admin/_protected/leads': typeof AdminProtectedLeadsRoute
   '/admin/_protected/products': typeof AdminProtectedProductsRoute
   '/admin/_protected/settings': typeof AdminProtectedSettingsRoute
+  '/en/blog/$slug': typeof EnBlogSlugRoute
+  '/en/portfolio/$slug': typeof EnPortfolioSlugRoute
+  '/en/products/$slug': typeof EnProductsSlugRoute
+  '/ru/blog/$slug': typeof RuBlogSlugRoute
+  '/ru/portfolio/$slug': typeof RuPortfolioSlugRoute
+  '/ru/products/$slug': typeof RuProductsSlugRoute
   '/admin/_protected/': typeof AdminProtectedIndexRoute
 }
 export interface FileRouteTypes {
@@ -336,11 +426,15 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/blog/$slug'
     | '/en/about'
+    | '/en/blog'
     | '/en/contact'
+    | '/en/portfolio'
     | '/en/products'
     | '/portfolio/$slug'
     | '/ru/about'
+    | '/ru/blog'
     | '/ru/contact'
+    | '/ru/portfolio'
     | '/ru/products'
     | '/urunler/$slug'
     | '/blog/'
@@ -351,6 +445,12 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/products'
     | '/admin/settings'
+    | '/en/blog/$slug'
+    | '/en/portfolio/$slug'
+    | '/en/products/$slug'
+    | '/ru/blog/$slug'
+    | '/ru/portfolio/$slug'
+    | '/ru/products/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -367,11 +467,15 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/blog/$slug'
     | '/en/about'
+    | '/en/blog'
     | '/en/contact'
+    | '/en/portfolio'
     | '/en/products'
     | '/portfolio/$slug'
     | '/ru/about'
+    | '/ru/blog'
     | '/ru/contact'
+    | '/ru/portfolio'
     | '/ru/products'
     | '/urunler/$slug'
     | '/blog'
@@ -382,6 +486,12 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/products'
     | '/admin/settings'
+    | '/en/blog/$slug'
+    | '/en/portfolio/$slug'
+    | '/en/products/$slug'
+    | '/ru/blog/$slug'
+    | '/ru/portfolio/$slug'
+    | '/ru/products/$slug'
   id:
     | '__root__'
     | '/'
@@ -402,11 +512,15 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/blog/$slug'
     | '/en/about'
+    | '/en/blog'
     | '/en/contact'
+    | '/en/portfolio'
     | '/en/products'
     | '/portfolio/$slug'
     | '/ru/about'
+    | '/ru/blog'
     | '/ru/contact'
+    | '/ru/portfolio'
     | '/ru/products'
     | '/urunler/$slug'
     | '/blog/'
@@ -417,6 +531,12 @@ export interface FileRouteTypes {
     | '/admin/_protected/leads'
     | '/admin/_protected/products'
     | '/admin/_protected/settings'
+    | '/en/blog/$slug'
+    | '/en/portfolio/$slug'
+    | '/en/products/$slug'
+    | '/ru/blog/$slug'
+    | '/ru/portfolio/$slug'
+    | '/ru/products/$slug'
     | '/admin/_protected/'
   fileRoutesById: FileRoutesById
 }
@@ -579,11 +699,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RuProductsRouteImport
       parentRoute: typeof RuRoute
     }
+    '/ru/portfolio': {
+      id: '/ru/portfolio'
+      path: '/portfolio'
+      fullPath: '/ru/portfolio'
+      preLoaderRoute: typeof RuPortfolioRouteImport
+      parentRoute: typeof RuRoute
+    }
     '/ru/contact': {
       id: '/ru/contact'
       path: '/contact'
       fullPath: '/ru/contact'
       preLoaderRoute: typeof RuContactRouteImport
+      parentRoute: typeof RuRoute
+    }
+    '/ru/blog': {
+      id: '/ru/blog'
+      path: '/blog'
+      fullPath: '/ru/blog'
+      preLoaderRoute: typeof RuBlogRouteImport
       parentRoute: typeof RuRoute
     }
     '/ru/about': {
@@ -607,11 +741,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnProductsRouteImport
       parentRoute: typeof EnRoute
     }
+    '/en/portfolio': {
+      id: '/en/portfolio'
+      path: '/portfolio'
+      fullPath: '/en/portfolio'
+      preLoaderRoute: typeof EnPortfolioRouteImport
+      parentRoute: typeof EnRoute
+    }
     '/en/contact': {
       id: '/en/contact'
       path: '/contact'
       fullPath: '/en/contact'
       preLoaderRoute: typeof EnContactRouteImport
+      parentRoute: typeof EnRoute
+    }
+    '/en/blog': {
+      id: '/en/blog'
+      path: '/blog'
+      fullPath: '/en/blog'
+      preLoaderRoute: typeof EnBlogRouteImport
       parentRoute: typeof EnRoute
     }
     '/en/about': {
@@ -648,6 +796,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminProtectedIndexRouteImport
       parentRoute: typeof AdminProtectedRoute
+    }
+    '/ru/products/$slug': {
+      id: '/ru/products/$slug'
+      path: '/$slug'
+      fullPath: '/ru/products/$slug'
+      preLoaderRoute: typeof RuProductsSlugRouteImport
+      parentRoute: typeof RuProductsRoute
+    }
+    '/ru/portfolio/$slug': {
+      id: '/ru/portfolio/$slug'
+      path: '/$slug'
+      fullPath: '/ru/portfolio/$slug'
+      preLoaderRoute: typeof RuPortfolioSlugRouteImport
+      parentRoute: typeof RuPortfolioRoute
+    }
+    '/ru/blog/$slug': {
+      id: '/ru/blog/$slug'
+      path: '/$slug'
+      fullPath: '/ru/blog/$slug'
+      preLoaderRoute: typeof RuBlogSlugRouteImport
+      parentRoute: typeof RuBlogRoute
+    }
+    '/en/products/$slug': {
+      id: '/en/products/$slug'
+      path: '/$slug'
+      fullPath: '/en/products/$slug'
+      preLoaderRoute: typeof EnProductsSlugRouteImport
+      parentRoute: typeof EnProductsRoute
+    }
+    '/en/portfolio/$slug': {
+      id: '/en/portfolio/$slug'
+      path: '/$slug'
+      fullPath: '/en/portfolio/$slug'
+      preLoaderRoute: typeof EnPortfolioSlugRouteImport
+      parentRoute: typeof EnPortfolioRoute
+    }
+    '/en/blog/$slug': {
+      id: '/en/blog/$slug'
+      path: '/$slug'
+      fullPath: '/en/blog/$slug'
+      preLoaderRoute: typeof EnBlogSlugRouteImport
+      parentRoute: typeof EnBlogRoute
     }
     '/admin/_protected/settings': {
       id: '/admin/_protected/settings'
@@ -724,17 +914,56 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface EnBlogRouteChildren {
+  EnBlogSlugRoute: typeof EnBlogSlugRoute
+}
+
+const EnBlogRouteChildren: EnBlogRouteChildren = {
+  EnBlogSlugRoute: EnBlogSlugRoute,
+}
+
+const EnBlogRouteWithChildren =
+  EnBlogRoute._addFileChildren(EnBlogRouteChildren)
+
+interface EnPortfolioRouteChildren {
+  EnPortfolioSlugRoute: typeof EnPortfolioSlugRoute
+}
+
+const EnPortfolioRouteChildren: EnPortfolioRouteChildren = {
+  EnPortfolioSlugRoute: EnPortfolioSlugRoute,
+}
+
+const EnPortfolioRouteWithChildren = EnPortfolioRoute._addFileChildren(
+  EnPortfolioRouteChildren,
+)
+
+interface EnProductsRouteChildren {
+  EnProductsSlugRoute: typeof EnProductsSlugRoute
+}
+
+const EnProductsRouteChildren: EnProductsRouteChildren = {
+  EnProductsSlugRoute: EnProductsSlugRoute,
+}
+
+const EnProductsRouteWithChildren = EnProductsRoute._addFileChildren(
+  EnProductsRouteChildren,
+)
+
 interface EnRouteChildren {
   EnAboutRoute: typeof EnAboutRoute
+  EnBlogRoute: typeof EnBlogRouteWithChildren
   EnContactRoute: typeof EnContactRoute
-  EnProductsRoute: typeof EnProductsRoute
+  EnPortfolioRoute: typeof EnPortfolioRouteWithChildren
+  EnProductsRoute: typeof EnProductsRouteWithChildren
   EnIndexRoute: typeof EnIndexRoute
 }
 
 const EnRouteChildren: EnRouteChildren = {
   EnAboutRoute: EnAboutRoute,
+  EnBlogRoute: EnBlogRouteWithChildren,
   EnContactRoute: EnContactRoute,
-  EnProductsRoute: EnProductsRoute,
+  EnPortfolioRoute: EnPortfolioRouteWithChildren,
+  EnProductsRoute: EnProductsRouteWithChildren,
   EnIndexRoute: EnIndexRoute,
 }
 
@@ -752,17 +981,56 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
   PortfolioRouteChildren,
 )
 
+interface RuBlogRouteChildren {
+  RuBlogSlugRoute: typeof RuBlogSlugRoute
+}
+
+const RuBlogRouteChildren: RuBlogRouteChildren = {
+  RuBlogSlugRoute: RuBlogSlugRoute,
+}
+
+const RuBlogRouteWithChildren =
+  RuBlogRoute._addFileChildren(RuBlogRouteChildren)
+
+interface RuPortfolioRouteChildren {
+  RuPortfolioSlugRoute: typeof RuPortfolioSlugRoute
+}
+
+const RuPortfolioRouteChildren: RuPortfolioRouteChildren = {
+  RuPortfolioSlugRoute: RuPortfolioSlugRoute,
+}
+
+const RuPortfolioRouteWithChildren = RuPortfolioRoute._addFileChildren(
+  RuPortfolioRouteChildren,
+)
+
+interface RuProductsRouteChildren {
+  RuProductsSlugRoute: typeof RuProductsSlugRoute
+}
+
+const RuProductsRouteChildren: RuProductsRouteChildren = {
+  RuProductsSlugRoute: RuProductsSlugRoute,
+}
+
+const RuProductsRouteWithChildren = RuProductsRoute._addFileChildren(
+  RuProductsRouteChildren,
+)
+
 interface RuRouteChildren {
   RuAboutRoute: typeof RuAboutRoute
+  RuBlogRoute: typeof RuBlogRouteWithChildren
   RuContactRoute: typeof RuContactRoute
-  RuProductsRoute: typeof RuProductsRoute
+  RuPortfolioRoute: typeof RuPortfolioRouteWithChildren
+  RuProductsRoute: typeof RuProductsRouteWithChildren
   RuIndexRoute: typeof RuIndexRoute
 }
 
 const RuRouteChildren: RuRouteChildren = {
   RuAboutRoute: RuAboutRoute,
+  RuBlogRoute: RuBlogRouteWithChildren,
   RuContactRoute: RuContactRoute,
-  RuProductsRoute: RuProductsRoute,
+  RuPortfolioRoute: RuPortfolioRouteWithChildren,
+  RuProductsRoute: RuProductsRouteWithChildren,
   RuIndexRoute: RuIndexRoute,
 }
 
