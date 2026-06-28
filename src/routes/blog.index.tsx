@@ -5,11 +5,10 @@ import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 function cleanContent(html: string): string {
   let result = html;
-  // Remove all shortcodes including self-closing ones
   result = result
-    .replace(/\[vc_[^\]]*\]/g, '')
-    .replace(/\[\/vc_[^\]]*\]/g, '')
-    .replace(/\[[^\]]*\]/g, '');
+    .replace(/\[vc_[^\]]*\]?/g, '')
+    .replace(/\[\/vc_[^\]]*\]?/g, '')
+    .replace(/\[[^\]]*\]?/g, '');
   return result
     .replace(/&#8221;|&#8220;/g, '"')
     .replace(/&#8217;|&#8216;/g, "'")
