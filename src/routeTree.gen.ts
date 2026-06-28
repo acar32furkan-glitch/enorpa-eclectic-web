@@ -10,16 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UrunlerRouteImport } from './routes/urunler'
+import { Route as ReferanslarRouteImport } from './routes/referanslar'
+import { Route as ProjelerRouteImport } from './routes/projeler'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as KvkkRouteImport } from './routes/kvkk'
 import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UrunlerIndexRouteImport } from './routes/urunler.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
+import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminProtectedRouteImport } from './routes/admin._protected'
@@ -32,6 +37,21 @@ import { Route as AdminProtectedDashboardRouteImport } from './routes/admin._pro
 const UrunlerRoute = UrunlerRouteImport.update({
   id: '/urunler',
   path: '/urunler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferanslarRoute = ReferanslarRouteImport.update({
+  id: '/referanslar',
+  path: '/referanslar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjelerRoute = ProjelerRouteImport.update({
+  id: '/projeler',
+  path: '/projeler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KvkkRoute = KvkkRouteImport.update({
@@ -64,6 +84,11 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -84,20 +109,24 @@ const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => UrunlerRoute,
 } as any)
+const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => PortfolioRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin/login',
-  path: '/admin/login',
-  getParentRoute: () => rootRouteImport,
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminProtectedRoute = AdminProtectedRouteImport.update({
-  id: '/admin/_protected',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
+  id: '/_protected',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminProtectedIndexRoute = AdminProtectedIndexRouteImport.update({
   id: '/',
@@ -127,16 +156,20 @@ const AdminProtectedDashboardRoute = AdminProtectedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
+  '/projeler': typeof ProjelerRoute
+  '/referanslar': typeof ReferanslarRoute
   '/urunler': typeof UrunlerRouteWithChildren
-  '/admin': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -148,13 +181,18 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminProtectedIndexRoute
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
+  '/projeler': typeof ProjelerRoute
+  '/referanslar': typeof ReferanslarRoute
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog': typeof BlogIndexRoute
   '/urunler': typeof UrunlerIndexRoute
@@ -162,21 +200,25 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminProtectedLeadsRoute
   '/admin/products': typeof AdminProtectedProductsRoute
   '/admin/settings': typeof AdminProtectedSettingsRoute
-  '/admin': typeof AdminProtectedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
   '/kvkk': typeof KvkkRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
+  '/projeler': typeof ProjelerRoute
+  '/referanslar': typeof ReferanslarRoute
   '/urunler': typeof UrunlerRouteWithChildren
   '/admin/_protected': typeof AdminProtectedRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portfolio/$slug': typeof PortfolioSlugRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -190,16 +232,20 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/blog'
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
     | '/kvkk'
+    | '/portfolio'
+    | '/projeler'
+    | '/referanslar'
     | '/urunler'
-    | '/admin'
     | '/admin/login'
     | '/blog/$slug'
+    | '/portfolio/$slug'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -211,13 +257,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
     | '/kvkk'
+    | '/portfolio'
+    | '/projeler'
+    | '/referanslar'
     | '/admin/login'
     | '/blog/$slug'
+    | '/portfolio/$slug'
     | '/urunler/$slug'
     | '/blog'
     | '/urunler'
@@ -225,20 +276,24 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/products'
     | '/admin/settings'
-    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/blog'
     | '/cerez-politikasi'
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
     | '/kvkk'
+    | '/portfolio'
+    | '/projeler'
+    | '/referanslar'
     | '/urunler'
     | '/admin/_protected'
     | '/admin/login'
     | '/blog/$slug'
+    | '/portfolio/$slug'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -251,15 +306,17 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BlogRoute: typeof BlogRouteWithChildren
   CerezPolitikasiRoute: typeof CerezPolitikasiRoute
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
   IletisimRoute: typeof IletisimRoute
   KvkkRoute: typeof KvkkRoute
+  PortfolioRoute: typeof PortfolioRouteWithChildren
+  ProjelerRoute: typeof ProjelerRoute
+  ReferanslarRoute: typeof ReferanslarRoute
   UrunlerRoute: typeof UrunlerRouteWithChildren
-  AdminProtectedRoute: typeof AdminProtectedRouteWithChildren
-  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -269,6 +326,27 @@ declare module '@tanstack/react-router' {
       path: '/urunler'
       fullPath: '/urunler'
       preLoaderRoute: typeof UrunlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referanslar': {
+      id: '/referanslar'
+      path: '/referanslar'
+      fullPath: '/referanslar'
+      preLoaderRoute: typeof ReferanslarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projeler': {
+      id: '/projeler'
+      path: '/projeler'
+      fullPath: '/projeler'
+      preLoaderRoute: typeof ProjelerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kvkk': {
@@ -313,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -341,6 +426,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerSlugRouteImport
       parentRoute: typeof UrunlerRoute
     }
+    '/portfolio/$slug': {
+      id: '/portfolio/$slug'
+      path: '/$slug'
+      fullPath: '/portfolio/$slug'
+      preLoaderRoute: typeof PortfolioSlugRouteImport
+      parentRoute: typeof PortfolioRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -350,17 +442,17 @@ declare module '@tanstack/react-router' {
     }
     '/admin/login': {
       id: '/admin/login'
-      path: '/admin/login'
+      path: '/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/_protected': {
       id: '/admin/_protected'
-      path: '/admin'
+      path: ''
       fullPath: '/admin'
       preLoaderRoute: typeof AdminProtectedRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/_protected/': {
       id: '/admin/_protected/'
@@ -400,31 +492,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
-
-interface UrunlerRouteChildren {
-  UrunlerSlugRoute: typeof UrunlerSlugRoute
-  UrunlerIndexRoute: typeof UrunlerIndexRoute
-}
-
-const UrunlerRouteChildren: UrunlerRouteChildren = {
-  UrunlerSlugRoute: UrunlerSlugRoute,
-  UrunlerIndexRoute: UrunlerIndexRoute,
-}
-
-const UrunlerRouteWithChildren =
-  UrunlerRoute._addFileChildren(UrunlerRouteChildren)
-
 interface AdminProtectedRouteChildren {
   AdminProtectedDashboardRoute: typeof AdminProtectedDashboardRoute
   AdminProtectedLeadsRoute: typeof AdminProtectedLeadsRoute
@@ -445,17 +512,68 @@ const AdminProtectedRouteWithChildren = AdminProtectedRoute._addFileChildren(
   AdminProtectedRouteChildren,
 )
 
+interface AdminRouteChildren {
+  AdminProtectedRoute: typeof AdminProtectedRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminProtectedRoute: AdminProtectedRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface PortfolioRouteChildren {
+  PortfolioSlugRoute: typeof PortfolioSlugRoute
+}
+
+const PortfolioRouteChildren: PortfolioRouteChildren = {
+  PortfolioSlugRoute: PortfolioSlugRoute,
+}
+
+const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
+  PortfolioRouteChildren,
+)
+
+interface UrunlerRouteChildren {
+  UrunlerSlugRoute: typeof UrunlerSlugRoute
+  UrunlerIndexRoute: typeof UrunlerIndexRoute
+}
+
+const UrunlerRouteChildren: UrunlerRouteChildren = {
+  UrunlerSlugRoute: UrunlerSlugRoute,
+  UrunlerIndexRoute: UrunlerIndexRoute,
+}
+
+const UrunlerRouteWithChildren =
+  UrunlerRoute._addFileChildren(UrunlerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   BlogRoute: BlogRouteWithChildren,
   CerezPolitikasiRoute: CerezPolitikasiRoute,
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
   IletisimRoute: IletisimRoute,
   KvkkRoute: KvkkRoute,
+  PortfolioRoute: PortfolioRouteWithChildren,
+  ProjelerRoute: ProjelerRoute,
+  ReferanslarRoute: ReferanslarRoute,
   UrunlerRoute: UrunlerRouteWithChildren,
-  AdminProtectedRoute: AdminProtectedRouteWithChildren,
-  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
