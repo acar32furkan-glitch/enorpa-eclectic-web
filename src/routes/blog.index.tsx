@@ -1,24 +1,38 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Calendar, ArrowRight, FileText } from "lucide-react";
+import { Calendar, ArrowRight, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
-const cleanContent = (html: string) => {
+function cleanContent(html: string): string {
   return html
-    .replace(/\[vc_[^\]]*\]/g, '')
-    .replace(/\[\/vc_[^\]]*\]/g, '')
-    .replace(/\[[^\]]*\]/g, '')
-    .replace(/&#8221;/g, '"')
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8216;/g, "'")
-    .replace(/&#8220;/g, '"')
+    .replace(/\[[\s\S]*?\]/g, '')
+    .replace(/&#8221;|&#8220;/g, '"')
+    .replace(/&#8217;|&#8216;/g, "'")
     .replace(/&#8230;/g, '...')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
     .replace(/&#[0-9]+;/g, '')
-    .replace(/\s*data-start=["'][^"']*["']/g, '')
-    .replace(/\s*data-end=["'][^"']*["']/g, '')
+    .replace(/&[a-z]+;/g, '')
+    .replace(/\s*data-\w+="[^"]*"/g, '')
+    .replace(/\s*data-\w+='[^']*'/g, '')
     .replace(/<p>\s*<\/p>/g, '')
+    .replace(/<h[1-6]>\s*<\/h[1-6]>/g, '')
+    .replace(/Lorem ipsum[\s\S]*?(?=<|$)/g, '')
+    .replace(/\n{3,}/g, '\n\n')
     .trim();
-};
+}
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function getExcerpt(post: BlogPost): string {
+  const cleaned = cleanContent(post.excerpt || '');
+  if (cleaned && cleaned.length > 10) return cleaned;
+  const contentText = stripHtml(cleanContent(post.content_html));
+  return contentText.slice(0, 150) + (contentText.length > 150 ? '...' : '');
+}
 
 const trOnlySlugs = [
   'kondenser-nedir-calisma-prensibi-verim-ve-uygulamalar-2',
@@ -100,8 +114,8 @@ function BlogListPage() {
                   className="w-full h-48 object-cover"
                 />
               ) : (
-                <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-                  <FileText className="h-12 w-12 text-gray-400" />
+                <div className="w-full h-48 bg-navy-dark flex items-center justify-center">
+                  <Factory className="h-12 w-12 text-orange/50" />
                 </div>
               )}
               <div className="p-6">
@@ -110,11 +124,9 @@ function BlogListPage() {
                     {post.title}
                   </Link>
                 </h2>
-{post.excerpt && (
-                   <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                     {cleanContent(post.excerpt)}
-                   </p>
-                 )}
+<p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                      {getExcerpt(post)}
+                    </p>
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
