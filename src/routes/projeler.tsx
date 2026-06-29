@@ -4,6 +4,19 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, Globe, Calendar } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
 
+const PROJELER_CONTENT = `<h1>Öne Çıkan Projelerimiz</h1>
+<p>Enorpa Enerji, 26 ülkede 138+ projeyi hayata geçirmiştir. İşte öne çıkan projelerimiz:</p>
+<ul>
+<li><strong>Turkey/Isparta</strong> - Drying Forest Products</li>
+<li><strong>Turkey/Izmir</strong> - Greenhouse Heating System</li>
+<li><strong>Turkey/Manisa</strong> - Industrial Steam Boiler</li>
+<li><strong>Uzbekistan/Tashkent</strong> - Greenhouse Heating (2020)</li>
+<li><strong>Uzbekistan/Harezm</strong> - Greenhouse Heating (2020)</li>
+<li><strong>Kazakhstan/Almaty</strong> - Greenhouse Heating (2022)</li>
+<li><strong>Russia</strong> - Industrial Steam Boilers</li>
+</ul>
+<p>Her proje, müşterimizin özel ihtiyaçlarına göre tasarlanmış ve Enorpa kalitesiyle hayata geçirilmiştir.</p>`;
+
 const projects = [
   {
     slug: "ozbekistan-taskent",
@@ -96,12 +109,12 @@ function ProjelerPage() {
           <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
             Projelerimiz
           </h1>
-          <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl">
-            26 ülkede 138+ proje ve 347+ müşteriye hizmet vermekteyiz.
-            Endüstriyel buhar, sıcak su, sıcak hava ve kızgın su kazanları ile
-            sera ısıtma sistemleri konusunda dünya genelinde güvenilir bir iş ortağıyız.
-          </p>
         </div>
+
+        <div
+          className="prose prose-lg max-w-none text-muted-foreground mb-16 [&_h1]:text-navy [&_h1]:font-display [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:uppercase [&_h1]:mb-6 [&_h2]:text-navy [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:uppercase [&_h2]:mt-8 [&_h2]:mb-4 [&_p]:mb-4 [&_p]:leading-relaxed [&_strong]:text-navy [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-2"
+          dangerouslySetInnerHTML={{ __html: PROJELER_CONTENT }}
+        />
 
         <div className="space-y-6">
           {projects.map((project, i) => {

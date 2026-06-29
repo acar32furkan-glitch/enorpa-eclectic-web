@@ -6,88 +6,88 @@ import { generateHreflangTags, SITE } from "@/lib/seo";
 
 const testimonials = [
   {
-    name: "Хасан Йылмаз",
-    company: "Акташ Тарым Ltd.Şti",
-    location: "Конья, Турция",
-    text: "С котлом серии HAS от Enorpa наше потребление топлива снизилось на 30%. Спасибо профессиональной команде и качественному продукту.",
+    name: "Hasan Yılmaz",
+    company: "Aktaş Tarım Ltd.Şti",
+    location: "Konya, Turkey",
+    text: "With Enorpa HAS Series boiler, our fuel consumption decreased by 30%. Thanks to the professional team and quality product.",
     rating: 5,
   },
   {
-    name: "Мехмет Демир",
-    company: "Демир Сера Ишлетмелери",
-    location: "Анталья, Турция",
-    text: "Мы увеличили производство на 20% с парогенератором серии Jasper. Команда Enorpa очень внимательна и профессиональна.",
+    name: "Mehmet Demir",
+    company: "Demir Sera İşletmeleri",
+    location: "Antalya, Turkey",
+    text: "We increased our production by 20% with Jasper Series steam generator. Enorpa team is very attentive and professional.",
     rating: 5,
   },
   {
-    name: "Али Кая",
-    company: "Кая Гыда A.Ş.",
-    location: "Измир, Турция",
-    text: "Мы достигли экономии энергии с помощью конденсатора. Быстрая установка, отличный сервис.",
+    name: "Ali Kaya",
+    company: "Kaya Gıda A.Ş.",
+    location: "İzmir, Turkey",
+    text: "We achieved energy savings with the condenser. Fast installation, excellent service.",
     rating: 5,
   },
   {
-    name: "Фатма Озтюрк",
-    company: "Озтюрк Тарым",
-    location: "Бурса, Турция",
-    text: "Мы сэкономили время с системой отопления теплиц под ключ. Рекомендую.",
+    name: "Fatma Öztürk",
+    company: "Öztürk Tarım",
+    location: "Bursa, Turkey",
+    text: "We saved time with turnkey greenhouse heating system. I recommend it.",
     rating: 5,
   },
 ];
 
-export const Route = createFileRoute("/ru/references")({
+export const Route = createFileRoute("/en/referanslar")({
   head: () => ({
     meta: [
-      { title: "Референции | Enorpa Energy" },
+      { title: "References | Enorpa Energy" },
       {
         name: "description",
-        content: "Референции Enorpa Energy. 138+ проектов, 347+ клиентов в 26 странах. Отзывы клиентов и истории успеха.",
+        content: "Enorpa Energy references. 138+ projects, 347+ customers in 26 countries. Customer reviews and success stories.",
       },
-      { property: "og:title", content: "Референции | Enorpa Energy" },
+      { property: "og:title", content: "References | Enorpa Energy" },
       {
         property: "og:description",
-        content: "Референции Enorpa Energy. 138+ проектов, 347+ клиентов в 26 странах.",
+        content: "Enorpa Energy references. 138+ projects, 347+ customers in 26 countries.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: SITE.defaultOgImage },
-      { property: "og:url", content: "https://enorpa.com/ru/references" },
-      { property: "og:locale", content: "ru_RU" },
+      { property: "og:url", content: "https://enorpa.com/en/references" },
+      { property: "og:locale", content: "en_US" },
       { property: "og:site_name", content: "Enorpa Energy" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Референции | Enorpa Energy" },
-      { name: "twitter:description", content: "Референции Enorpa Energy. 138+ проектов в 26 странах." },
+      { name: "twitter:title", content: "References | Enorpa Energy" },
+      { name: "twitter:description", content: "Enorpa Energy references. 138+ projects in 26 countries." },
       { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
-      { rel: "canonical", href: "https://enorpa.com/ru/references" },
-      ...generateHreflangTags("/ru/references"),
+      { rel: "canonical", href: "https://enorpa.com/en/references" },
+      ...generateHreflangTags("/en/references"),
     ],
   }),
-  component: RuReferencesPage,
+  component: EnReferencesPage,
 });
 
-function RuReferencesPage() {
+function EnReferencesPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <Breadcrumbs items={[{ name: "Референции" }]} />
+        <Breadcrumbs items={[{ name: "References" }]} />
         <div className="mb-12">
           <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Референции
+            References
           </div>
           <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Наши референции
+            Our References
           </h1>
           <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl">
-            Мы обслуживаем 347+ клиентов в 138+ проектах в 26 странах.
-            Опыт и истории успеха наших клиентов.
+            We serve 347+ customers in 138+ projects across 26 countries.
+            Our customers' experiences and success stories.
           </p>
         </div>
 
         <div className="mb-12">
           <h2 className="font-display text-navy text-2xl font-bold uppercase mb-8">
-            Отзывы клиентов
+            Customer Reviews
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((testimonial, i) => (
@@ -117,17 +117,17 @@ function RuReferencesPage() {
 
         <div className="bg-navy-dark text-white p-8 text-center">
           <h2 className="font-display text-2xl font-bold uppercase mb-4">
-            Готовы к вашему следующему проекту
+            Ready for Your Next Project
           </h2>
           <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-            Имея 25+ лет опыта и 138+ успешных проектов,
-            мы предложим наиболее подходящее решение для отопления вашего объекта.
+            With 25+ years of experience and 138+ successful projects,
+            let us provide the most suitable solution for your facility's heating needs.
           </p>
           <a
-            href="/ru/contact"
+            href="/en/contact"
             className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-6 py-3 transition-colors"
           >
-            Запросить цену
+            Get a Quote
           </a>
         </div>
       </div>

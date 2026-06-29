@@ -1,13 +1,66 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, MapPin, Globe, Factory } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
 
-const stats = [
-  { value: "26", label: "Ülke" },
-  { value: "138+", label: "Proje" },
-  { value: "347+", label: "Müşteri" },
+const REFERENCES = [
+  {
+    name: "Özbekistan / Taşkent",
+    sector: "Sera Isıtma",
+    year: "2020",
+    desc: "Taşkent'te sera ısıtma tesisatı kurulumu. Enorpa HAS Serisi kazanlar ile donatılan tesis, yüksek verimlilik sağlamaktadır.",
+    icon: Globe,
+  },
+  {
+    name: "Özbekistan / Harezm",
+    sector: "Sera Isıtma",
+    year: "2020",
+    desc: "Harezm'de sera ısıtma tesisatı kurulumu. Sıcak iklim koşullarına uygun özel tasarım.",
+    icon: Globe,
+  },
+  {
+    name: "Türkiye / Manisa",
+    sector: "Sanayi Buhar",
+    year: "2019",
+    desc: "Manisa'da buhar kazanı kurulumu. Sanayi tesisine özel buhar kazanı devreye alındı.",
+    icon: Factory,
+  },
+  {
+    name: "Türkiye / İzmir",
+    sector: "Sera Isıtma",
+    year: "2021",
+    desc: "İzmir'de sera ısıtma tesisatı kurulumu. Seracılık sektörüne özel çözümler.",
+    icon: MapPin,
+  },
+  {
+    name: "Türkiye / Isparta",
+    sector: "Orman Ürünleri Kurutma",
+    year: "2022",
+    desc: "Isparta'da orman ürünleri kurutma sistemi kurulumu. Enerji verimliliği odaklı tasarım.",
+    icon: Factory,
+  },
+  {
+    name: "Kazakistan / Almatı",
+    sector: "Sera Isıtma",
+    year: "2022",
+    desc: "Almatı'da sera ısıtma tesisatı. Soğuk iklim koşullarına uygun özel çözümler.",
+    icon: Globe,
+  },
+  {
+    name: "Türkiye / Konya",
+    sector: "Sera Isıtma",
+    year: "2023",
+    desc: "Konya'da sera ısıtma sistemi. HAS Serisi kazan ile yakıt tüketimi %30 azaltıldı.",
+    icon: MapPin,
+  },
+  {
+    name: "Türkiye / Antalya",
+    sector: "Sera Isıtma",
+    year: "2023",
+    desc: "Antalya'da sera ısıtma sistemi. Jasper Serisi buhar jeneratörü ile üretim %20 artırıldı.",
+    icon: MapPin,
+  },
 ];
 
 const testimonials = [
@@ -87,19 +140,52 @@ function ReferanslarPage() {
           </h1>
           <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl">
             26 ülkede 138+ proje ve 347+ müşteriye hizmet vermekteyiz.
-            Müşterilerimizin deneyimleri ve başarı hikayeleri.
+            İşte gerçekleştirdiğimiz referans projeler ve müşterilerimizin deneyimleri.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {stats.map((stat, i) => (
-            <div key={i} className="bg-white border border-border p-6 text-center">
-              <div className="text-4xl font-display font-bold text-orange mb-2">{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </div>
-          ))}
+        {/* Referans Projeleri */}
+        <div className="mb-16">
+          <h2 className="font-display text-navy text-2xl font-bold uppercase mb-8">
+            Referans Projelerimiz
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {REFERENCES.map((ref, i) => {
+              const Icon = ref.icon;
+              return (
+                <div key={i} className="bg-white border border-border p-6 hover:border-orange transition-colors">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="h-10 w-10 bg-orange/10 flex items-center justify-center">
+                      <Icon className="h-5 w-5 text-orange" />
+                    </div>
+                    <span className="text-xs text-muted-foreground">{ref.year}</span>
+                  </div>
+                  <h3 className="font-display text-navy font-bold uppercase text-sm mb-1">{ref.name}</h3>
+                  <div className="text-xs text-orange font-medium mb-2">{ref.sector}</div>
+                  <p className="text-sm text-muted-foreground">{ref.desc}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
+        {/* İstatistikler */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="bg-white border border-border p-6 text-center">
+            <div className="text-4xl font-display font-bold text-orange mb-2">26</div>
+            <div className="text-sm text-muted-foreground">Ülke</div>
+          </div>
+          <div className="bg-white border border-border p-6 text-center">
+            <div className="text-4xl font-display font-bold text-orange mb-2">138+</div>
+            <div className="text-sm text-muted-foreground">Proje</div>
+          </div>
+          <div className="bg-white border border-border p-6 text-center">
+            <div className="text-4xl font-display font-bold text-orange mb-2">347+</div>
+            <div className="text-sm text-muted-foreground">Müşteri</div>
+          </div>
+        </div>
+
+        {/* Müşteri Yorumları */}
         <div className="mb-12">
           <h2 className="font-display text-navy text-2xl font-bold uppercase mb-8">
             Müşteri Yorumları
