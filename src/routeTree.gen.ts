@@ -27,12 +27,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UrunlerIndexRouteImport } from './routes/urunler.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as UrunlerSlugRouteImport } from './routes/urunler.$slug'
+import { Route as RuReferencesRouteImport } from './routes/ru/references'
 import { Route as RuProductsRouteImport } from './routes/ru/products'
 import { Route as RuPortfolioRouteImport } from './routes/ru/portfolio'
 import { Route as RuContactRouteImport } from './routes/ru/contact'
 import { Route as RuBlogRouteImport } from './routes/ru/blog'
 import { Route as RuAboutRouteImport } from './routes/ru/about'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
+import { Route as EnReferencesRouteImport } from './routes/en/references'
 import { Route as EnProductsRouteImport } from './routes/en/products'
 import { Route as EnPortfolioRouteImport } from './routes/en/portfolio'
 import { Route as EnContactRouteImport } from './routes/en/contact'
@@ -143,6 +145,11 @@ const UrunlerSlugRoute = UrunlerSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => UrunlerRoute,
 } as any)
+const RuReferencesRoute = RuReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
+  getParentRoute: () => RuRoute,
+} as any)
 const RuProductsRoute = RuProductsRouteImport.update({
   id: '/products',
   path: '/products',
@@ -172,6 +179,11 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => PortfolioRoute,
+} as any)
+const EnReferencesRoute = EnReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
+  getParentRoute: () => EnRoute,
 } as any)
 const EnProductsRoute = EnProductsRouteImport.update({
   id: '/products',
@@ -291,12 +303,14 @@ export interface FileRoutesByFullPath {
   '/en/contact': typeof EnContactRoute
   '/en/portfolio': typeof EnPortfolioRouteWithChildren
   '/en/products': typeof EnProductsRouteWithChildren
+  '/en/references': typeof EnReferencesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
   '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
   '/ru/portfolio': typeof RuPortfolioRouteWithChildren
   '/ru/products': typeof RuProductsRouteWithChildren
+  '/ru/references': typeof RuReferencesRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -333,12 +347,14 @@ export interface FileRoutesByTo {
   '/en/contact': typeof EnContactRoute
   '/en/portfolio': typeof EnPortfolioRouteWithChildren
   '/en/products': typeof EnProductsRouteWithChildren
+  '/en/references': typeof EnReferencesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
   '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
   '/ru/portfolio': typeof RuPortfolioRouteWithChildren
   '/ru/products': typeof RuProductsRouteWithChildren
+  '/ru/references': typeof RuReferencesRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog': typeof BlogIndexRoute
   '/urunler': typeof UrunlerIndexRoute
@@ -378,12 +394,14 @@ export interface FileRoutesById {
   '/en/contact': typeof EnContactRoute
   '/en/portfolio': typeof EnPortfolioRouteWithChildren
   '/en/products': typeof EnProductsRouteWithChildren
+  '/en/references': typeof EnReferencesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/ru/about': typeof RuAboutRoute
   '/ru/blog': typeof RuBlogRouteWithChildren
   '/ru/contact': typeof RuContactRoute
   '/ru/portfolio': typeof RuPortfolioRouteWithChildren
   '/ru/products': typeof RuProductsRouteWithChildren
+  '/ru/references': typeof RuReferencesRoute
   '/urunler/$slug': typeof UrunlerSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/urunler/': typeof UrunlerIndexRoute
@@ -424,12 +442,14 @@ export interface FileRouteTypes {
     | '/en/contact'
     | '/en/portfolio'
     | '/en/products'
+    | '/en/references'
     | '/portfolio/$slug'
     | '/ru/about'
     | '/ru/blog'
     | '/ru/contact'
     | '/ru/portfolio'
     | '/ru/products'
+    | '/ru/references'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -466,12 +486,14 @@ export interface FileRouteTypes {
     | '/en/contact'
     | '/en/portfolio'
     | '/en/products'
+    | '/en/references'
     | '/portfolio/$slug'
     | '/ru/about'
     | '/ru/blog'
     | '/ru/contact'
     | '/ru/portfolio'
     | '/ru/products'
+    | '/ru/references'
     | '/urunler/$slug'
     | '/blog'
     | '/urunler'
@@ -510,12 +532,14 @@ export interface FileRouteTypes {
     | '/en/contact'
     | '/en/portfolio'
     | '/en/products'
+    | '/en/references'
     | '/portfolio/$slug'
     | '/ru/about'
     | '/ru/blog'
     | '/ru/contact'
     | '/ru/portfolio'
     | '/ru/products'
+    | '/ru/references'
     | '/urunler/$slug'
     | '/blog/'
     | '/urunler/'
@@ -678,6 +702,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UrunlerSlugRouteImport
       parentRoute: typeof UrunlerRoute
     }
+    '/ru/references': {
+      id: '/ru/references'
+      path: '/references'
+      fullPath: '/ru/references'
+      preLoaderRoute: typeof RuReferencesRouteImport
+      parentRoute: typeof RuRoute
+    }
     '/ru/products': {
       id: '/ru/products'
       path: '/products'
@@ -719,6 +750,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/portfolio/$slug'
       preLoaderRoute: typeof PortfolioSlugRouteImport
       parentRoute: typeof PortfolioRoute
+    }
+    '/en/references': {
+      id: '/en/references'
+      path: '/references'
+      fullPath: '/en/references'
+      preLoaderRoute: typeof EnReferencesRouteImport
+      parentRoute: typeof EnRoute
     }
     '/en/products': {
       id: '/en/products'
@@ -941,6 +979,7 @@ interface EnRouteChildren {
   EnContactRoute: typeof EnContactRoute
   EnPortfolioRoute: typeof EnPortfolioRouteWithChildren
   EnProductsRoute: typeof EnProductsRouteWithChildren
+  EnReferencesRoute: typeof EnReferencesRoute
 }
 
 const EnRouteChildren: EnRouteChildren = {
@@ -949,6 +988,7 @@ const EnRouteChildren: EnRouteChildren = {
   EnContactRoute: EnContactRoute,
   EnPortfolioRoute: EnPortfolioRouteWithChildren,
   EnProductsRoute: EnProductsRouteWithChildren,
+  EnReferencesRoute: EnReferencesRoute,
 }
 
 const EnRouteWithChildren = EnRoute._addFileChildren(EnRouteChildren)
@@ -1006,6 +1046,7 @@ interface RuRouteChildren {
   RuContactRoute: typeof RuContactRoute
   RuPortfolioRoute: typeof RuPortfolioRouteWithChildren
   RuProductsRoute: typeof RuProductsRouteWithChildren
+  RuReferencesRoute: typeof RuReferencesRoute
 }
 
 const RuRouteChildren: RuRouteChildren = {
@@ -1014,6 +1055,7 @@ const RuRouteChildren: RuRouteChildren = {
   RuContactRoute: RuContactRoute,
   RuPortfolioRoute: RuPortfolioRouteWithChildren,
   RuProductsRoute: RuProductsRouteWithChildren,
+  RuReferencesRoute: RuReferencesRoute,
 }
 
 const RuRouteWithChildren = RuRoute._addFileChildren(RuRouteChildren)

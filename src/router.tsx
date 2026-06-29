@@ -29,6 +29,7 @@ import { Route as EnAboutRouteImport } from "./routes/en/about";
 import { Route as EnProductsRouteImport } from "./routes/en/products";
 import { Route as EnProductsSlugRouteImport } from "./routes/en/products.$slug";
 import { Route as EnContactRouteImport } from "./routes/en/contact";
+import { Route as EnReferencesRouteImport } from "./routes/en/references";
 import { Route as EnBlogRouteImport } from "./routes/en/blog";
 import { Route as EnBlogSlugRouteImport } from "./routes/en/blog.$slug";
 import { Route as EnPortfolioRouteImport } from "./routes/en/portfolio";
@@ -38,6 +39,7 @@ import { Route as RuAboutRouteImport } from "./routes/ru/about";
 import { Route as RuProductsRouteImport } from "./routes/ru/products";
 import { Route as RuProductsSlugRouteImport } from "./routes/ru/products.$slug";
 import { Route as RuContactRouteImport } from "./routes/ru/contact";
+import { Route as RuReferencesRouteImport } from "./routes/ru/references";
 import { Route as RuBlogRouteImport } from "./routes/ru/blog";
 import { Route as RuBlogSlugRouteImport } from "./routes/ru/blog.$slug";
 import { Route as RuPortfolioRouteImport } from "./routes/ru/portfolio";
@@ -67,8 +69,9 @@ const routeTree = __rootImport._addFileChildren({
     EnProductsRoute: EnProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
       EnProductsSlugRoute: EnProductsSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => EnProductsRouteImport } as any),
     } as any),
-    EnContactRoute: EnContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => EnRouteImport } as any),
-    EnBlogRoute: EnBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
+     EnContactRoute: EnContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => EnRouteImport } as any),
+     EnReferencesRoute: EnReferencesRouteImport.update({ getId: () => '/references', path: '/references', getParentRoute: () => EnRouteImport } as any),
+     EnBlogRoute: EnBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
       EnBlogSlugRoute: EnBlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => EnBlogRouteImport } as any),
     } as any),
     EnPortfolioRoute: EnPortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => EnRouteImport } as any)._addFileChildren({
@@ -80,8 +83,9 @@ const routeTree = __rootImport._addFileChildren({
     RuProductsRoute: RuProductsRouteImport.update({ getId: () => '/products', path: '/products', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
       RuProductsSlugRoute: RuProductsSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => RuProductsRouteImport } as any),
     } as any),
-    RuContactRoute: RuContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => RuRouteImport } as any),
-    RuBlogRoute: RuBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
+     RuContactRoute: RuContactRouteImport.update({ getId: () => '/contact', path: '/contact', getParentRoute: () => RuRouteImport } as any),
+     RuReferencesRoute: RuReferencesRouteImport.update({ getId: () => '/references', path: '/references', getParentRoute: () => RuRouteImport } as any),
+     RuBlogRoute: RuBlogRouteImport.update({ getId: () => '/blog', path: '/blog', getParentRoute: () => RuRouteImport } as any)._addFileChildren({
       RuBlogSlugRoute: RuBlogSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => RuBlogRouteImport } as any),
     } as any),
     RuPortfolioRoute: RuPortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => RuRouteImport } as any)._addFileChildren({

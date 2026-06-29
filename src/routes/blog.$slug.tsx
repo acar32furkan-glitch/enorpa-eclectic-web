@@ -3,31 +3,7 @@ import { Calendar, ArrowLeft, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { generateBlogPostSchema, generateHreflangTags, SITE } from "@/lib/seo";
-import { generateExcerpt } from "@/lib/cleanContent";
-
-function cleanContent(html: string): string {
-  let result = html;
-  result = result
-    .replace(/\[vc_[^\]]*\]?/g, '')
-    .replace(/\[\/vc_[^\]]*\]?/g, '')
-    .replace(/\[[^\]]*\]?/g, '');
-  return result
-    .replace(/&#8221;|&#8220;/g, '"')
-    .replace(/&#8217;|&#8216;/g, "'")
-    .replace(/&#8230;/g, '...')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#[0-9]+;/g, '')
-    .replace(/&[a-z]+;/g, '')
-    .replace(/\s*data-\w+="[^"]*"/g, '')
-    .replace(/\s*data-\w+='[^']*'/g, '')
-    .replace(/<p>\s*<\/p>/g, '')
-    .replace(/<h[1-6]>\s*<\/h[1-6]>/g, '')
-    .replace(/Lorem ipsum[\s\S]*?(?=<|$)/g, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
+import { cleanContent } from "@/lib/cleanContent";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {

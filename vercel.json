@@ -1,8 +1,10 @@
 {
   "redirects": [
-    { "source": "/tr/", "destination": "/", "statusCode": 301 },
     { "source": "/en/", "destination": "/en", "statusCode": 301 },
     { "source": "/ru/", "destination": "/ru", "statusCode": 301 },
+    { "source": "/tr/", "destination": "/", "statusCode": 301 },
+    { "source": "/en/(.*)", "destination": "/en/$1", "statusCode": 301 },
+    { "source": "/ru/(.*)", "destination": "/ru/$1", "statusCode": 301 },
     { "source": "/tr/hakkimizda/", "destination": "/hakkimizda", "statusCode": 301 },
     { "source": "/tr/iletisim/", "destination": "/iletisim", "statusCode": 301 },
     { "source": "/tr/urunler/", "destination": "/urunler", "statusCode": 301 },
@@ -41,15 +43,12 @@
     { "source": "/tr/kazan-kontrol-panosu/", "destination": "/urunler/kazan-kontrol-panosu", "statusCode": 301 },
     { "source": "/tr/yedek-parca/", "destination": "/urunler/yedek-parca", "statusCode": 301 },
     { "source": "/tr/portfolio/(.*)", "destination": "/portfolio/$1", "statusCode": 301 },
-    { "source": "/tr/hakkimizda/", "destination": "/hakkimizda", "statusCode": 301 },
-    { "source": "/tr/iletisim/", "destination": "/iletisim", "statusCode": 301 },
-    { "source": "/tr/urunler/", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/tr/blog-2/", "destination": "/blog", "statusCode": 301 },
-    { "source": "/tr/blog-2/(.*)", "destination": "/blog/$1", "statusCode": 301 },
-    { "source": "/tr/projeler/", "destination": "/projeler", "statusCode": 301 },
-    { "source": "/tr/referanslarimiz/", "destination": "/referanslar", "statusCode": 301 },
-    { "source": "/tr/neden-enorpa/", "destination": "/blog/neden-enorpa", "statusCode": 301 },
     { "source": "/tr/(.*)", "destination": "/$1", "statusCode": 301 }
+  ],
+  "rewrites": [
+    { "source": "/en/:path*", "destination": "/en/:path*" },
+    { "source": "/ru/:path*", "destination": "/ru/:path*" },
+    { "source": "/:path*", "destination": "/:path*" }
   ],
   "headers": [
     {
