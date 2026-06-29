@@ -1,0 +1,626 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - link "+90 850 471 2100" [ref=e7] [cursor=pointer]:
+            - /url: tel:+908504712100
+            - img [ref=e8]
+            - generic [ref=e10]: +90 850 471 2100
+          - link "turuncu@enorpa.com" [ref=e11] [cursor=pointer]:
+            - /url: mailto:turuncu@enorpa.com
+            - img [ref=e12]
+            - generic [ref=e15]: turuncu@enorpa.com
+        - generic [ref=e16]:
+          - button "TR" [ref=e18]
+          - generic [ref=e19]:
+            - generic [ref=e20]: "|"
+            - button "EN" [ref=e21]
+          - generic [ref=e22]:
+            - generic [ref=e23]: "|"
+            - button "RU" [ref=e24]
+      - generic [ref=e26]:
+        - link "ENORPA" [ref=e27] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e28]: ENORPA
+        - navigation [ref=e30]:
+          - link "Anasayfa" [ref=e31] [cursor=pointer]:
+            - /url: /
+          - link "Ürünler" [ref=e32] [cursor=pointer]:
+            - /url: /urunler
+          - link "Hakkımızda" [ref=e33] [cursor=pointer]:
+            - /url: /hakkimizda
+          - link "Blog" [ref=e34] [cursor=pointer]:
+            - /url: /blog
+          - link "Projeler" [ref=e35] [cursor=pointer]:
+            - /url: /projeler
+          - link "Referanslar" [ref=e36] [cursor=pointer]:
+            - /url: /referanslar
+          - link "İletişim" [ref=e37] [cursor=pointer]:
+            - /url: /iletisim
+        - link "Teklif Al" [ref=e39] [cursor=pointer]:
+          - /url: /referanslar
+          - text: Teklif Al
+          - img [ref=e40]
+      - generic [ref=e42]:
+        - img "Enorpa Enerji Hero" [ref=e43]
+        - generic [ref=e46]:
+          - generic [ref=e48]: Enorpa Enerji · Since 2000
+          - heading "Endüstriyel Isıtmada Güvenilir Güç" [level=1] [ref=e49]
+          - paragraph [ref=e50]: Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel, yüksek verimli çözümler.
+          - generic [ref=e51]:
+            - link "Ürünleri İncele" [ref=e52] [cursor=pointer]:
+              - /url: "#products"
+              - text: Ürünleri İncele
+              - img [ref=e53]
+            - link "Bize Ulaşın" [ref=e55] [cursor=pointer]:
+              - /url: "#contact"
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]: 0+
+            - generic [ref=e61]: Yıl Deneyim
+          - generic [ref=e62]:
+            - generic [ref=e63]: 0+
+            - generic [ref=e64]: Tamamlanan Proje
+          - generic [ref=e65]:
+            - generic [ref=e66]: 0+
+            - generic [ref=e67]: Ülkeye İhracat
+          - generic [ref=e68]:
+            - generic [ref=e69]: 0+
+            - generic [ref=e70]: Mutlu Müşteri
+        - generic [ref=e71]:
+          - generic [ref=e72]: "Sertifikalı Üretim:"
+          - generic [ref=e73]:
+            - generic [ref=e74]:
+              - img [ref=e76]
+              - generic [ref=e79]:
+                - generic [ref=e80]: CE
+                - generic [ref=e81]: European Conformity
+            - generic [ref=e82]:
+              - img [ref=e84]
+              - generic [ref=e87]:
+                - generic [ref=e88]: TSE
+                - generic [ref=e89]: Türk Standartları
+            - generic [ref=e90]:
+              - img [ref=e92]
+              - generic [ref=e94]:
+                - generic [ref=e95]: ISO 9001
+                - generic [ref=e96]: Quality Management
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - generic [ref=e100]: Sektörler
+          - heading "Sektörler" [level=2] [ref=e101]
+          - paragraph [ref=e102]: Kazan, ısıtma ve buhar sistemleri çözümlerimizle dünyanın birçok noktasında farklı sektörlerdeki müşterilerimize profesyonel çözümler sunuyoruz.
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - generic [ref=e105]: 🌱
+            - heading "Sera Isıtma Sistemleri" [level=3] [ref=e106]
+            - paragraph [ref=e107]: Sera ısıtma tesisatı proje ve kurulumu
+          - generic [ref=e108]:
+            - generic [ref=e109]: 🏭
+            - heading "Endüstriyel Buhar Sistemleri" [level=3] [ref=e110]
+            - paragraph [ref=e111]: Endüstriyel tesislerde kullanılan yüksek verimli ısıtma sistemleri
+          - generic [ref=e112]:
+            - generic [ref=e113]: 💨
+            - heading "Kurutma Sistemleri" [level=3] [ref=e114]
+            - paragraph [ref=e115]: Nemin azaltılması için kullanılan teknolojik çözümler
+          - generic [ref=e116]:
+            - generic [ref=e117]: 🏢
+            - heading "Mahal Isıtma Sistemleri" [level=3] [ref=e118]
+            - paragraph [ref=e119]: Yapı içindeki sıcaklık düzenlemesi için kullanılan sistemler
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]: Yakıt Tasarruf Hesaplayıcısı
+          - heading "Yakıt Tasarruf Hesaplayıcısı" [level=2] [ref=e124]
+          - paragraph [ref=e125]: Enorpa sistemiyle ne kadar tasarruf edebileceğinizi hesaplayın.
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - generic [ref=e128]:
+              - generic [ref=e129]: Mevcut Yakıt Tipi
+              - combobox [ref=e130]:
+                - option "Doğalgaz" [selected]
+                - option "Fuel-Oil"
+                - option "Kömür"
+                - option "Pelet"
+            - generic [ref=e131]:
+              - generic [ref=e132]: Aylık Yakıt Tüketimi (m³/ay)
+              - spinbutton [ref=e133]: "1000"
+            - generic [ref=e134]:
+              - generic [ref=e135]: Mevcut Yakıt Birim Fiyatı (TL)
+              - spinbutton [ref=e136]: "5"
+            - generic [ref=e137]:
+              - generic [ref=e138]: Tesis Tipi
+              - combobox [ref=e139]:
+                - option "Sera" [selected]
+                - option "Otel"
+                - option "Endüstriyel Tesis"
+                - option "Diğer"
+          - generic [ref=e141]:
+            - generic [ref=e142]:
+              - generic [ref=e143]: Aylık Mevcut Maliyet
+              - generic [ref=e144]: 5.000 TL
+            - generic [ref=e145]:
+              - generic [ref=e146]: Tahmini Yıllık Tasarruf
+              - generic [ref=e147]: 13.200 TL
+            - generic [ref=e148]:
+              - generic [ref=e149]: Tahmini Amortisman Süresi
+              - generic [ref=e150]: 94.7 yıl
+            - paragraph [ref=e151]: "*Hesaplama tahmini olup gerçek değerler sistem büyüklüğüne göre değişir."
+            - link "Ücretsiz Tasarruf Analizi İste →" [ref=e152] [cursor=pointer]:
+              - /url: /iletisim
+      - generic [ref=e154]:
+        - generic [ref=e155]:
+          - generic [ref=e156]: Ürün Kataloğu
+          - heading "Ürün Kategorilerimiz" [level=2] [ref=e157]
+          - paragraph [ref=e158]: Her tesis için özel mühendislik. Tüm modellerimiz TSE, CE ve ISO 9001 standartlarında üretilir.
+        - generic [ref=e159]:
+          - article [ref=e160]:
+            - generic [ref=e161]:
+              - img [ref=e163]
+              - generic [ref=e166]: Sıcak Su Kazanları
+              - generic [ref=e167]:
+                - generic [ref=e168]: Multi Yakıtlı Sıcak Su Kazanı
+                - heading "Obsidyen Serisi" [level=3] [ref=e169]
+            - generic [ref=e170]:
+              - generic [ref=e172]:
+                - img [ref=e173]
+                - generic [ref=e176]:
+                  - generic [ref=e177]: Kapasite
+                  - generic [ref=e178]: 1.750.000 – 6.000.000 kcal/h
+              - generic [ref=e180]:
+                - button "Detay" [ref=e181]:
+                  - text: Detay
+                  - img [ref=e182]
+                - link "Tam Sayfa" [ref=e184] [cursor=pointer]:
+                  - /url: /urunler/obsidyen-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e185]
+          - article [ref=e187]:
+            - generic [ref=e188]:
+              - img [ref=e190]
+              - generic [ref=e193]: Sıcak Su Kazanları
+              - generic [ref=e194]:
+                - generic [ref=e195]: Sıvı/Gaz Yakıtlı Sıcak Su Kazanı
+                - heading "Akuamarin Serisi" [level=3] [ref=e196]
+            - generic [ref=e197]:
+              - generic [ref=e199]:
+                - img [ref=e200]
+                - generic [ref=e203]:
+                  - generic [ref=e204]: Kapasite
+                  - generic [ref=e205]: 75 kW – 20.000 kW
+              - generic [ref=e207]:
+                - button "İncele" [ref=e208]:
+                  - text: İncele
+                  - img [ref=e209]
+                - link "Tam Sayfa" [ref=e211] [cursor=pointer]:
+                  - /url: /urunler/akuamarin-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e212]
+          - article [ref=e214]:
+            - generic [ref=e215]:
+              - img [ref=e217]
+              - generic [ref=e220]: Sıcak Su Kazanları
+              - generic [ref=e221]:
+                - generic [ref=e222]: Katı Yakıtlı Sıcak Su Kazanı (Çift Külhanlı)
+                - heading "Kalsedon Serisi" [level=3] [ref=e223]
+            - generic [ref=e224]:
+              - generic [ref=e226]:
+                - img [ref=e227]
+                - generic [ref=e230]:
+                  - generic [ref=e231]: Kapasite
+                  - generic [ref=e232]: 1.500.000 – 3.500.000 kcal/h
+              - generic [ref=e234]:
+                - button "Detay" [ref=e235]:
+                  - text: Detay
+                  - img [ref=e236]
+                - link "Tam Sayfa" [ref=e238] [cursor=pointer]:
+                  - /url: /urunler/kalsedon-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e239]
+          - article [ref=e241]:
+            - generic [ref=e242]:
+              - img [ref=e244]
+              - generic [ref=e247]: Sıcak Su Kazanları
+              - generic [ref=e248]:
+                - generic [ref=e249]: Sıvı-Gaz Yakıtlı Buhar Jeneratörü
+                - heading "Jasper Serisi" [level=3] [ref=e250]
+            - generic [ref=e251]:
+              - generic [ref=e253]:
+                - img [ref=e254]
+                - generic [ref=e257]:
+                  - generic [ref=e258]: Kapasite
+                  - generic [ref=e259]: 349 kW – 2.093 kW
+              - generic [ref=e261]:
+                - button "Detay" [ref=e262]:
+                  - text: Detay
+                  - img [ref=e263]
+                - link "Tam Sayfa" [ref=e265] [cursor=pointer]:
+                  - /url: /urunler/jasper-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e266]
+          - article [ref=e268]:
+            - generic [ref=e269]:
+              - img [ref=e271]
+              - generic [ref=e274]: Buhar Kazanları
+              - generic [ref=e275]:
+                - generic [ref=e276]: Katı Yakıtlı Buhar Kazanı
+                - heading "Kuvars Serisi (Tek Külhanlı)" [level=3] [ref=e277]
+            - generic [ref=e278]:
+              - generic [ref=e280]:
+                - img [ref=e281]
+                - generic [ref=e284]:
+                  - generic [ref=e285]: Kapasite
+                  - generic [ref=e286]: 500 – 5.000 kg/h
+              - generic [ref=e288]:
+                - button "İncele" [ref=e289]:
+                  - text: İncele
+                  - img [ref=e290]
+                - link "Tam Sayfa" [ref=e292] [cursor=pointer]:
+                  - /url: /urunler/kuvars-serisi-tek-kulhanli
+                  - text: Tam Sayfa
+                  - img [ref=e293]
+          - article [ref=e295]:
+            - generic [ref=e296]:
+              - img [ref=e298]
+              - generic [ref=e301]: Buhar Kazanları
+              - generic [ref=e302]:
+                - generic [ref=e303]: Multi Yakıtlı Buhar Kazanı
+                - heading "Turmalin Serisi" [level=3] [ref=e304]
+            - generic [ref=e305]:
+              - generic [ref=e307]:
+                - img [ref=e308]
+                - generic [ref=e311]:
+                  - generic [ref=e312]: Kapasite
+                  - generic [ref=e313]: 2.000 – 5.000 kg/h
+              - generic [ref=e315]:
+                - button "İncele" [ref=e316]:
+                  - text: İncele
+                  - img [ref=e317]
+                - link "Tam Sayfa" [ref=e319] [cursor=pointer]:
+                  - /url: /urunler/turmalin-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e320]
+          - article [ref=e322]:
+            - generic [ref=e323]:
+              - img [ref=e325]
+              - generic [ref=e328]: Sıcak Hava Kazanları
+              - generic [ref=e329]:
+                - generic [ref=e330]: Katı Yakıtlı Sıcak Hava Kazanı
+                - heading "HAS Turbo Serisi" [level=3] [ref=e331]
+            - generic [ref=e332]:
+              - generic [ref=e334]:
+                - img [ref=e335]
+                - generic [ref=e338]:
+                  - generic [ref=e339]: Kapasite
+                  - generic [ref=e340]: 300.000 – 600.000 kcal/h
+              - generic [ref=e342]:
+                - button "Detay" [ref=e343]:
+                  - text: Detay
+                  - img [ref=e344]
+                - link "Tam Sayfa" [ref=e346] [cursor=pointer]:
+                  - /url: /urunler/has-turbo-serisi
+                  - text: Tam Sayfa
+                  - img [ref=e347]
+        - link "Tüm Ürün Kataloğunu İncele" [ref=e350] [cursor=pointer]:
+          - /url: /urunler
+          - text: Tüm Ürün Kataloğunu İncele
+          - img [ref=e351]
+      - generic [ref=e354]:
+        - generic [ref=e355]:
+          - generic [ref=e356]: Referanslar
+          - heading "Tamamlanan Projeler" [level=2] [ref=e357]
+          - paragraph [ref=e358]: 25+ yılda 500'ün üzerinde projeyi başarıyla tamamladık.
+        - generic [ref=e359]:
+          - generic [ref=e360]:
+            - generic [ref=e361]:
+              - generic [ref=e362]:
+                - generic [ref=e363]: Tekstil
+                - heading "Bursa Tekstil A.Ş." [level=3] [ref=e364]
+              - generic [ref=e365]: "2023"
+            - paragraph [ref=e366]: 2 adet Kuvars Serisi buhar kazanı, 8.000 kg/h kapasite
+          - generic [ref=e367]:
+            - generic [ref=e368]:
+              - generic [ref=e369]:
+                - generic [ref=e370]: Gıda
+                - heading "Ege Gıda Sanayi" [level=3] [ref=e371]
+              - generic [ref=e372]: "2024"
+            - paragraph [ref=e373]: Akuamarin Serisi sıcak su kazanı, 12.000 kW
+          - generic [ref=e374]:
+            - generic [ref=e375]:
+              - generic [ref=e376]:
+                - generic [ref=e377]: Sera
+                - heading "Anadolu Sera İşletmesi" [level=3] [ref=e378]
+              - generic [ref=e379]: "2023"
+            - paragraph [ref=e380]: HAS NG Serisi sıcak hava sistemi, 800.000 kcal/h
+          - generic [ref=e381]:
+            - generic [ref=e382]:
+              - generic [ref=e383]:
+                - generic [ref=e384]: Kimya
+                - heading "Marmara Kimya Tesisleri" [level=3] [ref=e385]
+              - generic [ref=e386]: "2024"
+            - paragraph [ref=e387]: Turmalin Serisi buhar kazanı, 5.000 kg/h
+      - generic [ref=e389]:
+        - generic [ref=e390]:
+          - generic [ref=e391]: Hızlı Teklif
+          - heading "İhtiyacınızı 30 Saniyede Belirleyin" [level=2] [ref=e392]
+          - paragraph [ref=e393]: Tesisinize uygun kazan kapasitesini hesaplayın veya size hemen ulaşmamız için kısa formu doldurun.
+        - generic [ref=e394]:
+          - generic [ref=e396]:
+            - generic [ref=e397]:
+              - img [ref=e399]
+              - generic [ref=e401]:
+                - heading "Kapasite Hesaplayıcı" [level=3] [ref=e402]
+                - paragraph [ref=e403]: 4 adımda tahmini kapasite
+            - generic [ref=e404]:
+              - generic [ref=e406]: "1"
+              - generic [ref=e409]: "2"
+              - generic [ref=e412]: "3"
+              - generic [ref=e415]: "4"
+            - generic [ref=e417]:
+              - generic [ref=e418]: 1. Tesis Tipiniz
+              - generic [ref=e419]:
+                - button "🧵 Tekstil" [ref=e420]:
+                  - generic [ref=e421]: 🧵
+                  - generic [ref=e422]: Tekstil
+                - button "🥫 Gıda" [ref=e423]:
+                  - generic [ref=e424]: 🥫
+                  - generic [ref=e425]: Gıda
+                - button "🌱 Sera" [ref=e426]:
+                  - generic [ref=e427]: 🌱
+                  - generic [ref=e428]: Sera
+                - button "🏨 Otel / Hastane" [ref=e429]:
+                  - generic [ref=e430]: 🏨
+                  - generic [ref=e431]: Otel / Hastane
+                - button "⚗️ Kimya" [ref=e432]:
+                  - generic [ref=e433]: ⚗️
+                  - generic [ref=e434]: Kimya
+            - generic [ref=e435]:
+              - button "← Geri" [disabled] [ref=e436]
+              - button "İleri" [disabled] [ref=e437]:
+                - text: İleri
+                - img [ref=e438]
+          - generic [ref=e441]:
+            - generic [ref=e442]:
+              - img [ref=e444]
+              - generic [ref=e446]:
+                - heading "Vaktiniz Yok mu?" [level=3] [ref=e447]
+                - paragraph [ref=e448]: Sizi 1 saat içinde arayalım
+            - generic [ref=e449]:
+              - generic [ref=e450]:
+                - generic [ref=e451]: Adınız Soyadınız
+                - textbox "Ahmet Yılmaz" [ref=e452]
+              - generic [ref=e453]:
+                - generic [ref=e454]: Telefon
+                - textbox "+90 555 111 22 33" [ref=e455]
+              - button "Beni Arayın" [ref=e456]:
+                - img [ref=e457]
+                - text: Beni Arayın
+              - generic [ref=e460]:
+                - img [ref=e461]
+                - text: Pzt – Cum · 08:30 – 18:00
+      - generic [ref=e465]:
+        - generic [ref=e466]:
+          - generic [ref=e467]: Doküman Merkezi
+          - heading "Teknik Belgeler & Kataloglar" [level=2] [ref=e468]
+          - paragraph [ref=e469]: Teknik föyler doğrudan indirilebilir. Premium kılavuzlarımız için kısa bir form doldurmanız yeterlidir.
+        - generic [ref=e470]:
+          - link "Kuvars Serisi Teknik Föy PDF · Buhar Kazanları 1.2 MB İndir" [ref=e471] [cursor=pointer]:
+            - /url: /docs/kuvars-spec.pdf
+            - generic [ref=e472]:
+              - img [ref=e474]
+              - generic [ref=e477]:
+                - heading "Kuvars Serisi Teknik Föy" [level=3] [ref=e478]
+                - paragraph [ref=e479]: PDF · Buhar Kazanları
+                - generic [ref=e480]:
+                  - generic [ref=e481]: 1.2 MB
+                  - generic [ref=e482]:
+                    - text: İndir
+                    - img [ref=e483]
+          - link "Oniks Serisi Teknik Föy PDF · Sıcak Su Kazanları 1.8 MB İndir" [ref=e486] [cursor=pointer]:
+            - /url: /docs/oniks-spec.pdf
+            - generic [ref=e487]:
+              - img [ref=e489]
+              - generic [ref=e492]:
+                - heading "Oniks Serisi Teknik Föy" [level=3] [ref=e493]
+                - paragraph [ref=e494]: PDF · Sıcak Su Kazanları
+                - generic [ref=e495]:
+                  - generic [ref=e496]: 1.8 MB
+                  - generic [ref=e497]:
+                    - text: İndir
+                    - img [ref=e498]
+          - link "HAS NG Teknik Föy PDF · Sıcak Hava Sistemleri 0.9 MB İndir" [ref=e501] [cursor=pointer]:
+            - /url: /docs/has-spec.pdf
+            - generic [ref=e502]:
+              - img [ref=e504]
+              - generic [ref=e507]:
+                - heading "HAS NG Teknik Föy" [level=3] [ref=e508]
+                - paragraph [ref=e509]: PDF · Sıcak Hava Sistemleri
+                - generic [ref=e510]:
+                  - generic [ref=e511]: 0.9 MB
+                  - generic [ref=e512]:
+                    - text: İndir
+                    - img [ref=e513]
+          - link "Sertifikalar Paketi CE · TSE · ISO 9001 3.4 MB İndir" [ref=e516] [cursor=pointer]:
+            - /url: /docs/certificates.pdf
+            - generic [ref=e517]:
+              - img [ref=e519]
+              - generic [ref=e522]:
+                - heading "Sertifikalar Paketi" [level=3] [ref=e523]
+                - paragraph [ref=e524]: CE · TSE · ISO 9001
+                - generic [ref=e525]:
+                  - generic [ref=e526]: 3.4 MB
+                  - generic [ref=e527]:
+                    - text: İndir
+                    - img [ref=e528]
+          - button "Premium 2026 Genel Katalog Tüm Ürün Yelpazesi 18 MB Talep Et" [ref=e531]:
+            - generic [ref=e532]:
+              - img [ref=e534]
+              - generic [ref=e537]:
+                - generic [ref=e538]: Premium
+                - heading "2026 Genel Katalog" [level=3] [ref=e539]
+                - paragraph [ref=e540]: Tüm Ürün Yelpazesi
+                - generic [ref=e541]:
+                  - generic [ref=e542]: 18 MB
+                  - generic [ref=e543]:
+                    - text: Talep Et
+                    - img [ref=e544]
+          - button "Premium Mühendislik Tasarım Kılavuzu Premium Rehber 8.7 MB Talep Et" [ref=e547]:
+            - generic [ref=e548]:
+              - img [ref=e550]
+              - generic [ref=e553]:
+                - generic [ref=e554]: Premium
+                - heading "Mühendislik Tasarım Kılavuzu" [level=3] [ref=e555]
+                - paragraph [ref=e556]: Premium Rehber
+                - generic [ref=e557]:
+                  - generic [ref=e558]: 8.7 MB
+                  - generic [ref=e559]:
+                    - text: Talep Et
+                    - img [ref=e560]
+      - generic [ref=e564]:
+        - generic [ref=e565]:
+          - generic [ref=e566]: Projelerimiz
+          - heading "Projelerimizden Görüntüler" [level=2] [ref=e567]
+        - generic [ref=e568]:
+          - generic [ref=e569]:
+            - img "Özbekistan / Taşkent" [ref=e571]
+            - generic [ref=e572]:
+              - heading "Özbekistan / Taşkent" [level=3] [ref=e573]
+              - paragraph [ref=e574]: Sera Isıtma Tesisatı Kurulumu
+          - generic [ref=e575]:
+            - img "Özbekistan / Harezm" [ref=e577]
+            - generic [ref=e578]:
+              - heading "Özbekistan / Harezm" [level=3] [ref=e579]
+              - paragraph [ref=e580]: Sera Isıtma Tesisatı Kurulumu
+          - generic [ref=e581]:
+            - img "Türkiye / Manisa" [ref=e583]
+            - generic [ref=e584]:
+              - heading "Türkiye / Manisa" [level=3] [ref=e585]
+              - paragraph [ref=e586]: Buhar Kazanı Kurulumu
+          - generic [ref=e587]:
+            - img "Türkiye / İzmir" [ref=e589]
+            - generic [ref=e590]:
+              - heading "Türkiye / İzmir" [level=3] [ref=e591]
+              - paragraph [ref=e592]: Sera Isıtma Tesisatı Kurulumu
+      - generic [ref=e594]:
+        - generic [ref=e595]:
+          - generic [ref=e596]: Görüşler
+          - heading "Yüksek Teknoloji & Mühendislik" [level=2] [ref=e597]
+        - generic [ref=e598]:
+          - generic [ref=e599]:
+            - img [ref=e600]
+            - paragraph [ref=e602]: "\"Müşterilerimize sağladığımız kaliteli ve zamanında teknik destek, işlerini kesintisiz sürdürmelerini sağlıyor. Saha ekiplerimiz her projede profesyonel yaklaşımları ve yenilikçi çözümleriyle fark yaratıyor.\""
+            - generic [ref=e603]:
+              - generic [ref=e604]: Mevlüt A.
+              - generic [ref=e605]: Servis & Saha Sorumlusu
+          - generic [ref=e606]:
+            - img [ref=e607]
+            - paragraph [ref=e609]: "\"Yenilikçi stratejiler ve sektörel uzmanlıkla enerji çözümlerinde öncü konumdayız. Müşteri odaklı yaklaşımımızla sürdürülebilirlik ve verimlilik alanlarında öncü projelere imza atıyoruz.\""
+            - generic [ref=e610]:
+              - generic [ref=e611]: Onur K.
+              - generic [ref=e612]: Proje & Pazarlama Müdürü
+          - generic [ref=e613]:
+            - img [ref=e614]
+            - paragraph [ref=e616]: "\"Enerji sektöründe sağlam bir iz bırakmanın gururunu yaşıyoruz. Yenilikçi projelerimiz ve müşteri odaklı yaklaşımımızla sektördeki değişimi liderlik ederek yönlendiriyoruz.\""
+            - generic [ref=e617]:
+              - generic [ref=e618]: İbrahim Ç.
+              - generic [ref=e619]: Yönetim Kurulu Üyesi
+          - generic [ref=e620]:
+            - img [ref=e621]
+            - paragraph [ref=e623]: "\"Isıtma sektöründe kalite ve yenilik standartlarını belirlemekteyiz. Yaratıcı çözümlerimizle üretimde verimlilik ve sürdürülebilirlik sağlayarak müşterilerimize mükemmel ürünler sunmayı hedefliyoruz.\""
+            - generic [ref=e624]:
+              - generic [ref=e625]: Aykut M.
+              - generic [ref=e626]: Yönetim Kurulu Üyesi
+      - generic [ref=e628]:
+        - generic [ref=e629]:
+          - generic [ref=e630]: İletişim
+          - heading "Mühendislerimize Ulaşın" [level=2] [ref=e631]
+          - paragraph [ref=e632]: Projeniz için doğru kazanı birlikte belirleyelim. Saha ekibimiz Türkiye genelinde hizmet verir.
+        - generic [ref=e633]:
+          - link "Telefon +90 850 471 2100" [ref=e634] [cursor=pointer]:
+            - /url: tel:+908504712100
+            - img [ref=e636]
+            - generic [ref=e638]: Telefon
+            - generic [ref=e639]: +90 850 471 2100
+          - link "E-posta turuncu@enorpa.com" [ref=e640] [cursor=pointer]:
+            - /url: mailto:turuncu@enorpa.com
+            - img [ref=e642]
+            - generic [ref=e645]: E-posta
+            - generic [ref=e646]: turuncu@enorpa.com
+          - generic [ref=e647]:
+            - img [ref=e649]
+            - generic [ref=e652]: Fabrika
+            - generic [ref=e653]: Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA
+          - generic [ref=e654]:
+            - img [ref=e656]
+            - generic [ref=e660]: Mesai
+            - generic [ref=e661]: Pzt – Cum · 08:30 – 18:00
+      - generic [ref=e662]:
+        - generic [ref=e663]:
+          - generic [ref=e664]:
+            - generic [ref=e666]: ENORPA
+            - paragraph [ref=e668]: Endüstriyel buhar, sıcak su ve sıcak hava sistemlerinde 25+ yıllık üretim deneyimi.
+            - generic [ref=e669]:
+              - generic [ref=e670]: Sertifikalar
+              - generic [ref=e671]: CE
+              - generic [ref=e672]: TSE
+              - generic [ref=e673]: ISO
+          - generic [ref=e674]:
+            - generic [ref=e675]: Ürünler
+            - list [ref=e676]:
+              - listitem [ref=e677]:
+                - link "Ürünlerimiz" [ref=e678] [cursor=pointer]:
+                  - /url: /urunler
+          - generic [ref=e679]:
+            - generic [ref=e680]: Kurumsal
+            - list [ref=e681]:
+              - listitem [ref=e682]:
+                - link "Hakkımızda" [ref=e683] [cursor=pointer]:
+                  - /url: /hakkimizda
+              - listitem [ref=e684]:
+                - link "Referanslar" [ref=e685] [cursor=pointer]:
+                  - /url: /#refs
+              - listitem [ref=e686]:
+                - link "Dokümanlar" [ref=e687] [cursor=pointer]:
+                  - /url: /#docs
+              - listitem [ref=e688]:
+                - link "İletişim" [ref=e689] [cursor=pointer]:
+                  - /url: /iletisim
+          - generic [ref=e690]:
+            - generic [ref=e691]: Fabrika & İletişim
+            - generic [ref=e692]:
+              - generic [ref=e693]:
+                - img [ref=e694]
+                - generic [ref=e697]: Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA
+              - link "+90 850 471 2100" [ref=e698] [cursor=pointer]:
+                - /url: tel:+908504712100
+                - img [ref=e699]
+                - text: +90 850 471 2100
+              - link "turuncu@enorpa.com" [ref=e701] [cursor=pointer]:
+                - /url: mailto:turuncu@enorpa.com
+                - img [ref=e702]
+                - text: turuncu@enorpa.com
+            - generic [ref=e705]:
+              - img [ref=e706]
+              - text: Google Maps
+        - generic [ref=e710]:
+          - generic [ref=e711]: © 2026 Enorpa Enerji. Tüm hakları saklıdır.
+          - generic [ref=e712]:
+            - link "Gizlilik" [ref=e713] [cursor=pointer]:
+              - /url: /gizlilik-politikasi
+            - link "KVKK" [ref=e714] [cursor=pointer]:
+              - /url: /kvkk
+            - link "Çerezler" [ref=e715] [cursor=pointer]:
+              - /url: /cerez-politikasi
+  - generic [ref=e716]:
+    - paragraph [ref=e717]:
+      - text: Bu site, deneyiminizi geliştirmek ve site trafiğini analiz etmek için çerezler kullanır. Detaylar için
+      - link "Çerez Politikamızı" [ref=e718] [cursor=pointer]:
+        - /url: /cerez-politikasi
+      - text: inceleyebilirsiniz.
+    - generic [ref=e719]:
+      - button "Reddet" [ref=e720]
+      - button "Kabul Et" [ref=e721]
+  - link "WhatsApp" [ref=e722] [cursor=pointer]:
+    - /url: https://wa.me/908504712100
+    - img [ref=e723]

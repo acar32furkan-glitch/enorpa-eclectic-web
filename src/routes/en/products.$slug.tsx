@@ -25,12 +25,6 @@ export const Route = createFileRoute("/en/products/$slug")({
         { name: "twitter:image", content: SITE.defaultOgImage },
       ],
       links: [{ rel: "canonical", href: `https://enorpa.com/en/products/${params.slug}` }],
-      scripts: loaderData ? [{ type: "application/ld+json", children: JSON.stringify(generateProductSchema({
-        name: loaderData.name,
-        description: loaderData.detail || loaderData.type,
-        image: loaderData.image_url,
-        slug: params.slug,
-      })) }] : [],
     };
   },
   component: EnProductDetailPage,
