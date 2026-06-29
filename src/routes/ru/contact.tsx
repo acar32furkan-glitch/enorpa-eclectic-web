@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
+import { SITE, generateHreflangTags } from "@/lib/seo";
 
 export const Route = createFileRoute("/ru/contact")({
   head: () => ({
@@ -14,8 +14,14 @@ export const Route = createFileRoute("/ru/contact")({
       { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:url", content: "https://enorpa.com/ru/contact" },
       { property: "og:locale", content: "ru_RU" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Контакты | Enorpa Energy" },
+      { name: "twitter:description", content: "Свяжитесь с нами. Мы готовы помочь." },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
-    links: [{ rel: "canonical", href: "https://enorpa.com/ru/contact" }],
+    links: [{ rel: "canonical", href: "https://enorpa.com/ru/contact" },
+      ...generateHreflangTags("/ru/contact"),
+    ],
   }),
   component: RuContactPage,
 });

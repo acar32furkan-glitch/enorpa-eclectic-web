@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { generateFaqSchema, SITE } from "@/lib/seo";
+import { generateFaqSchema, generateHreflangTags, SITE } from "@/lib/seo";
 
 const faqs = [
   {
@@ -48,7 +48,9 @@ export const Route = createFileRoute("/sss")({
       { property: "og:description", content: "Frequently asked questions about boilers, installation, and service." },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://enorpa.com/sss" }],
+    links: [{ rel: "canonical", href: "https://enorpa.com/sss" },
+      ...generateHreflangTags("/sss"),
+    ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(generateFaqSchema(faqs)) }],
   }),
   component: SssPage,

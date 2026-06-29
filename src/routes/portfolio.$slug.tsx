@@ -3,6 +3,7 @@ import { Calendar, MapPin, ArrowLeft, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { generateArticleSchema, generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/portfolio/$slug")({
   head: ({ params }) => ({
@@ -12,17 +13,18 @@ export const Route = createFileRoute("/portfolio/$slug")({
       { property: "og:title", content: `${params.slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())} | Enorpa Enerji` },
       { property: "og:description", content: `${params.slug.replace(/-/g, " ")} projesi - Enorpa Enerji.` },
       { property: "og:type", content: "article" },
-      { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+       { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:url", content: `https://enorpa.com/portfolio/${params.slug}` },
       { property: "og:locale", content: "tr_TR" },
-      { property: "og:site_name", content: "Enorpa Enerji" },
+      { property: "og:site_name", content: SITE.name },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: `${params.slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())} | Enorpa Enerji` },
       { name: "twitter:description", content: `${params.slug.replace(/-/g, " ")} projesi.` },
-      { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
       { rel: "canonical", href: `https://enorpa.com/portfolio/${params.slug}` },
+      ...generateHreflangTags(`/portfolio/${params.slug}`),
     ],
   }),
   component: ProjectDetailPage,
@@ -75,6 +77,12 @@ function ProjectDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateArticleSchema({
+        title: project.title,
+        description: project.subtitle || project.description,
+        image: project.featured_image_url,
+        slug: `portfolio/${project.slug}`,
+      })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">
         <Breadcrumbs items={[

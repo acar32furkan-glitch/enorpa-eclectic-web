@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
+import { generateArticleSchema, generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/en/portfolio/$slug")({
   head: ({ params }) => ({
@@ -16,7 +16,9 @@ export const Route = createFileRoute("/en/portfolio/$slug")({
       { property: "og:url", content: `https://enorpa.com/en/portfolio/${params.slug}` },
       { property: "og:locale", content: "en_US" },
     ],
-    links: [{ rel: "canonical", href: `https://enorpa.com/en/portfolio/${params.slug}` }],
+    links: [{ rel: "canonical", href: `https://enorpa.com/en/portfolio/${params.slug}` },
+      ...generateHreflangTags(`/en/portfolio/${params.slug}`),
+    ],
   }),
   component: EnPortfolioDetailPage,
   loader: async ({ params }) => {
@@ -45,6 +47,12 @@ function EnPortfolioDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateArticleSchema({
+        title: project.title,
+        description: project.description || "Enorpa Energy project",
+        image: project.featured_image_url,
+        slug: `en/portfolio/${params.slug}`,
+      })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">
         <Link to="/en/projects" className="inline-flex items-center gap-2 text-sm font-display uppercase tracking-wider text-navy-dark hover:text-orange mb-6">

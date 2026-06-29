@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users, Building2 } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/hakkimizda")({
   head: () => ({
@@ -18,11 +19,17 @@ export const Route = createFileRoute("/hakkimizda")({
           "Enorpa Enerji - TSE, CE, ASME, EAC standartlarında endüstriyel ısıtma ekipmanları üreticisi.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Hakkımızda | Enorpa Enerji" },
+      { name: "twitter:description", content: "Enorpa Enerji - 25+ yıllık tecrübe, TSE, CE, ASME sertifikalı üretim." },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/hakkimizda" },
+      ...generateHreflangTags("/hakkimizda"),
     ],
   }),
   component: HakkimizdaPage,

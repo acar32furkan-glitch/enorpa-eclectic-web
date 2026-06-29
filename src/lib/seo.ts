@@ -1,14 +1,16 @@
 
 
-export const DOMAIN = "enorpa-eclectic-web.vercel.app";
+import { SUPPORTED_LANGS, type SupportedLang } from "@/lib/i18n";
+
+export const DOMAIN = "enorpa.com";
 export const SITE = {
   name: "Enorpa Enerji",
-  url: "https://enorpa-eclectic-web.vercel.app",
+  url: "https://enorpa.com",
   logo: "https://enorpa.com/favicon.ico",
   phone: "+908504712100",
   email: "turuncu@enorpa.com",
   instagram: "https://instagram.com/enorpaenerji",
-  defaultOgImage: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png",
+  defaultOgImage: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp",
   defaultLang: "tr" as SupportedLang,
 };
 
@@ -204,6 +206,44 @@ export function generateFaqSchema(faqs: { question: string; answer: string }[]) 
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
     })),
+  };
+}
+
+export function generateWebSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    url: SITE.url,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE.url}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+export function generateArticleSchema(article: {
+  title: string;
+  description: string;
+  image?: string;
+  slug: string;
+  publishedAt?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    image: article.image,
+    url: `${SITE.url}/${article.slug}`,
+    datePublished: article.publishedAt || new Date().toISOString(),
+    author: { "@type": "Organization", name: SITE.name },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      logo: { "@type": "ImageObject", url: SITE.logo },
+    },
   };
 }
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
+import { SITE, generateHreflangTags } from "@/lib/seo";
 
 export const Route = createFileRoute("/ru/about")({
   head: () => ({
@@ -14,7 +14,9 @@ export const Route = createFileRoute("/ru/about")({
       { property: "og:url", content: "https://enorpa.com/ru/about" },
       { property: "og:locale", content: "ru_RU" },
     ],
-    links: [{ rel: "canonical", href: "https://enorpa.com/ru/about" }],
+    links: [{ rel: "canonical", href: "https://enorpa.com/ru/about" },
+      ...generateHreflangTags("/ru/about"),
+    ],
   }),
   component: RuAboutPage,
 });

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, Globe, Calendar } from "lucide-react";
+import { generateHreflangTags, SITE } from "@/lib/seo";
 
 const projects = [
   {
@@ -65,17 +66,18 @@ export const Route = createFileRoute("/projeler")({
         content: "Enorpa Enerji projeleri. Özbekistan, Türkiye ve dünya genelinde sera ısıtma, buhar kazanı ve kurutma projeleri.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:url", content: "https://enorpa.com/projeler" },
       { property: "og:locale", content: "tr_TR" },
-      { property: "og:site_name", content: "Enorpa Enerji" },
+      { property: "og:site_name", content: SITE.name },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Projeler | Enorpa Enerji" },
       { name: "twitter:description", content: "Enorpa Enerji projeleri. 26 ülkede 138+ proje." },
-      { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/projeler" },
+      ...generateHreflangTags("/projeler"),
     ],
   }),
   component: ProjelerPage,

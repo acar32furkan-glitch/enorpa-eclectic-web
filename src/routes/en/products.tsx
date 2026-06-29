@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { fetchProductsFromSupabase, toSlug, type Product } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
+import { SITE, generateHreflangTags } from "@/lib/seo";
 
 export const Route = createFileRoute("/en/products")({
   head: () => ({
@@ -16,7 +16,9 @@ export const Route = createFileRoute("/en/products")({
       { property: "og:url", content: "https://enorpa.com/en/products" },
       { property: "og:locale", content: "en_US" },
     ],
-    links: [{ rel: "canonical", href: "https://enorpa.com/en/products" }],
+    links: [{ rel: "canonical", href: "https://enorpa.com/en/products" },
+      ...generateHreflangTags("/en/products"),
+    ],
   }),
   component: EnProductsPage,
   loader: async () => {

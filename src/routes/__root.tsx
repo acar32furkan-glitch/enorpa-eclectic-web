@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
-const BRAND_LOGO_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png";
+const BRAND_LOGO_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp";
 const FAVICON_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/favicon-192.png";
 
 const getSessionId = () => {
@@ -101,8 +101,11 @@ meta: [
        { name: "twitter:card", content: "summary_large_image" },
        { name: "twitter:title", content: "Enorpa Enerji — Endüstriyel Isıtmada Güvenilir Güç" },
        { name: "twitter:description", content: "Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel yüksek verimli endüstriyel ısıtma çözümleri." },
-       { property: "og:image", content: BRAND_LOGO_URL },
-       { name: "twitter:image", content: BRAND_LOGO_URL },
+        { property: "og:image", content: BRAND_LOGO_URL },
+        { name: "twitter:image", content: BRAND_LOGO_URL },
+        { property: "og:url", content: "https://enorpa.com/" },
+        { property: "og:locale", content: "tr_TR" },
+        { property: "og:site_name", content: "Enorpa Enerji" },
 {
           name: "Content-Security-Policy",
           content: "default-src 'self'; img-src 'self' https://hmhkrrbvkafwcbyyvezl.supabase.co data: https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://hmhkrrbvkafwcbyyvezl.supabase.co https://connect.facebook.net https://www.facebook.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://hmhkrrbvkafwcbyyvezl.supabase.co https://www.google-analytics.com https://connect.facebook.net https://www.facebook.com; frame-src 'none'; object-src 'none';",
@@ -120,14 +123,14 @@ meta: [
 scripts: [
         {
           type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Enorpa Enerji",
-            url: "https://enorpa-eclectic-web.vercel.app",
-            logo: "https://enorpa-eclectic-web.vercel.app/favicon.ico",
-            telephone: "+908504712100",
-            sameAs: ["https://instagram.com/enorpaenerji"],
+           children: JSON.stringify({
+             "@context": "https://schema.org",
+             "@type": "Organization",
+             name: "Enorpa Enerji",
+             url: "https://enorpa.com",
+             logo: "https://enorpa.com/favicon.ico",
+             telephone: "+908504712100",
+             sameAs: ["https://instagram.com/enorpaenerji"],
             location: [
               { "@type": "Place", "name": "Merkez Ofis", "address": { "@type": "PostalAddress", "streetAddress": "Sanayi Mah. 3231 Sk. No:12", "addressLocality": "Isparta", "addressCountry": "TR" }},
               { "@type": "Place", "name": "Fabrika 2 Isparta OSB", "address": { "@type": "PostalAddress", "streetAddress": "Vatan OSB Mah. 304. Cad. No:12", "addressLocality": "Isparta", "addressCountry": "TR" }},
