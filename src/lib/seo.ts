@@ -1,10 +1,9 @@
-import { supabase } from "@/integrations/supabase/client";
-import type { SupportedLang } from "./i18n";
-import { SUPPORTED_LANGS } from "./i18n";
 
+
+export const DOMAIN = "enorpa-eclectic-web.vercel.app";
 export const SITE = {
   name: "Enorpa Enerji",
-  url: "https://enorpa.com",
+  url: "https://enorpa-eclectic-web.vercel.app",
   logo: "https://enorpa.com/favicon.ico",
   phone: "+908504712100",
   email: "turuncu@enorpa.com",
@@ -208,21 +207,4 @@ export function generateFaqSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
-export async function fetchBlogPost(slug: string) {
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-  if (error || !data) return null;
-  return data;
-}
 
-export async function fetchAllBlogPosts() {
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .order("published_at", { ascending: false });
-  if (error || !data) return [];
-  return data;
-}

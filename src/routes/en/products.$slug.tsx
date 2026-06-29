@@ -71,6 +71,12 @@ function EnProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateProductSchema({
+        name: loaderData.name,
+        description: loaderData.detail || loaderData.type,
+        image: loaderData.image_url,
+        slug: params.slug,
+      })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">
         <Link to="/en/products" className="inline-flex items-center gap-2 text-sm font-display uppercase tracking-wider text-navy-dark hover:text-orange mb-6">

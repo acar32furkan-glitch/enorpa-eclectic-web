@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Factory, Globe, Users } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/ru/")({
   head: () => ({
@@ -11,18 +10,14 @@ export const Route = createFileRoute("/ru/")({
       { property: "og:title", content: "Enorpa Energy - Системы отопления и паровые котлы" },
       { property: "og:description", content: "Промышленные котлы. 26 стран, 138+ проектов." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:url", content: "https://enorpa.com/ru" },
       { property: "og:locale", content: "ru_RU" },
-      { property: "og:site_name", content: SITE.name },
+      { property: "og:site_name", content: "Enorpa Enerji" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Enorpa Energy - Системы отопления" },
       { name: "twitter:description", content: "Промышленные котлы. 26 стран, 138+ проектов." },
-      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
-    links: [
-      { rel: "canonical", href: "https://enorpa.com/ru" },
-    ],
+    links: [{ rel: "canonical", href: "https://enorpa.com/ru" }],
   }),
   component: RuHomePage,
 });
@@ -42,17 +37,10 @@ function RuHomePage() {
             горячей воды, горячего воздуха, а также топливных баков и сосудов под давлением.
           </p>
           <div className="flex items-center justify-center gap-4">
-            <Link
-              to="/ru/products"
-              className="inline-flex items-center gap-2 bg-orange text-white font-display uppercase tracking-wider text-sm px-6 py-3 hover:bg-orange-dark transition-colors"
-            >
-              Наша продукция
-              <ArrowRight className="h-4 w-4" />
+            <Link to="/ru/products" className="inline-flex items-center gap-2 bg-orange text-white font-display uppercase tracking-wider text-sm px-6 py-3 hover:bg-orange-dark transition-colors">
+              Наша продукция <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              to="/ru/contact"
-              className="inline-flex items-center gap-2 border-2 border-navy text-navy font-display uppercase tracking-wider text-sm px-6 py-3 hover:bg-navy hover:text-white transition-colors"
-            >
+            <Link to="/ru/contact" className="inline-flex items-center gap-2 border-2 border-navy text-navy font-display uppercase tracking-wider text-sm px-6 py-3 hover:bg-navy hover:text-white transition-colors">
               Связаться с нами
             </Link>
           </div>
@@ -80,14 +68,9 @@ function RuHomePage() {
           <h2 className="font-display text-2xl font-bold uppercase mb-4">Качественная продукция, довольные клиенты</h2>
           <p className="text-white/80 mb-6 max-w-2xl mx-auto">
             Enorpa Energy устанавливает стандарты качества и инноваций в сфере отопления.
-            Мы стремимся предоставить нашим клиентам отличную продукцию, обеспечивая эффективность и экологичность.
           </p>
-          <a
-            href="/ru/contact"
-            className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-6 py-3 transition-colors"
-          >
-            Запросить цену
-            <ArrowRight className="h-4 w-4" />
+          <a href="/ru/contact" className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-6 py-3 transition-colors">
+            Запросить цену <ArrowRight className="h-4 w-4" />
           </a>
         </div>
       </div>

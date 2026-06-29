@@ -27,16 +27,19 @@ import { Route as SssRouteImport } from "./routes/sss";
 import { Route as EnRouteImport } from "./routes/en";
 import { Route as EnAboutRouteImport } from "./routes/en/about";
 import { Route as EnProductsRouteImport } from "./routes/en/products";
+import { Route as EnProductsSlugRouteImport } from "./routes/en/products.$slug";
 import { Route as EnContactRouteImport } from "./routes/en/contact";
-import { Route as RuAboutRouteImport } from "./routes/ru/about";
-import { Route as RuProductsRouteImport } from "./routes/ru/products";
-import { Route as RuContactRouteImport } from "./routes/ru/contact";
 import { Route as EnBlogRouteImport } from "./routes/en/blog";
 import { Route as EnBlogSlugRouteImport } from "./routes/en/blog.$slug";
-import { Route as RuBlogRouteImport } from "./routes/ru/blog";
-import { Route as RuBlogSlugRouteImport } from "./routes/ru/blog.$slug";
 import { Route as EnPortfolioRouteImport } from "./routes/en/portfolio";
 import { Route as EnPortfolioSlugRouteImport } from "./routes/en/portfolio.$slug";
+import { Route as RuRouteImport } from "./routes/ru";
+import { Route as RuAboutRouteImport } from "./routes/ru/about";
+import { Route as RuProductsRouteImport } from "./routes/ru/products";
+import { Route as RuProductsSlugRouteImport } from "./routes/ru/products.$slug";
+import { Route as RuContactRouteImport } from "./routes/ru/contact";
+import { Route as RuBlogRouteImport } from "./routes/ru/blog";
+import { Route as RuBlogSlugRouteImport } from "./routes/ru/blog.$slug";
 import { Route as RuPortfolioRouteImport } from "./routes/ru/portfolio";
 import { Route as RuPortfolioSlugRouteImport } from "./routes/ru/portfolio.$slug";
 
@@ -96,6 +99,6 @@ const routeTree = __rootImport._addFileChildren({
   PortfolioRoute: PortfolioRouteImport.update({ getId: () => '/portfolio', path: '/portfolio', getParentRoute: () => __rootImport } as any)._addFileChildren({
     PortfolioSlugRoute: PortfolioSlugRouteImport.update({ getId: () => '/$slug', path: '/$slug', getParentRoute: () => PortfolioRouteImport } as any),
   } as any),
-} as any)._addFileTypes({} as any)._addFileTypes({} as any);
+} as any)._addFileTypes({} as any);
 
 export const getRouter = () => createRouter({ routeTree, context: { queryClient }, scrollRestoration: true, defaultPreloadStaleTime: 0 });
