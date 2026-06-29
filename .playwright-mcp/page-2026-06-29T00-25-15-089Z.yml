@@ -1,0 +1,142 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - link "+90 850 471 2100" [ref=e7] [cursor=pointer]:
+            - /url: tel:+908504712100
+            - img [ref=e8]
+            - generic [ref=e10]: +90 850 471 2100
+          - link "turuncu@enorpa.com" [ref=e11] [cursor=pointer]:
+            - /url: mailto:turuncu@enorpa.com
+            - img [ref=e12]
+            - generic [ref=e15]: turuncu@enorpa.com
+        - generic [ref=e16]:
+          - button "TR" [ref=e18]
+          - generic [ref=e19]:
+            - generic [ref=e20]: "|"
+            - button "EN" [ref=e21]
+          - generic [ref=e22]:
+            - generic [ref=e23]: "|"
+            - button "RU" [ref=e24]
+      - generic [ref=e26]:
+        - link "ENORPA" [ref=e27] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e28]: ENORPA
+        - navigation [ref=e30]:
+          - link "Anasayfa" [ref=e31] [cursor=pointer]:
+            - /url: /
+          - link "Ürünler" [ref=e32] [cursor=pointer]:
+            - /url: /urunler
+          - link "Hakkımızda" [ref=e33] [cursor=pointer]:
+            - /url: /hakkimizda
+          - link "Blog" [ref=e34] [cursor=pointer]:
+            - /url: /blog
+          - link "Projeler" [ref=e35] [cursor=pointer]:
+            - /url: /projeler
+          - link "Referanslar" [ref=e36] [cursor=pointer]:
+            - /url: /referanslar
+          - link "İletişim" [ref=e37] [cursor=pointer]:
+            - /url: /iletisim
+        - link "Teklif Al" [ref=e39] [cursor=pointer]:
+          - /url: /referanslar
+          - text: Teklif Al
+          - img [ref=e40]
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: FAQ
+          - heading "Frequently Asked Questions" [level=1] [ref=e45]
+        - generic [ref=e46]:
+          - button "What types of boilers does Enorpa Energy manufacture?" [ref=e48]:
+            - generic [ref=e49]: What types of boilers does Enorpa Energy manufacture?
+            - img [ref=e50]
+          - button "What certifications do your products have?" [ref=e53]:
+            - generic [ref=e54]: What certifications do your products have?
+            - img [ref=e55]
+          - button "Do you provide installation services?" [ref=e58]:
+            - generic [ref=e59]: Do you provide installation services?
+            - img [ref=e60]
+          - button "What is a condenser and how does it work?" [ref=e63]:
+            - generic [ref=e64]: What is a condenser and how does it work?
+            - img [ref=e65]
+          - button "Do you provide spare parts support?" [ref=e68]:
+            - generic [ref=e69]: Do you provide spare parts support?
+            - img [ref=e70]
+          - button "How can I get a quote?" [ref=e73]:
+            - generic [ref=e74]: How can I get a quote?
+            - img [ref=e75]
+          - button "What is the warranty period for Enorpa products?" [ref=e78]:
+            - generic [ref=e79]: What is the warranty period for Enorpa products?
+            - img [ref=e80]
+          - button "Which countries do you export to?" [ref=e83]:
+            - generic [ref=e84]: Which countries do you export to?
+            - img [ref=e85]
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e91]: ENORPA
+            - paragraph [ref=e93]: Endüstriyel buhar, sıcak su ve sıcak hava sistemlerinde 25+ yıllık üretim deneyimi.
+            - generic [ref=e94]:
+              - generic [ref=e95]: Sertifikalar
+              - generic [ref=e96]: CE
+              - generic [ref=e97]: TSE
+              - generic [ref=e98]: ISO
+          - generic [ref=e99]:
+            - generic [ref=e100]: Ürünler
+            - list [ref=e101]:
+              - listitem [ref=e102]:
+                - link "Ürünlerimiz" [ref=e103] [cursor=pointer]:
+                  - /url: /urunler
+          - generic [ref=e104]:
+            - generic [ref=e105]: Kurumsal
+            - list [ref=e106]:
+              - listitem [ref=e107]:
+                - link "Hakkımızda" [ref=e108] [cursor=pointer]:
+                  - /url: /hakkimizda
+              - listitem [ref=e109]:
+                - link "Referanslar" [ref=e110] [cursor=pointer]:
+                  - /url: /#refs
+              - listitem [ref=e111]:
+                - link "Dokümanlar" [ref=e112] [cursor=pointer]:
+                  - /url: /#docs
+              - listitem [ref=e113]:
+                - link "İletişim" [ref=e114] [cursor=pointer]:
+                  - /url: /iletisim
+          - generic [ref=e115]:
+            - generic [ref=e116]: Fabrika & İletişim
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - img [ref=e119]
+                - generic [ref=e122]: Sanayi Mah. 3231 Sk. No:12 · Merkez / ISPARTA
+              - link "+90 850 471 2100" [ref=e123] [cursor=pointer]:
+                - /url: tel:+908504712100
+                - img [ref=e124]
+                - text: +90 850 471 2100
+              - link "turuncu@enorpa.com" [ref=e126] [cursor=pointer]:
+                - /url: mailto:turuncu@enorpa.com
+                - img [ref=e127]
+                - text: turuncu@enorpa.com
+            - generic [ref=e130]:
+              - img [ref=e131]
+              - text: Google Maps
+        - generic [ref=e135]:
+          - generic [ref=e136]: © 2026 Enorpa Enerji. Tüm hakları saklıdır.
+          - generic [ref=e137]:
+            - link "Gizlilik" [ref=e138] [cursor=pointer]:
+              - /url: /gizlilik-politikasi
+            - link "KVKK" [ref=e139] [cursor=pointer]:
+              - /url: /kvkk
+            - link "Çerezler" [ref=e140] [cursor=pointer]:
+              - /url: /cerez-politikasi
+  - generic [ref=e141]:
+    - paragraph [ref=e142]:
+      - text: Bu site, deneyiminizi geliştirmek ve site trafiğini analiz etmek için çerezler kullanır. Detaylar için
+      - link "Çerez Politikamızı" [ref=e143] [cursor=pointer]:
+        - /url: /cerez-politikasi
+      - text: inceleyebilirsiniz.
+    - generic [ref=e144]:
+      - button "Reddet" [ref=e145]
+      - button "Kabul Et" [ref=e146]
+  - link "WhatsApp" [ref=e147] [cursor=pointer]:
+    - /url: https://wa.me/908504712100
+    - img [ref=e148]
