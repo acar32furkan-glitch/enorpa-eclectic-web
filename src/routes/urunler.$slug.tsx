@@ -13,22 +13,23 @@ export const Route = createFileRoute("/urunler/$slug")({
         { title: `${title} | Enorpa Enerji` },
         { name: "description", content: `${title} - Enorpa Enerji ürün kataloğu` },
         { property: "og:title", content: `${title} | Enorpa Enerji` },
-      { 
-        property: "og:description", 
-        content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
-      },
-      { property: "og:type", content: "product" },
-      { property: "og:locale", content: "tr_TR" },
+        { 
+          property: "og:description", 
+          content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
+        },
+        { property: "og:type", content: "product" },
+        { property: "og:image", content: SITE.defaultOgImage },
+        { property: "og:url", content: `https://enorpa.com/urunler/${params.slug}` },
+        { property: "og:locale", content: "tr_TR" },
+        { property: "og:site_name", content: SITE.name },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${title} | Enorpa Enerji` },
+        { name: "twitter:description", content: `${title} - Enorpa Enerji.` },
+        { name: "twitter:image", content: SITE.defaultOgImage },
       ],
       links: [
         { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
       ],
-      scripts: product ? [{ type: "application/ld+json", children: JSON.stringify(generateProductSchema({
-        name: product.name,
-        description: product.detail || product.type,
-        image: product.image_url,
-        slug: params.slug,
-      })) }] : [],
     };
   },
   component: ProductDetailPage,
@@ -75,6 +76,12 @@ function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateProductSchema({
+        name: product.name,
+        description: product.detail || product.type,
+        image: product.image_url,
+        slug: product.slug || params.slug,
+      })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
         {/* Hero */}
