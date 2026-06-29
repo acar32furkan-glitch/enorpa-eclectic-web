@@ -3,6 +3,25 @@ import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users, Building2 } f
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { generateHreflangTags, SITE } from "@/lib/seo";
 
+const HAKKIMIZDA_CONTENT = `<h1>İçimizdeki Ateş Toprağı Yeşertiyor</h1>
+<h4>Buhar, sıcak su, sıcak hava, kızgın yağ sistemlerinin yanı sıra; akaryakıt tankları, yatay ve dikey basınçlı kaplar konusunda üretim, projelendirme ve taahhüt işleri yapmak amacıyla yola çıkan Enorpa bir çok farklı sektörün ısınma, depolama ve buhar ihtiyacını karşılamak üzere faaliyetlerini sürdürmektedir.</h4>
+<p><strong>Dünya Standartlarında Üretim</strong></p>
+<p>Enorpa Enerji, sıcak su, sıcak hava, buhar üretimi ve kurutma kazanları ile kat kaloriferleri konusunda geniş bir ürün yelpazesi sunmaktadır. Ürünlerimiz, müşterilerimize enerji verimliliği sağlayan modern teknolojilerle üretilmektedir. Firmanın ürünleri, uluslararası kabul görmüş standartlar olan TSE, CE, ASME ve EAC gibi sertifikalarla belgelenmektedir, bu da ürünlerimizin kalitesini ve güvenilirliğini garanti altına almaktadır. Enorpa Enerji, sektördeki uzmanlığı ve tecrübesiyle müşteri ihtiyaçlarına yönelik özelleştirilmiş çözümler sunarak güvenilir bir iş ortağı olmayı hedeflemektedir.</p>
+<p><strong>Ar-Ge &amp; Ür-Ge</strong></p>
+<p>Enorpa Enerji, AR-GE ve ÜR-GE çalışmalarına büyük önem veren bir firma olarak, sıcak su, sıcak hava, buhar üretimi ve kurutma kazanları ile kat kaloriferleri alanlarında sürekli yenilikçi çözümler geliştirmektedir. AR-GE departmanımız, mühendislik bilgisi ve endüstriyel deneyimiyle, enerji verimliliğini artırmak ve çevresel etkileri minimize etmek amacıyla yenilikçi tasarımlar ve çözümler üzerinde çalışmaktadır. ÜR-GE süreçlerimiz ise, müşteri ihtiyaçlarına yönelik özelleştirilmiş ürünler geliştirmek ve mevcut ürünlerimizin performansını sürekli olarak optimize etmek için stratejik bir yaklaşım benimsemektedir.</p>
+<h2>Maksimum Verim</h2>
+<p>Enorpa'nın ürün portföyünde bulunan buhar kazanları, sıcak su kazanları, sıcak hava kazanları (apareyleri), kızgın su kazanları, kızgın buhar kazanları, akaryakıt tankları, yatay ve dikey basınçlı kapların yanı sıra sadece sera ısıtmak için özel olarak dizayn edilmiş sektöre özgü sera ısıtma kazanları, sera ısıtma tesisat projelendirme hizmetleri bulunmaktadır. Seralarınız için en iyi projelendirme yapılarak; sizin için en stabil verimli uygulama hayata geçirilir.</p>
+<h2>Kaliteli Ürünler, Mutlu Müşteriler</h2>
+<p>Enorpa, halihazırda dünya coğrafyasının çeşitli lokasyonlarında bulunan ürünlerinin pazarlama aşamasından başlamak sureti ile arıza ve bakım kayıtlarına kadar günden güne artan bir veritabanına sahiptir. Enorpa bu veritabanının istatistiksel analizlerini yapmakta ve arıza faktörleri gibi müşteri memnuniyetsizliğine sebep olan durumları tespit edip minimize ederek "kaliteli ürünler, mutlu müşteriler" sloganına bağlı bir disiplin ile çalışmaktadır.</p>
+<h2>Örnek Projelerimiz</h2>
+<ul>
+<li>Turkey/Isparta - Drying Forest Products</li>
+<li>Uzbekistan/Tashkent - Greenhouse Heating</li>
+<li>Kazakhstan/Almaty - Greenhouse Heating</li>
+<li>Russia - Industrial Steam Boilers</li>
+</ul>
+<p>Enorpa, ısıtma kazanları, buhar kazanları, akaryakıt tankları ve sıcak hava kazanları gibi endüstriyel ısıtma ekipmanları üreten ve dünya genelinde müşterilerine çözüm sunan öncü bir firmadır. 25 yılı aşkın tecrübemizle, 26 ülkede 138+ projeyi hayata geçirdik.</p>`;
+
 export const Route = createFileRoute("/hakkimizda")({
   head: () => ({
     meta: [
@@ -99,54 +118,16 @@ function HakkimizdaPage() {
           <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase mt-2">
             Hakkımızda
           </h1>
-          <p className="mt-6 text-muted-foreground text-base md:text-lg leading-relaxed">
-            Enorpa, ısıtma kazanları, buhar kazanları, akaryakıt tankları ve sıcak hava kazanları
-            gibi endüstriyel ısıtma ekipmanları üreten ve dünya genelinde müşterilerine çözüm sunan
-            öncü bir firmadır.
-          </p>
         </div>
 
-        {/* Misyon & Vizyon */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          <div className="bg-steel border border-border p-8">
-            <div className="h-10 w-10 bg-orange text-white flex items-center justify-center mb-4">
-              <Award className="h-5 w-5" />
-            </div>
-            <h2 className="font-display text-navy text-2xl font-bold uppercase mb-3">Misyon</h2>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Sürdürülebilir enerji çözümleri sunarak endüstriyel süreçleri daha verimli hale
-              getirmek ve müşterilere yenilikçi, güvenilir ve çevre dostu teknolojiler sağlamak.
-            </p>
-          </div>
-          <div className="bg-steel border border-border p-8">
-            <div className="h-10 w-10 bg-orange text-white flex items-center justify-center mb-4">
-              <Factory className="h-5 w-5" />
-            </div>
-            <h2 className="font-display text-navy text-2xl font-bold uppercase mb-3">Vizyon</h2>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Dünya çapında enerji alanında dönüşüme liderlik ederek ileri teknoloji ve
-              sürdürülebilir çözümlerle müşterilere değer katmak.
-            </p>
-          </div>
-        </div>
-
-        {/* AR-GE & ÜR-GE */}
-        <div className="bg-navy text-white p-8 md:p-10 mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-10 w-10 bg-orange flex items-center justify-center">
-              <BookOpen className="h-5 w-5" />
-            </div>
-            <h2 className="font-display text-white text-2xl font-bold uppercase">AR-GE & ÜR-GE</h2>
-          </div>
-          <p className="text-white/80 text-sm leading-relaxed max-w-4xl">
-            AR-GE departmanımız enerji verimliliğini artırmak ve çevresel etkiyi azaltmak için
-            yenilikçi tasarımlar geliştirir. ÜR-GE süreçlerimiz müşteri ihtiyaçlarına özel ürünler
-            ve sürekli performans optimizasyonu sağlar.
-          </p>
-        </div>
+        {/* WordPress İçeriği */}
+        <div
+          className="prose prose-lg max-w-none text-muted-foreground [&_h1]:text-navy [&_h1]:font-display [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:uppercase [&_h1]:mb-6 [&_h2]:text-navy [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:uppercase [&_h2]:mt-8 [&_h2]:mb-4 [&_h4]:text-navy [&_h4]:font-semibold [&_h4]:text-lg [&_h4]:mb-4 [&_p]:mb-4 [&_p]:leading-relaxed [&_strong]:text-navy [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-2"
+          dangerouslySetInnerHTML={{ __html: HAKKIMIZDA_CONTENT }}
+        />
 
         {/* Sertifikalar */}
-        <div className="mb-16">
+        <div className="mt-16">
           <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
             Standartlar & Sertifikalar
           </div>
@@ -173,29 +154,6 @@ function HakkimizdaPage() {
                 )}
                 <div className="font-display text-navy text-lg font-bold uppercase">{c.label}</div>
                 <div className="text-xs text-muted-foreground mt-1">{c.sub}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Süreç Adımları */}
-        <div>
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Çalışma Sürecimiz
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-            {STEPS.map((s, i) => (
-              <div key={s.title} className="bg-white border border-border p-6 relative">
-                <div className="absolute -top-3 -left-3 h-8 w-8 bg-orange text-white flex items-center justify-center font-display font-bold text-sm">
-                  {i + 1}
-                </div>
-                <div className="h-10 w-10 bg-steel text-navy flex items-center justify-center mb-3 mt-1">
-                  <s.icon className="h-5 w-5" />
-                </div>
-                <h3 className="font-display text-navy text-lg font-bold uppercase mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
