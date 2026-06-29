@@ -3,32 +3,33 @@ import { useEffect, useState } from "react";
 import { Gauge, FileDown } from "lucide-react";
 import { fetchProductBySlug, type Product, productCategories } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { generateProductSchema, SITE } from "@/lib/seo";
+import { generateProductSchema, generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/urunler/$slug")({
   head: ({ params }) => {
     const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
     return {
       meta: [
-        { title: `${title} | Enorpa Enerji` },
-        { name: "description", content: `${title} - Enorpa Enerji ürün kataloğu` },
-        { property: "og:title", content: `${title} | Enorpa Enerji` },
-        { 
-          property: "og:description", 
-          content: `${params.slug.replace(/-/g, " ")} - Enorpa Enerji ürün kataloğu`,
-        },
-        { property: "og:type", content: "product" },
-        { property: "og:image", content: SITE.defaultOgImage },
-        { property: "og:url", content: `https://enorpa.com/urunler/${params.slug}` },
-        { property: "og:locale", content: "tr_TR" },
-        { property: "og:site_name", content: SITE.name },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: `${title} | Enorpa Enerji` },
-        { name: "twitter:description", content: `${title} - Enorpa Enerji.` },
-        { name: "twitter:image", content: SITE.defaultOgImage },
+         { title: `${title} | Enorpa Enerji` },
+         { name: "description", content: `${title} - Enorpa Enerji ürün kataloğu` },
+         { property: "og:title", content: `${title} | Enorpa Enerji` },
+         { 
+           property: "og:description", 
+           content: `${title} - Enorpa Enerji ürün kataloğu`,
+         },
+         { property: "og:type", content: "product" },
+         { property: "og:image", content: SITE.defaultOgImage },
+         { property: "og:url", content: `https://enorpa.com/urunler/${params.slug}` },
+         { property: "og:locale", content: "tr_TR" },
+         { property: "og:site_name", content: SITE.name },
+         { name: "twitter:card", content: "summary_large_image" },
+         { name: "twitter:title", content: `${title} | Enorpa Enerji` },
+         { name: "twitter:description", content: `${title} - Enorpa Enerji.` },
+         { name: "twitter:image", content: SITE.defaultOgImage },
       ],
       links: [
         { rel: "canonical", href: `https://enorpa.com/urunler/${params.slug}` },
+        ...generateHreflangTags(`/urunler/${params.slug}`),
       ],
     };
   },

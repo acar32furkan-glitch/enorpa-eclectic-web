@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Star, Quote } from "lucide-react";
+import { generateHreflangTags, SITE } from "@/lib/seo";
 
 const stats = [
   { value: "26", label: "Ülke" },
@@ -54,17 +55,18 @@ export const Route = createFileRoute("/referanslar")({
         content: "Enorpa Enerji referansları. 26 ülkede 138+ proje, 347+ müşteri.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:url", content: "https://enorpa.com/referanslar" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Referanslar | Enorpa Enerji" },
       { name: "twitter:description", content: "Enorpa Enerji referansları. 26 ülkede 138+ proje." },
-      { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/logo.png" },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/referanslar" },
+      ...generateHreflangTags("/referanslar"),
     ],
   }),
   component: ReferanslarPage,

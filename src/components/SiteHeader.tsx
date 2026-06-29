@@ -20,7 +20,7 @@ type NavDict = {
 const t: Record<Lang, NavDict> = {
   TR: { nav: ["Anasayfa", "Ürünler", "Hakkımızda", "Blog", "Projeler", "Referanslar", "İletişim"], quote: "Teklif Al" },
   EN: { nav: ["Home", "Products", "About", "Blog", "Projects", "References", "Contact"], quote: "Get Quote" },
-  RU: { nav: ["Главная", "Продукция", "О компании", "Блог", "Проекты", "Проекты", "Контакты"], quote: "Запросить цену" },
+  RU: { nav: ["Главная", "Продукция", "О компании", "Блог", "Проекты", "Рекомендации", "Контакты"], quote: "Запросить цену" },
 };
 
 const WHATSAPP = "908504712100";
@@ -45,6 +45,15 @@ export function SiteHeader() {
     setLang(l);
     if (typeof window !== "undefined") {
       localStorage.setItem("enorpa_lang", l);
+      const currentPath = window.location.pathname;
+      let newPath: string;
+      if (l === "TR") {
+        newPath = currentPath.replace(/^\/en/, "").replace(/^\/ru/, "") || "/";
+      } else {
+        const cleanPath = currentPath.replace(/^\/en/, "").replace(/^\/ru/, "");
+        newPath = "/" + l.toLowerCase() + cleanPath;
+      }
+      window.location.href = newPath;
     }
   };
 
@@ -55,14 +64,11 @@ export function SiteHeader() {
   }, []);
 
   const getHref = (isIndex: number) => {
-    if (isIndex === 0) return "/";
-    if (isIndex === 1) return "/urunler";
-    if (isIndex === 2) return "/hakkimizda";
-    if (isIndex === 3) return "/blog";
-    if (isIndex === 4) return "/projeler";
-    if (isIndex === 5) return "/referanslar";
-    if (isIndex === 6) return "/iletisim";
-    return "#";
+    const langPrefix = lang === "TR" ? "" : lang.toLowerCase();
+    const base = langPrefix ? "/" + langPrefix : "";
+    if (isIndex === 0) return base || "/";
+    const paths = ["", "/urunler", "/hakkimizda", "/blog", "/projeler", "/referanslar", "/iletisim"];
+    return base + paths[isIndex];
   };
 
   return (
@@ -171,6 +177,57 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const [lang, setLang] = useState<Lang>("TR");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("enorpa_lang");
+      if (stored === "TR" || stored === "EN" || stored === "RU") {
+        setLang(stored);
+      } else if (window.location.pathname.startsWith("/en")) {
+        setLang("EN");
+      } else if (window.location.pathname.startsWith("/ru")) {
+        setLang("RU");
+      }
+    }
+  }, []);
+
+  const langPrefix = lang === "TR" ? "" : lang.toLowerCase();
+  const base = langPrefix ? "/" + langPrefix : "";
+  const footerLinks: Record<Lang, { title: string; links: { label: string; href: string }[] }[]> = {
+    TR: [
+      { title: "Ürünler", links: [{ label: "Ürünlerimiz", href: "/urunler" }] },
+      { title: "Kurumsal", links: [
+        { label: "Hakkımızda", href: "/hakkimizda" },
+        { label: "Blog", href: "/blog" },
+        { label: "Projeler", href: "/projeler" },
+        { label: "Referanslar", href: "/referanslar" },
+        { label: "İletişim", href: "/iletisim" },
+      ]},
+    ],
+    EN: [
+      { title: "Products", links: [{ label: "Our Products", href: "/en/products" }] },
+      { title: "Company", links: [
+        { label: "About Us", href: "/en/about" },
+        { label: "Blog", href: "/en/blog" },
+        { label: "Projects", href: "/en/projects" },
+        { label: "References", href: "/en/references" },
+        { label: "Contact", href: "/en/contact" },
+      ]},
+    ],
+    RU: [
+      { title: "Продукция", links: [{ label: "Наша продукция", href: "/ru/products" }] },
+      { title: "Компания", links: [
+        { label: "О компании", href: "/ru/about" },
+        { label: "Блог", href: "/ru/blog" },
+        { label: "Проекты", href: "/ru/projects" },
+        { label: "Рекомендации", href: "/ru/references" },
+        { label: "Контакты", href: "/ru/contact" },
+      ]},
+    ],
+  };
+  const currentLinks = footerLinks[lang];
+
   return (
     <footer className="bg-navy-dark text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -190,17 +247,13 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <FooterCol title="Ürünler" links={[{ label: "Ürünlerimiz", href: "/urunler" }]} />
-<FooterCol title="Kurumsal" links={[
-            { label: "Hakkımızda", href: "/hakkimizda" },
-            { label: "Referanslar", href: "/#refs" },
-            { label: "Dokümanlar", href: "/#docs" },
-            { label: "İletişim", href: "/iletisim" },
-          ]} />
+        {currentLinks.map((col) => (
+          <FooterCol key={col.title} title={col.title} links={col.links.map((l) => ({ ...l, href: base + l.href }))} />
+        ))}
 
         <div>
           <div className="text-xs uppercase tracking-[0.25em] text-orange font-display font-bold mb-4">
-            Fabrika & İletişim
+            Fabrika {'&'} İletişim
           </div>
           <div className="space-y-3 text-sm text-white/80">
             <div className="flex items-start gap-2">
@@ -226,14 +279,14 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <div>© {new Date().getFullYear()} Enorpa Enerji. Tüm hakları saklıdır.</div>
           <div className="flex items-center gap-5">
-            <a href="/gizlilik-politikasi" className="hover:text-white">Gizlilik</a>
-            <a href="/kvkk" className="hover:text-white">KVKK</a>
-            <a href="/cerez-politikasi" className="hover:text-white">Çerezler</a>
+            <a href={base + "/gizlilik-politikasi"} className="hover:text-white">Gizlilik</a>
+            <a href={base + "/kvkk"} className="hover:text-white">KVKK</a>
+            <a href={base + "/cerez-politikasi"} className="hover:text-white">Çerezler</a>
           </div>
         </div>
-      </div>
-    </footer>
-  );
+       </div>
+     </footer>
+   );
 }
 
 function FooterCol({ title, links }: { title: string; links: { label: string; href: string }[] }) {

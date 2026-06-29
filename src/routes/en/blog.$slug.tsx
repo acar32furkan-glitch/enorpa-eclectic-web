@@ -2,19 +2,20 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, ArrowLeft, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
-import { generateBlogPostSchema, SITE } from "@/lib/seo";
+import { generateBlogPostSchema, generateHreflangTags, SITE } from "@/lib/seo";
 import { cleanContent } from "@/lib/cleanContent";
 
 export const Route = createFileRoute("/en/blog/$slug")({
   head: ({ params }) => {
     const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-    const schema = generateBlogPostSchema({ title, excerpt: "Blog post", slug: params.slug, publishedAt: new Date().toISOString().split("T")[0] });
+    const description = `${title} - Enorpa Energy blog post. Industrial heating, steam boilers, and greenhouse systems.`;
+    const schema = generateBlogPostSchema({ title, excerpt: description, slug: params.slug, publishedAt: new Date().toISOString().split("T")[0] });
     return {
       meta: [
         { title: `${title} | Enorpa Blog` },
-        { name: "description", content: "Blog post" },
+        { name: "description", content: description },
         { property: "og:title", content: `${title} | Enorpa Blog` },
-        { property: "og:description", content: "Blog post" },
+        { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:image", content: SITE.defaultOgImage },
         { property: "og:url", content: `https://enorpa.com/en/blog/${params.slug}` },
@@ -22,10 +23,13 @@ export const Route = createFileRoute("/en/blog/$slug")({
         { property: "og:site_name", content: SITE.name },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: `${title} | Enorpa Blog` },
-        { name: "twitter:description", content: "Blog post" },
+        { name: "twitter:description", content: description },
         { name: "twitter:image", content: SITE.defaultOgImage },
       ],
-      links: [{ rel: "canonical", href: `https://enorpa.com/en/blog/${params.slug}` }],
+      links: [
+        { rel: "canonical", href: `https://enorpa.com/en/blog/${params.slug}` },
+        ...generateHreflangTags(`/en/blog/${params.slug}`),
+      ],
       scripts: [{ type: "application/ld+json", children: JSON.stringify(schema) }],
     };
   },

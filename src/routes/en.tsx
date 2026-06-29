@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Factory, Globe, Users } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { generateHreflangTags, generateWebSiteSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/en")({
   head: () => ({
@@ -17,7 +18,12 @@ export const Route = createFileRoute("/en")({
       { name: "twitter:title", content: "Enorpa Energy - Heating Systems" },
       { name: "twitter:description", content: "Industrial boilers. 26 countries, 138+ projects." },
     ],
-    links: [{ rel: "canonical", href: "https://enorpa.com/en" }],
+    links: [{ rel: "canonical", href: "https://enorpa.com/en" },
+      ...generateHreflangTags("/en"),
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(generateWebSiteSchema()) },
+    ],
   }),
   component: EnHomePage,
 });

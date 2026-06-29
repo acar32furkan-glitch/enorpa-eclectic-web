@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/kvkk")({
   head: () => ({
@@ -9,6 +10,7 @@ export const Route = createFileRoute("/kvkk")({
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/kvkk" },
+      ...generateHreflangTags("/kvkk"),
     ],
   }),
   component: LegalPage,

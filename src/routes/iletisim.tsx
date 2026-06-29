@@ -3,6 +3,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { MapPin, Phone, Mail, Send, Clock, MessageCircle, Building2, Loader2 } from "lucide-react";
+import { generateHreflangTags, SITE } from "@/lib/seo";
 
 export const Route = createFileRoute("/iletisim")({
   head: () => ({
@@ -20,10 +21,17 @@ export const Route = createFileRoute("/iletisim")({
           "Enorpa Enerji iletişim bilgileri. Isparta ve Karaman fabrikalarımız için telefon, e-posta ve teklif formu ile ulaşın.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: SITE.defaultOgImage },
       { property: "og:locale", content: "tr_TR" },
+      { property: "og:site_name", content: SITE.name },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "İletişim | Enorpa Enerji" },
+      { name: "twitter:description", content: "Enorpa Enerji iletişim bilgileri." },
+      { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/iletisim" },
+      ...generateHreflangTags("/iletisim"),
     ],
   }),
   component: IletisimPage,
@@ -59,7 +67,7 @@ function IletisimPage() {
     setError(null);
     setLoading(true);
     try {
-      const response = await supabase.from("leads").insert({
+      const { error } = await supabase.from("leads").insert({
         name: cleanName,
         phone: cleanPhone || undefined,
         email: email.trim() || undefined,
@@ -68,11 +76,9 @@ function IletisimPage() {
         source: "contact_page",
         status: "new",
       });
-      console.error("Supabase response:", response);
-      if (response.error) {
-        console.error("Form error:", response.error);
-        console.error("Error details:", response.error.message, response.error.details, response.error.hint);
-        setError(`Hata: ${response.error.message || "Lütfen tekrar deneyin."}`);
+      if (error) {
+        console.error("Form error:", error);
+        setError(`Hata: ${error.message || "Lütfen tekrar deneyin."}`);
         return;
       }
       setSubmitted(true);

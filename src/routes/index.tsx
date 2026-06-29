@@ -23,6 +23,7 @@ import {
   Building2,
   Loader2,
 } from "lucide-react";
+import { generateHreflangTags, generateWebSiteSchema } from "@/lib/seo";
 import {
   productCategories as fallbackCategories,
   getFeaturedProducts,
@@ -53,11 +54,21 @@ export const Route = createFileRoute("/")({
           "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
+      { property: "og:url", content: "https://enorpa.com/" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
+      { name: "twitter:description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları. 26 ülkede 138+ proje." },
+      { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/" },
+      ...generateHreflangTags(""),
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(generateWebSiteSchema()) },
     ],
   }),
   component: Index,
@@ -861,16 +872,15 @@ function QuickCallbackForm() {
     setError(null);
     setLoading(true);
     try {
-      const response = await supabase.from("leads").insert({
+      const { error } = await supabase.from("leads").insert({
         name: cleanName,
         phone: cleanPhone,
         source: "quick_callback",
         interest: "Hızlı Geri Arama",
         status: "new",
       });
-      console.error("QuickCallback response:", response);
-      if (response.error) {
-        console.error("QuickCallback form error:", response.error.message, response.error.details);
+      if (error) {
+        console.error("QuickCallback form error:", error);
         setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
         return;
       }
