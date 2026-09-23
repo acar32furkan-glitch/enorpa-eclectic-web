@@ -22,6 +22,9 @@ dist-ssr
 # Vercel
 .vercel/
 
+# Tooling metadata
+.lovable/
+
 # API placeholder (build output)
 api/
 
