@@ -1,32 +1,5 @@
 {
-  "buildCommand": "npx vite build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "redirects": [
-    { "source": "/en/", "destination": "/en", "statusCode": 301 },
-    { "source": "/ru/", "destination": "/ru", "statusCode": 301 },
-    { "source": "/tr/", "destination": "/", "statusCode": 301 },
-{ "source": "/en/references", "destination": "/referanslar", "statusCode": 301 },
-    { "source": "/ru/references", "destination": "/referanslar", "statusCode": 301 },
-    { "source": "/en/steam-boilers", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/hot-water-boilers", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/hot-air-boilers", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/central-heating", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/superheated-water-boilers", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/burners", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/chimneys", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/condenser", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/economizer", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/spare-parts", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/boiler-control-panel", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/boiler-automation-system", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/en/turnkey-greenhouse-heating-system", "destination": "/urunler", "statusCode": 301 },
-    { "source": "/tr/(.*)", "destination": "/$1", "statusCode": 301 }
-  ],
+  "buildCommand": "npm run build",
   "headers": [
     {
       "source": "/(.*)",
@@ -37,6 +10,35 @@
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
+    }
+  ],
+  "redirects": [
+    { "source": "/en/", "destination": "/en", "statusCode": 301 },
+    { "source": "/ru/", "destination": "/ru", "statusCode": 301 },
+    { "source": "/tr/", "destination": "/", "statusCode": 301 },
+    { "source": "/tr/(.*)", "destination": "/$1", "statusCode": 301 },
+
+    { "source": "/en/references", "destination": "/en/referanslar", "statusCode": 301 },
+    { "source": "/ru/references", "destination": "/ru/referanslar", "statusCode": 301 },
+    { "source": "/en/projects", "destination": "/en/portfolio", "statusCode": 301 },
+    { "source": "/ru/projects", "destination": "/ru/portfolio", "statusCode": 301 },
+
+    { "source": "/en/steam-boilers", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/hot-water-boilers", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/hot-air-boilers", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/central-heating", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/superheated-water-boilers", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/burners", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/chimneys", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/condenser", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/economizer", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/spare-parts", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/boiler-control-panel", "destination": "/en/products", "statusCode": 301 },
+    { "source": "/en/boiler-automation-system", "destination": "/en/products", "statusCode": 301 },
+    {
+      "source": "/en/turnkey-greenhouse-heating-system",
+      "destination": "/en/products",
+      "statusCode": 301
     }
   ]
 }

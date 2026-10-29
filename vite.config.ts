@@ -15,5 +15,15 @@ export default defineConfig({
     build: {
       chunkSizeWarningLimit: 600,
     },
+    // CJS/ESM interop: `use-sync-external-store/shim/with-selector` bir CJS modülü.
+    // Önceden optimize edilmezse dev'de "does not provide an export named
+    // 'useSyncExternalStoreWithSelector'" hatası veriyor ve istemci-only
+    // rotalar (ör. /admin/login) boş kalıyor.
+    optimizeDeps: {
+      include: [
+        "use-sync-external-store/shim",
+        "use-sync-external-store/shim/with-selector",
+      ],
+    },
   },
 });

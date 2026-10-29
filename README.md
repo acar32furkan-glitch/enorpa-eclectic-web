@@ -141,11 +141,16 @@ Site `http://localhost:3000` adresinde açılır.
 
 | Komut | Açıklama |
 |-------|----------|
-| `bun run dev` | Geliştirme sunucusu (HMR) |
-| `bun run build` | Production build |
-| `bun run preview` | Build çıktısını önizle |
-| `bun run lint` | ESLint kontrolü |
-| `bun run format` | Prettier ile kod formatla |
+| `npm run dev` | Geliştirme sunucusu (HMR) |
+| `npm run build` | Sitemap üretimi + production build |
+| `npm run preview` | Build çıktısını önizle |
+| `npm run lint` | ESLint kontrolü |
+| `npm run format` | Prettier ile kod formatla |
+| `npm run images` | Orijinal site görsellerini içe aktar (ürün/proje/hero/kart) |
+| `npm run assets` | SVG yedek görselleri üret |
+| `npm run seo:sitemap` | `public/sitemap.xml` üret |
+| `npm run audit` | 34 rotada SEO + sağlık denetimi |
+| `npm run db:up` / `db:down` / `db:reset` / `db:status` | Yerel Supabase yönetimi |
 
 ---
 
@@ -164,14 +169,164 @@ Site `http://localhost:3000` adresinde açılır.
 
 | Öğe | Uygulama |
 |-----|----------|
-| Canonical URL | Her sayfada dinamik |
-| hreflang | TR / EN / RU karşılıklı referanslar |
-| OpenGraph | Dinamik title, description, image |
-| JSON-LD | Organization, Product, FAQ, Breadcrumb |
-| Sitemap | Dinamik üretim (ürün + blog dahil) |
-| robots.txt | Admin dizini hariç tutulmuş |
-| 301 Redirects | Eski WordPress URL → yeni sayfa eşleştirmeleri |
-| Core Web Vitals | Lazy loading, WebP, preconnect, font optimizasyonu |
+| Canonical URL | Her sayfada tekil, gerçek adresle birebir (`⚠️ /en/references` gibi yanlış canonical'lar düzeltildi) |
+| hreflang | [`generateHreflangTags()`](src/lib/seo.ts:187) eşleme tablosu — TR/EN/RU adresleri farklı olduğu için (`/urunler` → `/en/products`, `/projeler` → `/en/portfolio`, `/iletisim` → `/en/contact`) doğru karşılıklar üretilir; karşılığı olmayan sayfalarda alternatif **yazılmaz** |
+| OpenGraph / Twitter | Dinamik title, description, 1200×630 `og-cover.png` + `og:image:width/height/alt` |
+| JSON-LD | Organization (kök), ProductCollection + VideoObject (`/urunler`), Product, Article, BreadcrumbList, WebSite |
+| Sitemap | [`scripts/gen-sitemap.mjs`](scripts/gen-sitemap.mjs:1) ile **üretilir** (127 URL: 24 ürün × 3 dil, 6 proje, 4 blog, statik sayfalar + hreflang alternatifleri). `prebuild` kancası sayesinde her build'de tazelenir |
+| robots.txt | `/admin`, `/api/`, `/login` hariç; `Sitemap:` satırı tanımlı |
+| 301 Redirects | Eski WordPress URL → yeni sayfa eşleştirmeleri (`vercel.json`) |
+| Core Web Vitals | Hero slider'da yalnızca aktif slayt metni render edilir, görseller WebP, `fetchPriority` ilk slaytta yüksek, YouTube gömme tıklamaya kadar yüklenmez |
+
+### SEO komutları
+
+```bash
+npm run seo:sitemap   # public/sitemap.xml üret
+npm run seo:check     # sitemap'i yazmadan özet ver (URL sayısı)
+npm run audit         # 34 rotayı gezer: 200 / title / description / canonical / og / JSON-LD / hreflang
+```
+
+`npm run audit` çıktısı örnek:
+
+```text
+ROTA                              KOD  DESC  CANON  OG  LD  HL  BAŞLIK
+/urunler                          200  149   ✓      ✓   3   4   Ürünlerimiz | Enorpa Enerji
+/en/products/oniks-serisi         200  128   ✓      ✓   2   12  Oniks Serisi | Enorpa Energy Products
+✓ 34 rota denetlendi — sorun bulunamadı.
+```
+
+Denetim şunları yakalar: eksik/tekrarlanan `<title>`, 50 karakterden kısa veya
+200'den uzun `description`, canonical/og:image eksikliği, JSON-LD'si olmayan kritik
+sayfa ve **sitemap'te bulunmayan hreflang hedefi**. CI'da `npm run audit` çalıştırıldığında
+sorun varsa çıkış kodu `1` olur.
+
+---
+
+## 🎨 Görsel Varlıkları
+
+Site hiçbir harici görsel sunucusuna bağımlı değildir. İki katman vardır:
+
+**1. Orijinal site görselleri (birincil):** Eski WordPress sitesinden indirilen
+gerçek ürün render'ları ve proje fotoğrafları WebP'ye çevrilerek `public/img/`
+altına aktarılır.
+
+```bash
+npm run images          # = node scripts/import-original-images.mjs
+# farklı bir kaynak klasör için:
+node scripts/import-original-images.mjs --source "D:\yol\uploads"
+```
+
+Betik 24 ürün render'ı, 6 proje fotoğrafı, **3 hero slider fotoğrafı** (1920×900),
+**3 ana sayfa tanıtım kartı** (entegre / ürünler / projeler), OG kapak görseli,
+4 sertifika rozeti ve logoyu eşleştirir; ardından
+`src/lib/product-images.generated.ts` dosyasını yazar (slug → görsel yolu).
+Kaynak: `Desktop\enorpa\enorpa-images`.
+
+Hero slider'ı oluşturan kaynak kareler (hepsi orijinal siteden):
+
+| Slayt | Kaynak dosya | Çözünürlük | İçerik |
+|---|---|---|---|
+| slide-1 | `Ozbekistan.jpg` | 1600×800 | Sahada kurulu turuncu Enorpa kazanları (güneşli) |
+| slide-2 | `enorpa-foto-4-scaled.jpg` | 2560×1514 | Kazan dairesi, kırmızı/mavi hatlar |
+| slide-3 | `izmir-slider-5-duzenli.jpg` | 2000×1500 | Sera ısıtma sahası, pompa/pano hattı |
+
+Slaytlar `public/img/hero/slide-{1,2,3}.webp` olarak üretilir (1920×900, cover,
+koyu iç mekân kareleri için hafif brightness/saturation artışı). Slayt sırasını
+veya kaynağı değiştirmek için [`scripts/import-original-images.mjs`](scripts/import-original-images.mjs:110)
+içindeki `HERO_SLIDES` dizisini düzenleyip `npm run images` çalıştırın.
+
+**2. Üretilen yedekler (fallback):** Orijinali bulunmayan görseller için marka
+paletinde SVG'ler üretilir:
+
+```bash
+npm run assets          # = node scripts/gen-assets.mjs
+```
+
+Görsel yolu her zaman [`src/lib/assets.ts`](src/lib/assets.ts:1) üzerinden çözülür
+(`HERO_SLIDES`, `promoImage`, `productImage`, `projectImage`, `resolveImageUrl`,
+`resolveProjectImage`): orijinal WebP varsa o, yoksa SVG yedeği kullanılır.
+
+Ana sayfa hero'su artık **3 slaytlı otomatik slider**'dır
+([`HeroSlider`](src/routes/index.tsx:255)): 6,5 sn'de bir otomatik geçiş, nokta +
+ok kontrolleri, hover'da duraklama ve düz lacivert örtü yerine soldan sağa açılan
+gradient overlay kullanır. Slayt başlıkları orijinal sitedeki üç başlıktır
+(TR/EN/RU ayrı). Hero'nun hemen altında orijinal sitedeki üçlü kart bloğu
+(**Entegre Sistemler / Ürünlerimizi Keşfedin / Projelerimiz**) yer alır.
+
+Betik SVG kaynaklarını yazar, `sharp` ile WebP (hero, ürün kartları) ve PNG
+(OG kapağı, favicon, apple-touch-icon) türevlerini oluşturur.
+
+Görsel kullanımı: ana sayfa hero + ürün kartları + proje galerisi, `/urunler`
+katalog kartları, `/projeler` proje kartları, blog kartları (TR/EN/RU), EN/RU
+ana sayfa hero'su, `hakkimizda` sertifika rozetleri ve admin ürün listesi.
+Tüm `<img>` etiketleri `loading="eager"` + `decoding="async"` kullanır; böylece
+sayfa kaydırılmadan da görseller yüklenir (SVG dosyaları ~5 KB).
+
+---
+
+## 🗄️ Yerel Supabase (Önerilen Geliştirme Ortamı)
+
+Bulut projesi kapalı olduğu için admin paneli, lead kaydı ve içerik yönetimi
+varsayılan olarak devre dışıdır. Yerel Supabase'i tek komutla ayağa kaldırabilirsiniz
+(Docker Desktop açık olmalı):
+
+```bash
+npm run db:up
+```
+
+Bu komut:
+
+1. `supabase start` ile Postgres + Auth + Storage + Studio'yu başlatır,
+2. anahtarları **`.env.local`** dosyasına yazar (Vite `.env`'den önce okur),
+3. `admin@enorpa.local` / `Enorpa123!` yönetici hesabını oluşturur
+   (e-posta doğrulaması yerelde kapalıdır).
+
+Sonrasında `npm run dev` ile siteyi yeniden başlatın.
+
+| Komut | Açıklama |
+|-------|----------|
+| `npm run db:up` | Yerel Supabase'i başlat + `.env.local` + admin kullanıcısı |
+| `npm run db:down` | Durdur (veriler korunur) |
+| `npm run db:reset` | Şemayı + seed verisini sıfırdan uygula |
+| `npm run db:status` | Servis durumu ve anahtarlar |
+| `npm run db:env` | Sadece `.env.local` dosyasını yenile |
+| `npm run db:keepalive` | Uzak (bulut) projeye ping atarak duraklamasını engelle |
+
+Yerel adresler: API `http://127.0.0.1:54321` · Studio `http://127.0.0.1:54323` ·
+E-posta kutusu (Mailpit) `http://127.0.0.1:54324`.
+
+> Yerel anahtarlar ve JWT secret paylaşılan varsayılanlardır — production'da
+> kullanılmaz. `.env.local` git'e girmez.
+
+### Şema
+
+`supabase/migrations` altındaki migration'lar sırayla uygulanır. Uygulama kodunun
+ihtiyaç duyduğu tabloların tamamı (`products`, `leads`, `site_settings`,
+`page_views`, `blog_posts`, `projects`, `user_roles`, `analytics_events`) ve
+`product-images` storage bucket'ı `20261028120000_local_schema_completion.sql`
+ile tamamlanır; ürün kataloğu, proje vitrini ve bölüm anahtarları da burada seed
+edilir.
+
+---
+
+## 🧩 Veritabanı Kapalıyken (Tanıtım Modu)
+
+Site, Supabase erişilemediğinde de tam olarak gezilebilir kalır:
+
+| Katman | Davranış |
+|--------|----------|
+| Ürünler | `src/data/products.ts` içindeki statik katalog + yerel görseller |
+| Blog | `src/data/blog.ts` içindeki yerel yazılar |
+| Projeler | `ProjectsList` bileşenindeki statik proje listesi (TR/EN/RU) |
+| Site ayarları | Tüm bölümler açık kabul edilir |
+| Formlar | Talep, tarayıcıda kuyruğa alınır (`localStorage: enorpa_pending_leads`), ziyaretçiye hata gösterilmez |
+
+Bağlantı durumu `src/lib/backend.ts` içinde tek noktadan yönetilir; ilk başarısız
+istekten sonra tekrar deneme yapılmaz. `src/lib/assets.ts` görsel yollarının tek
+kaynağıdır.
+
+> Yönetim paneli (`/admin`) gerçek Supabase bağlantısı gerektirir; erişim yoksa
+> giriş ekranında bilgilendirme gösterilir.
 
 ---
 

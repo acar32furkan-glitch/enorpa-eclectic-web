@@ -5,12 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/gen-sitemap.mjs",
     "build": "vite build",
-    "vercel-build": "vite build",
+    "vercel-build": "node scripts/gen-sitemap.mjs && vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "assets": "node scripts/gen-assets.mjs",
+    "images": "node scripts/import-original-images.mjs",
+    "seo:sitemap": "node scripts/gen-sitemap.mjs",
+    "seo:check": "node scripts/gen-sitemap.mjs --dry",
+    "audit": "node scripts/audit-seo.mjs",
+    "db:up": "node scripts/db.mjs up",
+    "db:down": "node scripts/db.mjs down",
+    "db:reset": "node scripts/db.mjs reset",
+    "db:status": "node scripts/db.mjs status",
+    "db:env": "node scripts/db.mjs env",
+    "db:keepalive": "node scripts/db.mjs keepalive"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
