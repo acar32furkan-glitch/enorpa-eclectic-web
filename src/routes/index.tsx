@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { readOrFallback, submitLead } from "@/lib/backend";
+import { ASSETS, HERO_SLIDES, projectImage, promoImage } from "@/lib/assets";
 import {
   ShieldCheck,
   Gauge,
@@ -22,6 +24,8 @@ import {
   Send,
   Building2,
   Loader2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { generateHreflangTags, generateWebSiteSchema } from "@/lib/seo";
 import {
@@ -54,14 +58,14 @@ export const Route = createFileRoute("/")({
           "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları üretimi. Sera ısıtma, endüstriyel buhar ve mahal ısıtma çözümleri.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
+      { property: "og:image", content: ASSETS.ogImage },
       { property: "og:url", content: "https://enorpa.com/" },
       { property: "og:locale", content: "tr_TR" },
       { property: "og:site_name", content: "Enorpa Enerji" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Enorpa Enerji | Endüstriyel Su Kazanı, Hava Kazanı ve Buhar Kazanı" },
       { name: "twitter:description", content: "Enorpa Enerji - sıcak su, sıcak hava, buhar ve kızgın su kazanları. 26 ülkede 138+ proje." },
-      { name: "twitter:image", content: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp" },
+      { name: "twitter:image", content: ASSETS.ogImage },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/" },
@@ -76,9 +80,13 @@ export const Route = createFileRoute("/")({
 
 type Lang = "TR" | "EN" | "RU";
 
+type HeroSlide = { title: string; sub: string };
+
 type Dict = {
   heroTitle: string;
   heroSub: string;
+  /** Hero slider slaytları (görsel sırasına göre) */
+  heroSlides: HeroSlide[];
   ctaPrimary: string;
   ctaSecondary: string;
   yearsExp: string;
@@ -99,6 +107,20 @@ const t: Record<Lang, Dict> = {
     heroTitle: "Endüstriyel Isıtmada\nGüvenilir Güç",
     heroSub:
       "Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel, yüksek verimli çözümler.",
+    heroSlides: [
+      {
+        title: "Seranız için\nSıcak Bir Adım",
+        sub: "Sera ısıtma sistemlerinde 25 yılı aşkın tecrübe. Anahtar teslim projelerle üretim verimliliğinizi artırıyoruz.",
+      },
+      {
+        title: "Isıtma Çözümlerinde\nGüvenin Adresi",
+        sub: "Sıcak su, sıcak hava, buhar ve kızgın su kazanlarında TSE, CE ve ISO 9001 standartlarında üretim.",
+      },
+      {
+        title: "Verimli Isıtma\nMaksimum Konfor",
+        sub: "26 ülkede 138+ tamamlanan proje. Her tesis için özel mühendislik ve satış sonrası destek.",
+      },
+    ],
     ctaPrimary: "Ürünleri İncele",
     ctaSecondary: "Bize Ulaşın",
     yearsExp: "Yıl Deneyim",
@@ -118,6 +140,20 @@ const t: Record<Lang, Dict> = {
     heroTitle: "Reliable Power\nin Industrial Heating",
     heroSub:
       "High-efficiency, custom-engineered solutions with steam, hot water and hot air boiler systems for your facility.",
+    heroSlides: [
+      {
+        title: "A Warm Step\nfor Your Greenhouse",
+        sub: "25+ years of greenhouse heating expertise. Turnkey projects that raise the efficiency of your production.",
+      },
+      {
+        title: "The Trusted Address\nin Heating Solutions",
+        sub: "Hot water, hot air, steam and superheated water boilers manufactured to TSE, CE and ISO 9001 standards.",
+      },
+      {
+        title: "Efficient Heating\nMaximum Comfort",
+        sub: "138+ completed projects in 26 countries. Custom engineering and after-sales support for every facility.",
+      },
+    ],
     ctaPrimary: "Explore Products",
     ctaSecondary: "Contact Us",
     yearsExp: "Years Experience",
@@ -137,6 +173,20 @@ const t: Record<Lang, Dict> = {
     heroTitle: "Надежная мощность\nпромышленного отопления",
     heroSub:
       "Высокоэффективные индивидуальные решения с паровыми, водогрейными и воздухонагревательными котлами.",
+    heroSlides: [
+      {
+        title: "Тепло для вашей\nтеплицы",
+        sub: "Более 25 лет опыта в отоплении теплиц. Проекты «под ключ» для роста эффективности производства.",
+      },
+      {
+        title: "Надежность\nв отоплении",
+        sub: "Водогрейные, воздухонагревательные, паровые котлы и котлы перегретой воды по стандартам TSE, CE, ISO 9001.",
+      },
+      {
+        title: "Эффективный обогрев\nМаксимальный комфорт",
+        sub: "138+ завершенных проектов в 26 странах. Индивидуальная инженерия и сервисная поддержка.",
+      },
+    ],
     ctaPrimary: "Смотреть продукцию",
     ctaSecondary: "Связаться",
     yearsExp: "лет опыта",
@@ -171,18 +221,13 @@ function Index() {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { data } = await supabase.from("site_settings").select("key, value");
-        const map: Record<string, boolean> = {};
-        if (data) {
-          for (const row of data) {
-            map[row.key] = row.value ?? true;
-          }
-        }
-        setSettings(map);
-      } catch {
-        setSettings({});
-      }
+      const data = await readOrFallback<{ key: string; value: boolean | null }[]>(
+        () => supabase.from("site_settings").select("key, value"),
+        [],
+      );
+      const map: Record<string, boolean> = {};
+      for (const row of data) map[row.key] = row.value ?? true;
+      setSettings(map);
     })();
   }, []);
 
@@ -191,55 +236,8 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-      {showHero && (
-        <>
-          {/* HERO */}
-          <section className="relative">
-            <img
-              src="https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp"
-              alt="Enorpa Enerji Hero"
-              fetchPriority="high"
-              width="1920"
-              height="800"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: "rgba(10, 30, 61, 0.78)" }}
-            />
-            <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 md:py-36 lg:py-44">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 border-l-4 border-orange pl-3 mb-6">
-                  <span className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold">
-                    Enorpa Enerji · Since 2000
-                  </span>
-                </div>
-                <h1 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] whitespace-pre-line uppercase">
-                  {L.heroTitle}
-                </h1>
-                <p className="mt-6 text-white/85 text-lg md:text-xl max-w-2xl leading-relaxed">
-                  {L.heroSub}
-                </p>
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <a
-                    href="#products"
-                    className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
-                  >
-                    {L.ctaPrimary}
-                    <ArrowRight className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-navy font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
-                  >
-                    {L.ctaSecondary}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+      {showHero && <HeroSlider L={L} />}
+      <PromoTriptych lang={lang} />
 
       {show("show_stats") && <TrustBar L={L} />}
       {show("show_sectors") && <SectorsSection />}
@@ -253,6 +251,260 @@ function Index() {
       <ContactSection />
       <SiteFooter />
     </div>
+  );
+}
+
+/* =========================================================================
+   PROMO TRIPTYCH — orijinal sitedeki 3 kart (Entegre / Ürünler / Projeler)
+========================================================================= */
+
+type PromoKey = "entegre" | "urunler" | "projeler";
+
+const PROMO_COPY: Record<Lang, { key: PromoKey; title: string; sub: string; cta: string; href: string }[]> = {
+  TR: [
+    {
+      key: "entegre",
+      title: "Entegre Sistemler",
+      sub: "Kazan, brülör, otomasyon ve devreye alma — tek elden anahtar teslim.",
+      cta: "Hakkımızda",
+      href: "/hakkimizda",
+    },
+    {
+      key: "urunler",
+      title: "Ürünlerimizi Keşfedin",
+      sub: "Sıcak su, buhar, sıcak hava ve kızgın su kazanlarında 24 ürün serisi.",
+      cta: "Ürünler",
+      href: "/urunler",
+    },
+    {
+      key: "projeler",
+      title: "Projelerimiz",
+      sub: "26 ülkede 138+ tamamlanan referans proje ve saha tecrübesi.",
+      cta: "Projeler",
+      href: "/projeler",
+    },
+  ],
+  EN: [
+    {
+      key: "entegre",
+      title: "Integrated Systems",
+      sub: "Boiler, burner, automation and commissioning — turnkey from one hand.",
+      cta: "About Us",
+      href: "/en/about",
+    },
+    {
+      key: "urunler",
+      title: "Discover Our Products",
+      sub: "24 product series across hot water, steam, hot air and superheated water.",
+      cta: "Products",
+      href: "/en/products",
+    },
+    {
+      key: "projeler",
+      title: "Our Projects",
+      sub: "138+ completed reference projects across 26 countries.",
+      cta: "Projects",
+      href: "/en/portfolio",
+    },
+  ],
+  RU: [
+    {
+      key: "entegre",
+      title: "Интегрированные системы",
+      sub: "Котел, горелка, автоматика и пусконаладка — под ключ из одних рук.",
+      cta: "О компании",
+      href: "/ru/about",
+    },
+    {
+      key: "urunler",
+      title: "Наша продукция",
+      sub: "24 серии: водогрейные, паровые, воздухонагревательные котлы.",
+      cta: "Продукция",
+      href: "/ru/products",
+    },
+    {
+      key: "projeler",
+      title: "Наши проекты",
+      sub: "Более 138 завершенных проектов в 26 странах.",
+      cta: "Проекты",
+      href: "/ru/portfolio",
+    },
+  ],
+};
+
+function PromoTriptych({ lang }: { lang: Lang }) {
+  const cards = PROMO_COPY[lang] ?? PROMO_COPY.TR;
+
+  return (
+    <section className="bg-white border-b border-border">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-px bg-border px-0 md:grid-cols-3">
+        {cards.map((card) => {
+          const image = promoImage(card.key);
+          return (
+            <Link
+              key={card.key}
+              to={card.href}
+              className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden bg-navy-dark p-6 md:min-h-[260px]"
+            >
+              {image && (
+                <img
+                  src={image}
+                  alt=""
+                  aria-hidden="true"
+                  width="900"
+                  height="700"
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-105"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/95 via-navy-dark/55 to-navy-dark/5" />
+              <div className="relative">
+                <h3 className="font-display text-white text-xl md:text-2xl font-semibold uppercase tracking-wide">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm text-white/80 leading-relaxed">{card.sub}</p>
+                <span className="mt-4 inline-flex items-center gap-2 text-orange font-display uppercase tracking-wider text-xs font-semibold">
+                  {card.cta}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   HERO SLIDER — orijinal sitedeki slider fotoğrafları + gradient overlay
+========================================================================= */
+
+const HERO_INTERVAL = 6500;
+
+function HeroSlider({ L }: { L: Dict }) {
+  const slides =
+    L.heroSlides.length > 0 ? L.heroSlides : [{ title: L.heroTitle, sub: L.heroSub }];
+  const images = HERO_SLIDES.length > 0 ? HERO_SLIDES : [ASSETS.hero];
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (slides.length <= 1 || paused) return;
+    const id = window.setInterval(() => setActive((i) => (i + 1) % slides.length), HERO_INTERVAL);
+    return () => window.clearInterval(id);
+  }, [slides.length, paused]);
+
+  const activeImage = active % images.length;
+  const go = (dir: number) => setActive((i) => (i + dir + slides.length) % slides.length);
+
+  return (
+    <section
+      className="relative isolate overflow-hidden bg-navy-dark"
+      aria-roledescription="carousel"
+      aria-label="Enorpa Enerji tanıtımı"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Katman: slider fotoğrafları (crossfade) */}
+      <div className="absolute inset-0 -z-10">
+        {images.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            aria-hidden="true"
+            width="1920"
+            height="900"
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding="async"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-out ${
+              i === activeImage ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Katman: okunabilirlik gradyanı (düz lacivert örtü yerine) */}
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(6,20,38,0.92)_0%,rgba(6,20,38,0.78)_28%,rgba(6,20,38,0.36)_58%,rgba(6,20,38,0.06)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-black/45 to-transparent" />
+
+      {/* İçerik */}
+      <div className="relative mx-auto flex min-h-[540px] max-w-7xl flex-col justify-center px-4 py-20 md:min-h-[640px] md:py-28 lg:min-h-[720px]">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 border-l-4 border-orange pl-3 mb-6">
+            <span className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold">
+              Enorpa Enerji · Since 2000
+            </span>
+          </div>
+
+          {/* Yalnızca aktif slayt render edilir: metinler üst üste binmez */}
+          <div key={active} className="hero-fade-up">
+            <h1 className="font-display text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] whitespace-pre-line uppercase drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
+              {slides[active].title}
+            </h1>
+            <p className="mt-6 text-white/90 text-lg md:text-xl max-w-2xl leading-relaxed">
+              {slides[active].sub}
+            </p>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <a
+              href="#products"
+              className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
+            >
+              {L.ctaPrimary}
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white hover:text-navy font-display font-semibold uppercase tracking-wider px-7 py-4 transition-colors"
+            >
+              {L.ctaSecondary}
+            </a>
+          </div>
+        </div>
+
+        {/* Kontroller */}
+        <div className="mt-12 flex items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`${i + 1}. slayt`}
+                aria-current={i === active}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === active ? "w-10 bg-orange" : "w-4 bg-white/30 hover:bg-white/60"
+                }`}
+              />
+            ))}
+          </div>
+          {slides.length > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Önceki slayt"
+                className="grid h-10 w-10 place-items-center border border-white/30 text-white transition-colors hover:border-orange hover:bg-orange"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Sonraki slayt"
+                className="grid h-10 w-10 place-items-center border border-white/30 text-white transition-colors hover:border-orange hover:bg-orange"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -346,7 +598,8 @@ function ProductCard({
           <img
             src={product.image_url}
             alt={product.name}
-            loading="lazy"
+            loading="eager"
+            decoding="async"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             width="600"
             height="450"
@@ -872,15 +1125,13 @@ function QuickCallbackForm() {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.from("leads").insert({
+      const result = await submitLead({
         name: cleanName,
         phone: cleanPhone,
         source: "quick_callback",
         interest: "Hızlı Geri Arama",
-        status: "new",
       });
-      if (error) {
-        console.error("QuickCallback form error:", error);
+      if (!result.ok) {
         setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
         return;
       }
@@ -889,8 +1140,7 @@ function QuickCallbackForm() {
         if (window.fbq) window.fbq("track", "Lead");
         if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Quick Callback" });
       }
-    } catch (err) {
-      console.error("QuickCallback form error:", err);
+    } catch {
       setError("Talebiniz gönderilemedi. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);
@@ -1075,7 +1325,9 @@ function FuelSavingsCalculator() {
   const SYSTEM_COSTS: Record<FacilityType, number> = {
     greenhouse: 1250000,
     hotel: 2250000,
-    industrial: 3000000,
+    textile: 3000000,
+    food: 2800000,
+    chemical: 3200000,
     other: 1250000,
   };
 
@@ -1333,26 +1585,22 @@ const PROJECTS = [
   {
     title: "Özbekistan / Taşkent",
     sub: "Sera Isıtma Tesisatı Kurulumu",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp",
+    image_url: projectImage("taskent"),
   },
   {
     title: "Özbekistan / Harezm",
     sub: "Sera Isıtma Tesisatı Kurulumu",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/harezm.webp",
+    image_url: projectImage("harezm"),
   },
   {
     title: "Türkiye / Manisa",
     sub: "Buhar Kazanı Kurulumu",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/manisa.webp",
+    image_url: projectImage("manisa"),
   },
   {
     title: "Türkiye / İzmir",
     sub: "Sera Isıtma Tesisatı Kurulumu",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/izmir.webp",
+    image_url: projectImage("izmir"),
   },
 ];
 
@@ -1381,7 +1629,8 @@ function ProjectGallery() {
                   alt={p.title}
                   width="600"
                   height="450"
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-all duration-500"
                 />
               </div>
@@ -1565,16 +1814,13 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
     setError(null);
     setLoading(true);
     try {
-      const response = await supabase.from("leads").insert({
+      const result = await submitLead({
         name: clean.split("@")[0],
         email: clean,
         source: "document_gate",
         interest: `Belge: ${doc.title}`,
-        status: "new",
       });
-      console.error("GateModal response:", response);
-      if (response.error) {
-        console.error("GateModal form error:", response.error.message, response.error.details);
+      if (!result.ok) {
         setError("Bir hata oluştu. Lütfen tekrar deneyin.");
         return;
       }
@@ -1583,8 +1829,7 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
         if (window.fbq) window.fbq("track", "Lead", { content_name: doc.title });
         if (window.gtag) window.gtag("event", "generate_lead", { event_category: "Document Gate" });
       }
-    } catch (err) {
-      console.error("GateModal form error:", err);
+    } catch {
       setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setLoading(false);
