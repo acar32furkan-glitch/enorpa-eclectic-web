@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useChildMatches } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Link } from "@tanstack/react-router";
@@ -27,9 +27,9 @@ export const Route = createFileRoute("/en/blog")({
       ...generateHreflangTags("/en/blog"),
     ],
   }),
-  component: EnBlogIndexPage,
+  component: EnBlogLayout,
   loader: async () => {
-    const { data } = await supabase
+    const { data } = await (supabase as any)
       .from("blog_posts")
       .select("*")
       .eq("language", "en")
@@ -37,6 +37,11 @@ export const Route = createFileRoute("/en/blog")({
     return data || [];
   },
 });
+
+function EnBlogLayout() {
+  const children = useChildMatches();
+  return children.length > 0 ? <Outlet /> : <EnBlogIndexPage />;
+}
 
 function EnBlogIndexPage() {
   const posts = Route.useLoaderData() as any[];
@@ -55,7 +60,30 @@ function EnBlogIndexPage() {
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-muted-foreground">No blog posts yet.</p>
+          <div className="bg-steel border border-border p-8 md:p-12 max-w-2xl">
+            <h2 className="font-display text-navy text-xl md:text-2xl font-bold uppercase mb-3">
+              Articles coming soon
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base mb-6">
+              Our English blog is being prepared. In the meantime, you can explore our product
+              catalogue or contact our engineering team directly — we answer technical questions in
+              English within one business day.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/en/products"
+                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-5 py-3 transition-colors"
+              >
+                View Products
+              </a>
+              <a
+                href="/en/contact"
+                className="inline-flex items-center gap-2 border border-navy text-navy hover:bg-navy hover:text-white font-display font-semibold uppercase tracking-wider text-sm px-5 py-3 transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post: any) => (
@@ -69,7 +97,8 @@ function EnBlogIndexPage() {
                   <img
                     src={post.featured_image_url}
                     alt={post.title}
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     className="w-full h-48 object-cover"
                   />
                 )}

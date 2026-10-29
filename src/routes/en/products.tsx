@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Outlet, createFileRoute, Link, useChildMatches } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { fetchProductsFromSupabase, toSlug, type Product } from "@/data/products";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
@@ -20,12 +20,17 @@ export const Route = createFileRoute("/en/products")({
       ...generateHreflangTags("/en/products"),
     ],
   }),
-  component: EnProductsPage,
+  component: EnProductsLayout,
   loader: async () => {
     const categories = await fetchProductsFromSupabase();
     return categories;
   },
 });
+
+function EnProductsLayout() {
+  const children = useChildMatches();
+  return children.length > 0 ? <Outlet /> : <EnProductsPage />;
+}
 
 function EnProductsPage() {
   const categories = Route.useLoaderData();

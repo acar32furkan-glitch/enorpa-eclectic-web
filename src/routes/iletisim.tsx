@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { submitLead } from "@/lib/backend";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { MapPin, Phone, Mail, Send, Clock, MessageCircle, Building2, Loader2 } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
@@ -67,23 +67,20 @@ function IletisimPage() {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.from("leads").insert({
+      const result = await submitLead({
         name: cleanName,
         phone: cleanPhone || undefined,
         email: email.trim() || undefined,
         message: message.trim() || undefined,
         interest,
         source: "contact_page",
-        status: "new",
       });
-      if (error) {
-        console.error("Form error:", error);
-        setError(`Hata: ${error.message || "Lütfen tekrar deneyin."}`);
+      if (!result.ok) {
+        setError("Bir hata oluştu, lütfen tekrar deneyin.");
         return;
       }
       setSubmitted(true);
-    } catch (err) {
-      console.error("Form error:", err);
+    } catch {
       setError("Bir hata oluştu, lütfen tekrar deneyin.");
     } finally {
       setLoading(false);

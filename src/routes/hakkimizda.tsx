@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users, Building2 } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { generateHreflangTags, SITE } from "@/lib/seo";
+import { certificateBadge } from "@/lib/assets";
 
 const HAKKIMIZDA_CONTENT = `<h1>İçimizdeki Ateş Toprağı Yeşertiyor</h1>
 <h4>Buhar, sıcak su, sıcak hava, kızgın yağ sistemlerinin yanı sıra; akaryakıt tankları, yatay ve dikey basınçlı kaplar konusunda üretim, projelendirme ve taahhüt işleri yapmak amacıyla yola çıkan Enorpa bir çok farklı sektörün ısınma, depolama ve buhar ihtiyacını karşılamak üzere faaliyetlerini sürdürmektedir.</h4>
@@ -55,31 +56,11 @@ export const Route = createFileRoute("/hakkimizda")({
 });
 
 const CERTIFICATIONS = [
-  {
-    label: "TSE",
-    sub: "Türk Standartları",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/tse.png",
-  },
-  {
-    label: "CE",
-    sub: "European Conformity",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/ce.png",
-  },
-  {
-    label: "ASME",
-    sub: "American Society",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/asme.png",
-  },
-  {
-    label: "EAC",
-    sub: "Eurasian Conformity",
-    image_url:
-      "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/eac.png",
-  },
-  { label: "GOST", sub: "Rusya Standardı" },
+  { label: "TSE", sub: "Türk Standartları", image_url: certificateBadge("tse") },
+  { label: "CE", sub: "European Conformity", image_url: certificateBadge("ce") },
+  { label: "ASME", sub: "American Society", image_url: certificateBadge("asme") },
+  { label: "EAC", sub: "Eurasian Conformity", image_url: certificateBadge("eac") },
+  { label: "GOST", sub: "Rusya Standardı", image_url: certificateBadge("gost") },
 ];
 
 const STEPS = [
@@ -144,7 +125,8 @@ function HakkimizdaPage() {
                     alt={c.label}
                     width="96"
                     height="96"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     className="h-12 w-12 object-contain mx-auto mb-3"
                   />
                 ) : (

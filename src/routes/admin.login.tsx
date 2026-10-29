@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Flame, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { isBackendOffline, isUnreachable } from "@/lib/backend";
 
 export const Route = createFileRoute("/admin/login")({
   ssr: false,
@@ -15,12 +16,17 @@ function AdminLogin() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [offline, setOffline] = useState(() => isBackendOffline());
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin/dashboard" });
-    });
-  }, [navigate]);
+    if (offline) return;
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (data.session) navigate({ to: "/admin/dashboard" });
+      })
+      .catch(() => setOffline(true));
+  }, [navigate, offline]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +37,12 @@ function AdminLogin() {
       if (error) throw error;
       navigate({ to: "/admin/dashboard" });
     } catch (e: unknown) {
-      setErr(e instanceof Error ? e.message : "Bir hata oluştu");
+      if (isUnreachable(e)) {
+        setOffline(true);
+        setErr("Sunucuya ulaşılamıyor. Yönetim paneli şu anda çevrimdışı.");
+      } else {
+        setErr(e instanceof Error ? e.message : "Bir hata oluştu");
+      }
     } finally {
       setLoading(false);
     }
@@ -88,6 +99,13 @@ function AdminLogin() {
               placeholder="••••••••"
             />
           </div>
+
+          {offline && !err && (
+            <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm px-3 py-2">
+              Sunucuya şu anda ulaşılamıyor. Yönetim paneli, veri tabanı bağlantısı
+              kurulduğunda kullanılabilir olacak.
+            </div>
+          )}
 
           {err && (
             <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2">

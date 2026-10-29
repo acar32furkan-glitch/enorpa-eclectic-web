@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useChildMatches } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Link } from "@tanstack/react-router";
@@ -27,9 +27,9 @@ export const Route = createFileRoute("/ru/blog")({
       ...generateHreflangTags("/ru/blog"),
     ],
   }),
-  component: RuBlogIndexPage,
+  component: RuBlogLayout,
   loader: async () => {
-    const { data } = await supabase
+    const { data } = await (supabase as any)
       .from("blog_posts")
       .select("*")
       .eq("language", "ru")
@@ -37,6 +37,11 @@ export const Route = createFileRoute("/ru/blog")({
     return data || [];
   },
 });
+
+function RuBlogLayout() {
+  const children = useChildMatches();
+  return children.length > 0 ? <Outlet /> : <RuBlogIndexPage />;
+}
 
 function RuBlogIndexPage() {
   const posts = Route.useLoaderData() as any[];
@@ -55,7 +60,30 @@ function RuBlogIndexPage() {
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-muted-foreground">Записей пока нет.</p>
+          <div className="bg-steel border border-border p-8 md:p-12 max-w-2xl">
+            <h2 className="font-display text-navy text-xl md:text-2xl font-bold uppercase mb-3">
+              Статьи скоро появятся
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base mb-6">
+              Русскоязычный раздел блога готовится. Пока вы можете посмотреть каталог продукции или
+              связаться с инженерной командой — на технические вопросы отвечаем в течение одного
+              рабочего дня.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/ru/products"
+                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-display font-semibold uppercase tracking-wider text-sm px-5 py-3 transition-colors"
+              >
+                Смотреть продукцию
+              </a>
+              <a
+                href="/ru/contact"
+                className="inline-flex items-center gap-2 border border-navy text-navy hover:bg-navy hover:text-white font-display font-semibold uppercase tracking-wider text-sm px-5 py-3 transition-colors"
+              >
+                Связаться
+              </a>
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post: any) => (
@@ -69,7 +97,8 @@ function RuBlogIndexPage() {
                   <img
                     src={post.featured_image_url}
                     alt={post.title}
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     className="w-full h-48 object-cover"
                   />
                 )}

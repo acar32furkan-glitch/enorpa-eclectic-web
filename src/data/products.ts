@@ -1,4 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
+import { readOrFallback } from "@/lib/backend";
+import { productImage, resolveImageUrl } from "@/lib/assets";
 
 export type ProductSpecs = {
   yakit?: string;
@@ -122,6 +124,16 @@ export const productCategories: ProductCategory[] = [
   },
 ];
 
+/**
+ * Yerel görsel ataması: veritabanı kapalıyken de kartlarda görsel görünmesi için
+ * her ürüne kategori bazlı yerel ekipman görseli atanır (varsa korunur).
+ */
+for (const cat of productCategories) {
+  cat.products.forEach((p, i) => {
+    if (!p.image_url) p.image_url = productImage(toSlug(p.name), cat.id, i);
+  });
+}
+
 /** Tüm kategorilerden featured ürünleri döndürür */
 export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
   const result: (Product & { categoryTitle: string })[] = [];
@@ -137,21 +149,44 @@ export function getFeaturedProducts(): (Product & { categoryTitle: string })[] {
 
 export async function fetchProductsFromSupabase(): Promise<ProductCategory[]> {
   try {
-    const { data, error } = await supabase.from("products").select("*").order("sort_order");
-    if (error || !data || data.length === 0) return productCategories;
+    const data = await readOrFallback<any[]>(
+      () => supabase.from("products").select("*").order("sort_order"),
+      [],
+    );
+    if (!data || data.length === 0) return productCategories;
 
     const grouped: ProductCategory[] = productCategories.map((cat) => ({
       ...cat,
       products: [],
     }));
-const digerIndex = productCategories.findIndex((c) => c.id === "diger");
+    const digerIndex = productCategories.findIndex((c) => c.id === "diger");
     const validCategoryIds = productCategories.map((c) => c.id);
 
+    /**
+     * Kategori eşleştirme: veritabanında `category` alanı kategori BAŞLIĞINI
+     * ("Sıcak Su Kazanları"), `category_id` ise kimliği ("sicak-su") tutar.
+     * Eski kayıtlarda yalnızca başlık olabileceği için iki alanı da deneriz.
+     */
+    const resolveCategoryIndex = (row: any): number => {
+      const candidates = [row.category_id, row.category, row.category_title]
+        .filter((v): v is string => typeof v === "string" && v.length > 0)
+        .map((v) => v.trim().toLowerCase());
+
+      for (const candidate of candidates) {
+        const byId = validCategoryIds.findIndex((id) => id === candidate);
+        if (byId >= 0) return byId;
+        const byTitle = productCategories.findIndex(
+          (cat) => cat.title.trim().toLowerCase() === candidate,
+        );
+        if (byTitle >= 0) return byTitle;
+      }
+      return digerIndex;
+    };
+
     for (const row of data) {
-      const catId = row.category;
-      const categoryIndex = validCategoryIds.indexOf(catId);
-      const targetIndex = categoryIndex >= 0 ? categoryIndex : digerIndex;
+      const targetIndex = resolveCategoryIndex(row);
       if (targetIndex >= 0) {
+        const categoryId = productCategories[targetIndex].id;
         const p: Product = {
           name: row.name,
           type: row.type,
@@ -159,7 +194,11 @@ const digerIndex = productCategories.findIndex((c) => c.id === "diger");
           detail: row.detail || undefined,
           specs: row.specs ? (row.specs as unknown as ProductSpecs) : undefined,
           featured: row.featured || false,
-          image_url: row.image_url || undefined,
+          image_url: resolveImageUrl(row.image_url, {
+            slug: row.slug || toSlug(row.name),
+            categoryId,
+            index: grouped[targetIndex].products.length,
+          }),
           slug: row.slug || toSlug(row.name) || undefined,
           long_description: row.long_description || undefined,
           pdf_url: row.pdf_url || undefined,
@@ -168,6 +207,9 @@ const digerIndex = productCategories.findIndex((c) => c.id === "diger");
         grouped[targetIndex].products.push(p);
       }
     }
+
+    // Hiçbir ürün eşleşmediyse (şema farkı vb.) statik katalogla devam et.
+    if (grouped.every((cat) => cat.products.length === 0)) return productCategories;
     return grouped;
   } catch {
     return productCategories;
@@ -189,7 +231,7 @@ export function toSlug(str: string): string {
 
 export async function fetchProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const { data, error } = await supabase.from("products").select("*").eq("slug", slug).single();
+    const { data, error } = await supabase.from("products").select("*").eq("slug", slug).maybeSingle();
     if (error || !data) return null;
     
 const p: Product = {
@@ -200,7 +242,11 @@ const p: Product = {
       detail: data.detail || undefined,
       specs: data.specs ? (data.specs as unknown as ProductSpecs) : undefined,
       featured: data.featured || false,
-      image_url: data.image_url || undefined,
+      image_url: resolveImageUrl(data.image_url, {
+        slug: data.slug || toSlug(data.name),
+        // Üretilen DB tiplerinde category_id yok; şema farkını tolere et.
+        categoryId: (data as { category_id?: string }).category_id || data.category || "diger",
+      }),
       slug: data.slug || undefined,
       long_description: data.long_description || undefined,
       pdf_url: data.pdf_url || undefined,

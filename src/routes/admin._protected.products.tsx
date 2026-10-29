@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2, Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { productCategories as fallbackCategories, toSlug } from "@/data/products";
+import { resolveImageUrl } from "@/lib/assets";
 
 export const Route = createFileRoute("/admin/_protected/products")({
   head: () => ({
@@ -265,7 +266,19 @@ const save = async (file?: File | null) => {
                 <tbody>
                   {items.map((p) => (
                     <tr key={p.id} className="border-b border-border last:border-0">
-                      <td className="px-4 py-3 font-semibold text-navy">{p.name}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={resolveImageUrl(p.image_url, { slug: p.slug ?? undefined })}
+                            alt={p.name}
+                            width="48"
+                            height="48"
+                            loading="lazy"
+                            className="h-12 w-12 flex-shrink-0 border border-border bg-steel object-cover"
+                          />
+                          <span className="font-semibold text-navy">{p.name}</span>
+                        </div>
+                      </td>
                       <td className="px-4 py-3 text-xs">{fallbackCategories.find((c) => c.id === p.category)?.title ?? p.category}</td>
                       <td className="px-4 py-3 text-xs">{p.type}</td>
                       <td className="px-4 py-3 text-xs">{p.capacity || "—"}</td>

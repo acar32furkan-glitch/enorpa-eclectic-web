@@ -3,6 +3,7 @@ import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, Globe, Calendar } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
+import { projectImage } from "@/lib/assets";
 
 const PROJELER_CONTENT = `<h1>Öne Çıkan Projelerimiz</h1>
 <p>Enorpa Enerji, 26 ülkede 138+ projeyi hayata geçirmiştir. İşte öne çıkan projelerimiz:</p>
@@ -25,6 +26,7 @@ const projects = [
     description: "Taşkent'te sera ısıtma tesisatı kurulumu gerçekleştirdik. Enorpa HAS Serisi kazanlar ile donatılan tesis, yüksek verimlilik sağlamaktadır.",
     location: "Özbekistan, Taşkent",
     year: "2020",
+    image: projectImage("taskent"),
     icon: Globe,
   },
   {
@@ -34,6 +36,7 @@ const projects = [
     description: "Harezm'de sera ısıtma tesisatı kurulumu. Sıcak iklim koşullarına uygun özel tasarım.",
     location: "Özbekistan, Harezm",
     year: "2020",
+    image: projectImage("harezm"),
     icon: Globe,
   },
   {
@@ -43,6 +46,7 @@ const projects = [
     description: "Manisa'da buhar kazanı kurulumu. Sanayi tesisine özel buhar kazanı devreye alındı.",
     location: "Türkiye, Manisa",
     year: "2019",
+    image: projectImage("manisa"),
     icon: MapPin,
   },
   {
@@ -52,6 +56,7 @@ const projects = [
     description: "İzmir'de sera ısıtma tesisatı kurulumu. Seracılık sektörüne özel çözümler.",
     location: "Türkiye, İzmir",
     year: "2021",
+    image: projectImage("izmir"),
     icon: MapPin,
   },
   {
@@ -61,7 +66,18 @@ const projects = [
     description: "Isparta'da orman ürünleri kurutma sistemi kurulumu. Enerji verimliliği odaklı tasarım.",
     location: "Türkiye, Isparta",
     year: "2022",
+    image: projectImage("isparta"),
     icon: MapPin,
+  },
+  {
+    slug: "kazakistan-almaty",
+    title: "Kazakistan/Almaty",
+    subtitle: "Sera Isıtma Tesisatı Kurulumu",
+    description: "Almaty'da sera ısıtma tesisatı kurulumu. Sert kış koşullarına uygun yüksek kapasiteli kazan seçimi.",
+    location: "Kazakistan, Almaty",
+    year: "2022",
+    image: projectImage("almaty"),
+    icon: Globe,
   },
 ];
 
@@ -116,31 +132,39 @@ function ProjelerPage() {
           dangerouslySetInnerHTML={{ __html: PROJELER_CONTENT }}
         />
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, i) => {
             const Icon = project.icon;
             return (
-              <Link key={i} to="/portfolio/$slug" params={{ slug: project.slug }} className="block">
-                <div className="bg-white border border-border p-6 hover:border-orange transition-colors cursor-pointer">
-                  <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 bg-orange/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-6 w-6 text-orange" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-1">
-                        <h3 className="font-display text-navy font-bold uppercase group-hover:text-orange transition-colors">{project.title}</h3>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {project.year}
-                        </span>
-                      </div>
-                      <div className="text-sm text-orange font-medium mb-2">{project.subtitle}</div>
-                      <p className="text-sm text-muted-foreground">{project.description}</p>
-                      <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
+              <Link key={i} to="/portfolio/$slug" params={{ slug: project.slug }} className="block group">
+                <div className="bg-white border border-border hover:border-orange transition-colors overflow-hidden h-full flex flex-col">
+                  <div className="relative aspect-[16/10] bg-navy-dark overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      width="800"
+                      height="500"
+                      loading="eager"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/20 to-transparent" />
+                    <span className="absolute top-3 left-3 bg-orange text-white text-xs font-display font-semibold uppercase tracking-wider px-2.5 py-1">
+                      {project.year}
+                    </span>
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center gap-2 text-white">
+                      <Icon className="h-4 w-4 text-orange flex-shrink-0" />
+                      <span className="text-xs uppercase tracking-wider text-white/85">
                         {project.location}
-                      </div>
+                      </span>
                     </div>
+                  </div>
+                  <div className="p-5 flex-1">
+                    <h3 className="font-display text-navy text-lg font-bold uppercase group-hover:text-orange transition-colors">
+                      {project.title}
+                    </h3>
+                    <div className="text-sm text-orange font-medium mt-1 mb-2">{project.subtitle}</div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{project.description}</p>
                   </div>
                 </div>
               </Link>

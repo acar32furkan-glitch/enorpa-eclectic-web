@@ -1,11 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useChildMatches } from "@tanstack/react-router";
+import { ProjectsList } from "@/components/ProjectsList";
 import { generateHreflangTags, SITE } from "@/lib/seo";
+
+function RuPortfolioLayout() {
+  const children = useChildMatches();
+  return children.length > 0 ? <Outlet /> : <ProjectsList lang="RU" />;
+}
 
 export const Route = createFileRoute("/ru/portfolio")({
   head: () => ({
     meta: [
       { title: "Проекты | Enorpa Energy" },
-      { name: "description", content: "Проекты Enorpa Energy. Системы отопления теплиц, паровые котлы." },
+      {
+        name: "description",
+        content:
+          "Проекты Enorpa Energy. Более 138 реализованных проектов в 26 странах: отопление теплиц, паровые котлы и промышленные решения.",
+      },
       { property: "og:title", content: "Проекты | Enorpa Energy" },
       { property: "og:description", content: "Портфолио проектов Enorpa Energy." },
       { property: "og:type", content: "website" },
@@ -23,5 +33,5 @@ export const Route = createFileRoute("/ru/portfolio")({
       ...generateHreflangTags("/ru/portfolio"),
     ],
   }),
-  component: () => null,
+  component: RuPortfolioLayout,
 });

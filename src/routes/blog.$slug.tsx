@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { generateBlogPostSchema, generateHreflangTags, SITE } from "@/lib/seo";
 import { cleanContent } from "@/lib/cleanContent";
+import { readOrFallback } from "@/lib/backend";
+import { localPostBySlug } from "@/data/blog";
 
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => {
@@ -42,12 +44,10 @@ export const Route = createFileRoute("/blog/$slug")({
   component: BlogDetailPage,
   loader: async ({ params }) => {
     const { slug } = params;
-    const { data } = await supabase
-      .from("blog_posts")
-      .select("*")
-      .eq("slug", slug)
-      .single();
-    return data;
+    return await readOrFallback<BlogPost | null>(
+      () => (supabase as any).from("blog_posts").select("*").eq("slug", slug).maybeSingle(),
+      localPostBySlug(slug),
+    );
   },
 });
 
@@ -121,7 +121,7 @@ function BlogDetailPage() {
               <img
                 src={post.featured_image_url}
                 alt={post.title}
-                fetchpriority="high"
+                fetchPriority="high"
                 className="w-full rounded-lg"
               />
             </figure>

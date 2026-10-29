@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { generateArticleSchema, generateHreflangTags, SITE } from "@/lib/seo";
+import { resolveProjectImage } from "@/lib/assets";
 
 export const Route = createFileRoute("/portfolio/$slug")({
   head: ({ params }) => ({
@@ -29,11 +30,13 @@ export const Route = createFileRoute("/portfolio/$slug")({
   }),
   component: ProjectDetailPage,
   loader: async ({ params }) => {
-    const { data } = await supabase
+    // Aynı slug üç dilde de kayıtlı olabilir; Türkçe kaydı hedefle.
+    const { data } = await (supabase as any)
       .from("projects")
       .select("*")
       .eq("slug", params.slug)
-      .single();
+      .eq("language", "tr")
+      .maybeSingle();
     return data;
   },
 });
@@ -80,7 +83,7 @@ function ProjectDetailPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateArticleSchema({
         title: project.title,
         description: project.subtitle || project.description,
-        image: project.featured_image_url,
+        image: resolveProjectImage(project.featured_image_url, project.slug),
         slug: `portfolio/${project.slug}`,
       })) }} />
       <SiteHeader />
@@ -140,15 +143,17 @@ function ProjectDetailPage() {
             </div>
           </div>
 
-          {project.featured_image_url && (
-            <figure className="mb-8">
-              <img
-                src={project.featured_image_url}
-                alt={project.title}
-                className="w-full rounded-lg"
-              />
-            </figure>
-          )}
+          <figure className="mb-8 bg-navy-dark overflow-hidden">
+            <img
+              src={resolveProjectImage(project.featured_image_url, project.slug)}
+              alt={project.title}
+              width="1600"
+              height="1000"
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto object-cover"
+            />
+          </figure>
 
           <div className="prose prose-lg max-w-none">
             <h2 className="font-display text-navy text-xl font-bold uppercase mb-4">Neler Yapıldı?</h2>

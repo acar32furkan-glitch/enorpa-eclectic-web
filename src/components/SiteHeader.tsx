@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import {
   Phone,
@@ -23,38 +23,54 @@ const t: Record<Lang, NavDict> = {
   RU: { nav: ["Главная", "Продукция", "О компании", "Блог", "Проекты", "Рекомендации", "Контакты"], quote: "Запросить цену" },
 };
 
+/** Her dilin gerçek (mevcut) sayfa adresleri — sıra menü ile aynı. */
+const NAV_PATHS: Record<Lang, readonly string[]> = {
+  TR: ["/", "/urunler", "/hakkimizda", "/blog", "/projeler", "/referanslar", "/iletisim"],
+  EN: ["/en", "/en/products", "/en/about", "/en/blog", "/en/portfolio", "/en/referanslar", "/en/contact"],
+  RU: ["/ru", "/ru/products", "/ru/about", "/ru/blog", "/ru/portfolio", "/ru/referanslar", "/ru/contact"],
+};
+
+/** Dile göre sayfa eşlemesi (dil değiştirirken aynı sayfada kal). */
+function translatePath(currentPath: string, target: Lang): string {
+  const stripped = currentPath.replace(/^\/(en|ru)(?=\/|$)/, "") || "/";
+  const idx = NAV_PATHS.TR.indexOf(stripped);
+  if (idx >= 0) return NAV_PATHS[target][idx];
+  const prefix = target === "TR" ? "" : "/" + target.toLowerCase();
+  return prefix + (stripped === "/" ? "" : stripped) || "/";
+}
+
 const WHATSAPP = "908504712100";
 
+/** Aktif dil, adres çubuğundan türetilir (SSR ve istemci aynı sonucu verir). */
+export function langFromPath(pathname: string): Lang {
+  if (pathname === "/en" || pathname.startsWith("/en/")) return "EN";
+  if (pathname === "/ru" || pathname.startsWith("/ru/")) return "RU";
+  return "TR";
+}
+
 export function SiteHeader() {
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("enorpa_lang");
-      if (stored === "TR" || stored === "EN" || stored === "RU") return stored;
-    }
-    return "TR";
-  });
+  const { pathname } = useLocation();
+  const lang = langFromPath(pathname);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const L = t[lang];
 
   useEffect(() => {
-    localStorage.setItem("enorpa_lang", lang);
+    try {
+      localStorage.setItem("enorpa_lang", lang);
+    } catch {
+      /* yoksay */
+    }
   }, [lang]);
 
   const chooseLang = (l: Lang) => {
-    setLang(l);
-    if (typeof window !== "undefined") {
+    if (typeof window === "undefined") return;
+    try {
       localStorage.setItem("enorpa_lang", l);
-      const currentPath = window.location.pathname;
-      let newPath: string;
-      if (l === "TR") {
-        newPath = currentPath.replace(/^\/en/, "").replace(/^\/ru/, "") || "/";
-      } else {
-        const cleanPath = currentPath.replace(/^\/en/, "").replace(/^\/ru/, "");
-        newPath = "/" + l.toLowerCase() + cleanPath;
-      }
-      window.location.href = newPath;
+    } catch {
+      /* yoksay */
     }
+    window.location.href = translatePath(window.location.pathname, l);
   };
 
   useEffect(() => {
@@ -63,13 +79,7 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const getHref = (isIndex: number) => {
-    const langPrefix = lang === "TR" ? "" : lang.toLowerCase();
-    const base = langPrefix ? "/" + langPrefix : "";
-    if (isIndex === 0) return base || "/";
-    const paths = ["", "/urunler", "/hakkimizda", "/blog", "/projeler", "/referanslar", "/iletisim"];
-    return base + paths[isIndex];
-  };
+  const getHref = (isIndex: number) => NAV_PATHS[lang][isIndex] ?? "/";
 
   return (
     <>
@@ -177,20 +187,8 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  const [lang, setLang] = useState<Lang>("TR");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("enorpa_lang");
-      if (stored === "TR" || stored === "EN" || stored === "RU") {
-        setLang(stored);
-      } else if (window.location.pathname.startsWith("/en")) {
-        setLang("EN");
-      } else if (window.location.pathname.startsWith("/ru")) {
-        setLang("RU");
-      }
-    }
-  }, []);
+  const { pathname } = useLocation();
+  const lang = langFromPath(pathname);
 
   const langPrefix = lang === "TR" ? "" : lang.toLowerCase();
   const base = langPrefix ? "/" + langPrefix : "";
@@ -206,23 +204,23 @@ export function SiteFooter() {
       ]},
     ],
     EN: [
-      { title: "Products", links: [{ label: "Our Products", href: "/en/products" }] },
+      { title: "Products", links: [{ label: "Our Products", href: "/products" }] },
       { title: "Company", links: [
-        { label: "About Us", href: "/en/about" },
-        { label: "Blog", href: "/en/blog" },
-        { label: "Projects", href: "/en/projects" },
+        { label: "About Us", href: "/about" },
+        { label: "Blog", href: "/blog" },
+        { label: "Projects", href: "/portfolio" },
         { label: "References", href: "/referanslar" },
-        { label: "Contact", href: "/en/contact" },
+        { label: "Contact", href: "/contact" },
       ]},
     ],
     RU: [
-      { title: "Продукция", links: [{ label: "Наша продукция", href: "/ru/products" }] },
+      { title: "Продукция", links: [{ label: "Наша продукция", href: "/products" }] },
       { title: "Компания", links: [
-        { label: "О компании", href: "/ru/about" },
-        { label: "Блог", href: "/ru/blog" },
-        { label: "Проекты", href: "/ru/projects" },
+        { label: "О компании", href: "/about" },
+        { label: "Блог", href: "/blog" },
+        { label: "Проекты", href: "/portfolio" },
         { label: "Рекомендации", href: "/referanslar" },
-        { label: "Контакты", href: "/ru/contact" },
+        { label: "Контакты", href: "/contact" },
       ]},
     ],
   };

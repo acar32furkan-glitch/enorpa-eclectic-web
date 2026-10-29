@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Calendar, ArrowRight, Factory } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
+import { readOrFallback } from "@/lib/backend";
+import { localPostsBySlugs } from "@/data/blog";
 
 import { cleanContent } from "@/lib/cleanContent";
 
@@ -37,12 +39,15 @@ export const Route = createFileRoute("/blog/")({
   }),
   component: BlogListPage,
   loader: async () => {
-    const { data } = await supabase
-      .from("blog_posts")
-      .select("*")
-      .in('slug', trOnlySlugs)
-      .order("published_at", { ascending: false });
-    return data || [];
+    return await readOrFallback<BlogPost[]>(
+      () =>
+        (supabase as any)
+          .from("blog_posts")
+          .select("*")
+          .in("slug", trOnlySlugs)
+          .order("published_at", { ascending: false }),
+      localPostsBySlugs(trOnlySlugs),
+    );
   },
 });
 
