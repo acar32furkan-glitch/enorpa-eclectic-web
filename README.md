@@ -164,30 +164,44 @@ Site `http://localhost:3000` adresinde açılır.
 - **Input validasyonu** — Zod şemaları + HTML sanitizasyonu
 - **Ortam değişkenleri** — `.env` git'ten hariç tutulmuş, secret'lar asla commit edilmez
 
-### Bilinen bağımlılık uyarıları (takip ediliyor)
+### Bağımlılık güvenliği (kritik CVE kapatıldı)
 
-`bun audit` çalıştırıldığında TanStack Start zincirinde bir **kritik** uyarı görünür
-(GHSA-qx66-fv34-fjm8 — server-function yanıtlarında reflected XSS, `<1.168.60`).
-Yükseltme denendi ancak `@tanstack/react-start@1.169.x` **router-plugin / start-* paketleriyle
-birlikte** yükseltilmeyi gerektiriyor; tek başına yükseltildiğinde SSR devre dışı kalıyor
-(`handleServerRoutes: object is not iterable`). Bu nedenle sürüm 1.167.50'de kalındı ve
-iş şu şekilde ayrıldı:
+TanStack Start'taki **kritik** uyarı (GHSA-qx66-fv34-fjm8 — server-function
+yanıtlarında reflected XSS, `<1.168.60`) kapatıldı. Kritik nokta: `1.169.x`
+sürümleri **Vite 8** istiyor, `1.168.60` ise hâlâ Vite 7 ile çalışıyor ve düzeltmeyi
+içeren ilk sürüm. Bu yüzden Vite 8'e çıkmadan çözüldü.
 
-- Site **server function kullanmıyor** (yalnızca örnek `src/lib/api/example.functions.ts` var);
-  ana veri akışı Supabase REST + statik sayfalar olduğundan uyarının pratik etkisi düşük.
-- Yükseltme, TanStack paketlerinin (react-start, start-plugin-core, router-plugin,
-  react-router) **tek seferde** güncellenmesiyle yapılmalı; doğrulama adımları:
-  `bun install` → `npm run build` → `npm run audit`.
+Sürümler **tam pinlendi** (kaza ile kopmasın diye `^` yok) ve birbirine hizalı:
 
-Kalan diğer uyarılar geliştirme zincirine aittir (eslint/prettier bağımlılıkları,
-`brace-expansion`, `undici`, `vite` dev sunucusu). Üretim çıktısını etkilemez.
+| Paket | Sürüm | Neden bu sürüm |
+|---|---|---|
+| `@tanstack/react-start` | `1.168.60` | CVE düzeltmesini içeren ilk sürüm, Vite 7 uyumlu |
+| `@tanstack/react-router` | `1.170.41` | react-start'ın birebir bağımlılığı (tek kopya kalsın) |
+| `@tanstack/router-plugin` | `1.168.42` | `start-plugin-core@1.171.49` ile aynı sürüm |
+| `vite` | `7.3.7` | launch-editor / fs.deny uyarılarını kapatan 7.x patch'i |
 
-> **Dikkat:** `bun audit fix` bugün **çalıştırılmamalı**. 75 uyarıyı kapatıyor ama
-> `@tanstack/react-router` / `react-start` sürümlerini birbirinden koparıyor ve
-> SSR'ı kırıyor (`defaultSerovalPlugins` export hatası + `handleServerRoutes`
-> çökmesi). Denendi ve geri alındı. Doğru sıra: TanStack paketlerini birlikte
-> yükselt → `bun install` → `npm run build` → `npm run audit` → ancak o zaman
-> `bun audit fix`.
+Sonuç: `bun audit` → **77 uyarıden 28'e**, **4 kritik → 0 kritik**.
+(`23 high / 5 moderate / 1 low` kalanların tamamı **geliştirme zinciri**:
+babel→browserslist, esbuild, js-yaml, router-generator içindeki `zod`. Üretim
+çıktısını etkilemez.)
+
+Doğrulama adımları (bu turda çalıştırıldı, hepsi geçti):
+
+```bash
+rm -rf node_modules bun.lock && bun install   # 476 paket, tek kopya doğrulandı
+node node_modules/typescript/bin/tsc --noEmit  # 0 hata
+npm run build                                  # client + ssr + nitro başarılı
+npm run audit                                  # 35 rota, 0 sorun
+```
+
+> **Dikkat:** `bun audit fix` **kullanılmamalı**. `@tanstack/*` paketlerini
+> öngörülemeyen şekilde kaydırıp SSR'ı kırıyor (`defaultSerovalPlugins` export
+> hatası + `handleServerRoutes` çökmesi). Denendi, geri alındı. Yükseltme
+> bilinçli olarak yukarıdaki tablo ile elle yapılır.
+
+`react-start` 1.169+ yükseltmesi (Vite 8 gerektirir) ayrı iş olarak duruyor:
+Vite 8 + `@vitejs/plugin-react` + `@tailwindcss/vite` + `@lovable.dev/vite-tanstack-config`
+birlikte yükseltilmeli.
 
 ---
 

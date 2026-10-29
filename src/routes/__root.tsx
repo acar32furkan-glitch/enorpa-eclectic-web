@@ -51,8 +51,9 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
+  // TanStack Router >=1.170 hata tipini `unknown` olarak verir; log için normalize et.
+  console.error(error instanceof Error ? error : String(error));
   const router = useRouter();
 
   return (
