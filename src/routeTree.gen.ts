@@ -282,7 +282,7 @@ const AdminProtectedDashboardRoute = AdminProtectedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminProtectedRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/en': typeof EnRouteWithChildren
