@@ -200,6 +200,7 @@ export function SiteFooter() {
         { label: "Blog", href: "/blog" },
         { label: "Projeler", href: "/projeler" },
         { label: "Referanslar", href: "/referanslar" },
+        { label: "Kariyer", href: "/kariyer" },
         { label: "İletişim", href: "/iletisim" },
       ]},
     ],

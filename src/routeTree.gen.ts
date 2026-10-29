@@ -16,6 +16,7 @@ import { Route as ReferanslarRouteImport } from './routes/referanslar'
 import { Route as ProjelerRouteImport } from './routes/projeler'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as KariyerRouteImport } from './routes/kariyer'
 import { Route as IletisimRouteImport } from './routes/iletisim'
 import { Route as HakkimizdaRouteImport } from './routes/hakkimizda'
 import { Route as GizlilikPolitikasiRouteImport } from './routes/gizlilik-politikasi'
@@ -88,6 +89,11 @@ const PortfolioRoute = PortfolioRouteImport.update({
 const KvkkRoute = KvkkRouteImport.update({
   id: '/kvkk',
   path: '/kvkk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KariyerRoute = KariyerRouteImport.update({
+  id: '/kariyer',
+  path: '/kariyer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IletisimRoute = IletisimRouteImport.update({
@@ -289,6 +295,7 @@ export interface FileRoutesByFullPath {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
+  '/kariyer': typeof KariyerRoute
   '/kvkk': typeof KvkkRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
@@ -334,6 +341,7 @@ export interface FileRoutesByTo {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
+  '/kariyer': typeof KariyerRoute
   '/kvkk': typeof KvkkRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
@@ -379,6 +387,7 @@ export interface FileRoutesById {
   '/gizlilik-politikasi': typeof GizlilikPolitikasiRoute
   '/hakkimizda': typeof HakkimizdaRoute
   '/iletisim': typeof IletisimRoute
+  '/kariyer': typeof KariyerRoute
   '/kvkk': typeof KvkkRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/projeler': typeof ProjelerRoute
@@ -428,6 +437,7 @@ export interface FileRouteTypes {
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
+    | '/kariyer'
     | '/kvkk'
     | '/portfolio'
     | '/projeler'
@@ -473,6 +483,7 @@ export interface FileRouteTypes {
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
+    | '/kariyer'
     | '/kvkk'
     | '/portfolio'
     | '/projeler'
@@ -517,6 +528,7 @@ export interface FileRouteTypes {
     | '/gizlilik-politikasi'
     | '/hakkimizda'
     | '/iletisim'
+    | '/kariyer'
     | '/kvkk'
     | '/portfolio'
     | '/projeler'
@@ -565,6 +577,7 @@ export interface RootRouteChildren {
   GizlilikPolitikasiRoute: typeof GizlilikPolitikasiRoute
   HakkimizdaRoute: typeof HakkimizdaRoute
   IletisimRoute: typeof IletisimRoute
+  KariyerRoute: typeof KariyerRoute
   KvkkRoute: typeof KvkkRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
   ProjelerRoute: typeof ProjelerRoute
@@ -623,6 +636,13 @@ declare module '@tanstack/react-router' {
       path: '/kvkk'
       fullPath: '/kvkk'
       preLoaderRoute: typeof KvkkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kariyer': {
+      id: '/kariyer'
+      path: '/kariyer'
+      fullPath: '/kariyer'
+      preLoaderRoute: typeof KariyerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/iletisim': {
@@ -1082,6 +1102,7 @@ const rootRouteChildren: RootRouteChildren = {
   GizlilikPolitikasiRoute: GizlilikPolitikasiRoute,
   HakkimizdaRoute: HakkimizdaRoute,
   IletisimRoute: IletisimRoute,
+  KariyerRoute: KariyerRoute,
   KvkkRoute: KvkkRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
   ProjelerRoute: ProjelerRoute,

@@ -221,6 +221,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://enorpa.com/sss"/>
   </url>
   <url>
+    <loc>https://enorpa.com/kariyer</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://enorpa.com/kariyer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://enorpa.com/kariyer"/>
+  </url>
+  <url>
     <loc>https://enorpa.com/kvkk</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>yearly</changefreq>

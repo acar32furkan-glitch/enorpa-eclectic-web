@@ -98,6 +98,7 @@ async function main() {
     "/en/contact",
     "/ru/contact",
     "/sss",
+    "/kariyer",
     "/kvkk",
     "/cerez-politikasi",
     "/gizlilik-politikasi",

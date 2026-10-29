@@ -104,6 +104,7 @@ async function main() {
 
   // yalnızca TR
   add("/sss", { priority: "0.5" });
+  add("/kariyer", { priority: "0.4" });
   add("/kvkk", { priority: "0.3", changefreq: "yearly" });
   add("/cerez-politikasi", { priority: "0.3", changefreq: "yearly" });
   add("/gizlilik-politikasi", { priority: "0.3", changefreq: "yearly" });

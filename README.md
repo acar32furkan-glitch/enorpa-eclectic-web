@@ -180,8 +180,14 @@ iş şu şekilde ayrıldı:
   `bun install` → `npm run build` → `npm run audit`.
 
 Kalan diğer uyarılar geliştirme zincirine aittir (eslint/prettier bağımlılıkları,
-`brace-expansion`, `undici`, `vite` dev sunucusu). Üretim çıktısını etkilemez;
-`bun audit fix` ile kademeli olarak kapatılabilir.
+`brace-expansion`, `undici`, `vite` dev sunucusu). Üretim çıktısını etkilemez.
+
+> **Dikkat:** `bun audit fix` bugün **çalıştırılmamalı**. 75 uyarıyı kapatıyor ama
+> `@tanstack/react-router` / `react-start` sürümlerini birbirinden koparıyor ve
+> SSR'ı kırıyor (`defaultSerovalPlugins` export hatası + `handleServerRoutes`
+> çökmesi). Denendi ve geri alındı. Doğru sıra: TanStack paketlerini birlikte
+> yükselt → `bun install` → `npm run build` → `npm run audit` → ancak o zaman
+> `bun audit fix`.
 
 ---
 
