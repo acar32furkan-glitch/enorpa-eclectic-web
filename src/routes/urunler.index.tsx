@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Gauge, Flame, Factory, ArrowRight, X, Info, ShieldCheck } from "lucide-react";
+import { Gauge, Flame, Factory, ArrowRight, X, Info, ShieldCheck, Youtube } from "lucide-react";
 import {
   productCategories as fallbackCategories,
   fetchProductsFromSupabase,
@@ -8,6 +8,9 @@ import {
   type ProductCategory,
   toSlug,
 } from "@/data/products";
+import { productImage } from "@/lib/assets";
+import { PRODUCT_VIDEO } from "@/data/videos";
+import { VideoEmbed } from "@/components/VideoEmbed";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/urunler/")({
@@ -32,7 +35,7 @@ export const Route = createFileRoute("/urunler/")({
     links: [
       { rel: "canonical", href: "https://enorpa.com/urunler" },
     ],
-    script: [
+    scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -58,6 +61,24 @@ export const Route = createFileRoute("/urunler/")({
               ...(p.capacity && { weight: p.capacity }),
             })),
           ),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          name: PRODUCT_VIDEO.title,
+          description: PRODUCT_VIDEO.description,
+          embedUrl: `https://www.youtube-nocookie.com/embed/${PRODUCT_VIDEO.id}`,
+          contentUrl: `https://youtu.be/${PRODUCT_VIDEO.id}`,
+          thumbnailUrl: `https://enorpa.com${productImage("kuvars-serisi-tek-kulhanli", "buhar")}`,
+          uploadDate: "2024-01-01",
+          publisher: {
+            "@type": "Organization",
+            name: "Enorpa Enerji",
+            logo: { "@type": "ImageObject", url: "https://enorpa.com/img/brand/logo-original.png" },
+          },
         }),
       },
     ],
@@ -121,6 +142,33 @@ function UrunlerPage() {
             />
           ))}
         </div>
+
+        {/* Tanıtım videosu — orijinal sitedeki ürün videosu */}
+        <div className="mt-20 grid items-center gap-8 border-t border-border pt-14 lg:grid-cols-[1.35fr_1fr]">
+          <VideoEmbed
+            videoId={PRODUCT_VIDEO.id}
+            title={PRODUCT_VIDEO.title}
+            poster={productImage("kuvars-serisi-tek-kulhanli", "buhar")}
+          />
+          <div>
+            <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3">
+              Tanıtım Videosu
+            </div>
+            <h2 className="font-display text-navy text-2xl md:text-3xl font-bold uppercase">
+              {PRODUCT_VIDEO.title}
+            </h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">{PRODUCT_VIDEO.description}</p>
+            <a
+              href={`https://youtu.be/${PRODUCT_VIDEO.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 border border-border px-5 py-3 font-display uppercase tracking-wider text-sm font-semibold text-navy transition-colors hover:border-orange hover:text-orange"
+            >
+              <Youtube className="h-4 w-4" />
+              YouTube'da İzle
+            </a>
+          </div>
+        </div>
       </div>
 
       {modalProduct && (
@@ -150,7 +198,8 @@ function ProductCard({
           <img
             src={product.image_url}
             alt={product.name}
-            loading="lazy"
+            loading="eager"
+            decoding="async"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             width="600"
             height="450"
