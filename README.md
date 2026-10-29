@@ -159,9 +159,29 @@ Site `http://localhost:3000` adresinde açılır.
 - **RLS (Row Level Security)** — Tüm Supabase tablolarında aktif
 - **Rol bazlı erişim** — `user_roles` tablosu + `has_role()` SECURITY DEFINER fonksiyonu
 - **Storage politikaları** — Ürün görselleri yalnızca admin tarafından yüklenebilir
-- **CSP + güvenlik header'ları** — `vercel.json` üzerinden HSTS, X-Frame-Options, nosniff
+- **CSP + güvenlik header'ları** — `vercel.json` üzerinden HSTS, X-Frame-Options, nosniff.
+  `frame-src` yalnızca `youtube-nocookie.com` / `youtube.com` için açıktır (tanıtım videosu).
 - **Input validasyonu** — Zod şemaları + HTML sanitizasyonu
 - **Ortam değişkenleri** — `.env` git'ten hariç tutulmuş, secret'lar asla commit edilmez
+
+### Bilinen bağımlılık uyarıları (takip ediliyor)
+
+`bun audit` çalıştırıldığında TanStack Start zincirinde bir **kritik** uyarı görünür
+(GHSA-qx66-fv34-fjm8 — server-function yanıtlarında reflected XSS, `<1.168.60`).
+Yükseltme denendi ancak `@tanstack/react-start@1.169.x` **router-plugin / start-* paketleriyle
+birlikte** yükseltilmeyi gerektiriyor; tek başına yükseltildiğinde SSR devre dışı kalıyor
+(`handleServerRoutes: object is not iterable`). Bu nedenle sürüm 1.167.50'de kalındı ve
+iş şu şekilde ayrıldı:
+
+- Site **server function kullanmıyor** (yalnızca örnek `src/lib/api/example.functions.ts` var);
+  ana veri akışı Supabase REST + statik sayfalar olduğundan uyarının pratik etkisi düşük.
+- Yükseltme, TanStack paketlerinin (react-start, start-plugin-core, router-plugin,
+  react-router) **tek seferde** güncellenmesiyle yapılmalı; doğrulama adımları:
+  `bun install` → `npm run build` → `npm run audit`.
+
+Kalan diğer uyarılar geliştirme zincirine aittir (eslint/prettier bağımlılıkları,
+`brace-expansion`, `undici`, `vite` dev sunucusu). Üretim çıktısını etkilemez;
+`bun audit fix` ile kademeli olarak kapatılabilir.
 
 ---
 
