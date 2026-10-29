@@ -28,5 +28,11 @@ jobs:
       - name: Bağımlılıkları kur
         run: bun install
 
+      - name: Tip kontrolü
+        run: bunx tsc --noEmit -p tsconfig.json
+
+      - name: Sitemap üretimi doğrula
+        run: node scripts/gen-sitemap.mjs --dry
+
       - name: Üretim derlemesi
         run: bun run build
