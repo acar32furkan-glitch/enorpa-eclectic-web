@@ -17,6 +17,7 @@ dist-ssr
 *.local
 .env
 .env.local
+.env.local.bak
 .env.production
 
 # Vercel
@@ -56,6 +57,14 @@ reports/
 tmp/
 scripts/crawled-data/
 scripts/optimized/
+
+# Design/QA work artifacts (not part of the app)
+shots/
+_handoff/
+
+# Supabase CLI local state (generated)
+supabase/.temp/
+supabase/.branches/
 
 # Lockfile: project uses bun (see bunfig.toml)
 package-lock.json
