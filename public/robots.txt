@@ -1,5 +1,14 @@
 User-agent: *
 Allow: /
+
+# Yönetim paneli indekslenmesin
 Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+
+# Tarama bütçesini görsellere harcamayalım (görseller sayfa içinden erişilebilir)
+User-agent: Googlebot-Image
+Allow: /
 
 Sitemap: https://enorpa.com/sitemap.xml

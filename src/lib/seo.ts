@@ -1,6 +1,7 @@
 
 
 import { SUPPORTED_LANGS, type SupportedLang } from "@/lib/i18n";
+import { ASSETS } from "@/lib/assets";
 
 export const DOMAIN = "enorpa.com";
 export const SITE = {
@@ -10,7 +11,7 @@ export const SITE = {
   phone: "+908504712100",
   email: "turuncu@enorpa.com",
   instagram: "https://instagram.com/enorpaenerji",
-  defaultOgImage: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp",
+  defaultOgImage: ASSETS.ogImage,
   defaultLang: "tr" as SupportedLang,
 };
 
@@ -183,18 +184,51 @@ export function generateOrganizationSchema() {
   };
 }
 
+/**
+ * Sayfa eşleme tablosu: TR yol → EN/RU karşılığı.
+ * EN/RU adresleri TR ile birebir aynı değil (products / portfolio / contact),
+ * bu yüzden hreflang'ler "/en" + path şeklinde körü körüne üretilemez.
+ */
+const HREFLANG_BASE: Record<string, { tr: string; en: string; ru: string }> = {
+  "": { tr: "/", en: "/en", ru: "/ru" },
+  urunler: { tr: "/urunler", en: "/en/products", ru: "/ru/products" },
+  products: { tr: "/urunler", en: "/en/products", ru: "/ru/products" },
+  hakkimizda: { tr: "/hakkimizda", en: "/en/about", ru: "/ru/about" },
+  about: { tr: "/hakkimizda", en: "/en/about", ru: "/ru/about" },
+  blog: { tr: "/blog", en: "/en/blog", ru: "/ru/blog" },
+  projeler: { tr: "/projeler", en: "/en/portfolio", ru: "/ru/portfolio" },
+  portfolio: { tr: "/portfolio", en: "/en/portfolio", ru: "/ru/portfolio" },
+  referanslar: { tr: "/referanslar", en: "/en/referanslar", ru: "/ru/referanslar" },
+  references: { tr: "/referanslar", en: "/en/referanslar", ru: "/ru/referanslar" },
+  iletisim: { tr: "/iletisim", en: "/en/contact", ru: "/ru/contact" },
+  contact: { tr: "/iletisim", en: "/en/contact", ru: "/ru/contact" },
+};
+
+/**
+ * Verilen yol için doğru hreflang alternatiflerini üretir.
+ * Karşılığı olmayan sayfalarda (sss, kvkk, çerez/gizlilik politikaları) boş dizi
+ * döner — böylece var olmayan adreslere hreflang verilmez.
+ */
 export function generateHreflangTags(path: string) {
-  const links: { rel: string; hrefLang: string; href: string }[] = SUPPORTED_LANGS.map((lang) => ({
-    rel: "alternate",
-    hrefLang: lang,
-    href: `${SITE.url}${lang === "tr" ? "" : "/" + lang}${path}`,
-  }));
-  links.push({
-    rel: "alternate",
-    hrefLang: "x-default",
-    href: `${SITE.url}${path}`,
-  });
-  return links;
+  const clean = (path.startsWith("/") ? path : `/${path}`) || "/";
+  const stripped = clean.replace(/^\/(en|ru)(?=\/|$)/, "") || "/";
+  const segments = stripped.split("/").filter(Boolean);
+  const head = segments[0] ?? "";
+  const tail = segments.slice(1).join("/");
+
+  // Liste sayfası: TR adresi /projeler, detay sayfaları /portfolio/<slug>
+  const base = head === "portfolio" && !tail ? HREFLANG_BASE.projeler : HREFLANG_BASE[head];
+  if (!base) return [];
+
+  const url = (prefix: string) =>
+    `${SITE.url}${prefix === "/" ? "/" : prefix}${tail ? `/${tail}` : ""}`;
+
+  return [
+    { rel: "alternate", hrefLang: "tr", href: url(base.tr) },
+    { rel: "alternate", hrefLang: "en", href: url(base.en) },
+    { rel: "alternate", hrefLang: "ru", href: url(base.ru) },
+    { rel: "alternate", hrefLang: "x-default", href: url(base.tr) },
+  ];
 }
 
 export function generateFaqSchema(faqs: { question: string; answer: string }[]) {

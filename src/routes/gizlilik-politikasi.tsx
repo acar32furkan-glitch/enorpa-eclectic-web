@@ -5,7 +5,11 @@ export const Route = createFileRoute("/gizlilik-politikasi")({
   head: () => ({
     meta: [
       { title: "Gizlilik Politikası | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji gizlilik politikası." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji gizlilik politikası: iletişim formlarında paylaşılan verilerin toplanması, kullanımı, saklanması ve üçüncü taraflarla paylaşım esasları.",
+      },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/gizlilik-politikasi" },

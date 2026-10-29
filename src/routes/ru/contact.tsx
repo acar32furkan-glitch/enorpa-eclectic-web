@@ -7,7 +7,11 @@ export const Route = createFileRoute("/ru/contact")({
   head: () => ({
     meta: [
       { title: "Контакты | Enorpa Energy" },
-      { name: "description", content: "Свяжитесь с Enorpa Energy. Телефон, email, адрес." },
+      {
+        name: "description",
+        content:
+          "Свяжитесь с Enorpa Energy: телефон +90 850 471 21 00, электронная почта и адреса заводов в Ыспарте и Карамане. Запросите расчет отопительной системы.",
+      },
       { property: "og:title", content: "Контакты | Enorpa Energy" },
       { property: "og:description", content: "Свяжитесь с нами. Мы готовы помочь." },
       { property: "og:type", content: "website" },

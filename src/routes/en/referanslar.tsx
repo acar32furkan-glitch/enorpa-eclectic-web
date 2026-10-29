@@ -59,8 +59,8 @@ export const Route = createFileRoute("/en/referanslar")({
       { name: "twitter:image", content: SITE.defaultOgImage },
     ],
     links: [
-      { rel: "canonical", href: "https://enorpa.com/en/references" },
-      ...generateHreflangTags("/en/references"),
+      { rel: "canonical", href: "https://enorpa.com/en/referanslar" },
+      ...generateHreflangTags("/en/referanslar"),
     ],
   }),
   component: EnReferencesPage,

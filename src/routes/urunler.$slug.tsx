@@ -11,11 +11,14 @@ export const Route = createFileRoute("/urunler/$slug")({
     return {
       meta: [
          { title: `${title} | Enorpa Enerji` },
-         { name: "description", content: `${title} - Enorpa Enerji ürün kataloğu` },
+         {
+           name: "description",
+           content: `${title} — Enorpa Enerji ürün kataloğu. Kapasite, yakıt seçenekleri, verim ve teknik özellikler. Tesisiniz için teklif alın.`,
+         },
          { property: "og:title", content: `${title} | Enorpa Enerji` },
-         { 
-           property: "og:description", 
-           content: `${title} - Enorpa Enerji ürün kataloğu`,
+         {
+           property: "og:description",
+           content: `${title} — kapasite, yakıt seçenekleri ve teknik özellikler. Enorpa Enerji.`,
          },
          { property: "og:type", content: "product" },
          { property: "og:image", content: SITE.defaultOgImage },
@@ -81,7 +84,7 @@ function ProductDetailPage() {
         name: product.name,
         description: product.detail || product.type,
         image: product.image_url,
-        slug: product.slug || params.slug,
+        slug: product.slug || "",
       })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
@@ -99,7 +102,7 @@ function ProductDetailPage() {
               <img
                 src={product.image_url}
                 alt={product.name}
-                fetchpriority="high"
+                fetchPriority="high"
                 className="w-full h-64 md:h-80 object-cover object-center rounded-lg"
               />
             ) : (

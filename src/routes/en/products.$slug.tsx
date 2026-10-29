@@ -10,10 +10,13 @@ export const Route = createFileRoute("/en/products/$slug")({
     const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
     return {
       meta: [
-        { title: `${title} | Enorpa Energy` },
-        { name: "description", content: `${title} - Enorpa Energy product catalog. High efficiency, reliable, and eco-friendly.` },
-        { property: "og:title", content: `${title} | Enorpa Energy` },
-        { property: "og:description", content: `${title} - Enorpa Energy industrial boiler.` },
+        { title: `${title} | Enorpa Energy Products` },
+        {
+          name: "description",
+          content: `${title} — Enorpa Energy product catalog. Capacity, fuel options, efficiency and technical specifications for your facility.`,
+        },
+        { property: "og:title", content: `${title} | Enorpa Energy Products` },
+        { property: "og:description", content: `${title} — capacity, fuel options and technical specifications. Enorpa Energy.` },
         { property: "og:type", content: "product" },
         { property: "og:image", content: SITE.defaultOgImage },
         { property: "og:url", content: `https://enorpa.com/en/products/${params.slug}` },
@@ -71,7 +74,7 @@ function EnProductDetailPage() {
         name: loaderData.name,
         description: loaderData.detail || loaderData.type,
         image: loaderData.image_url,
-        slug: params.slug,
+        slug: loaderData.slug || "",
       })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">

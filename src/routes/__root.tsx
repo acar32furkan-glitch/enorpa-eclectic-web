@@ -10,11 +10,13 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { isBackendOffline } from "@/lib/backend";
+import { ASSETS } from "@/lib/assets";
 
 import appCss from "../styles.css?url";
 
-const BRAND_LOGO_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp";
-const FAVICON_URL = "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/brand/favicon-192.png";
+const BRAND_LOGO_URL = ASSETS.ogImage;
+const FAVICON_URL = ASSETS.faviconSvg;
 
 const getSessionId = () => {
   if (typeof window === "undefined") return "";
@@ -98,23 +100,29 @@ meta: [
        { name: "twitter:title", content: "Enorpa Enerji — Endüstriyel Isıtmada Güvenilir Güç" },
        { name: "twitter:description", content: "Buhar kazanları, sıcak su kazanları ve sıcak hava sistemleriyle tesislerinize özel yüksek verimli endüstriyel ısıtma çözümleri." },
         { property: "og:image", content: BRAND_LOGO_URL },
+        { property: "og:image:type", content: "image/png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: "Enorpa Enerji endüstriyel kazan ve ısıtma sistemleri" },
         { name: "twitter:image", content: BRAND_LOGO_URL },
+        { name: "twitter:image:alt", content: "Enorpa Enerji endüstriyel kazan ve ısıtma sistemleri" },
         { property: "og:url", content: "https://enorpa.com/" },
         { property: "og:locale", content: "tr_TR" },
         { property: "og:site_name", content: "Enorpa Enerji" },
 {
           name: "Content-Security-Policy",
-          content: "default-src 'self'; img-src 'self' https://hmhkrrbvkafwcbyyvezl.supabase.co data: https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://hmhkrrbvkafwcbyyvezl.supabase.co https://connect.facebook.net https://www.facebook.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://hmhkrrbvkafwcbyyvezl.supabase.co https://www.google-analytics.com https://connect.facebook.net https://www.facebook.com; frame-src 'none'; object-src 'none';",
+          content: "default-src 'self'; img-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; object-src 'none';",
         },
+        { name: "theme-color", content: "#0f2d5c" },
      ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "preconnect", href: "https://hmhkrrbvkafwcbyyvezl.supabase.co", crossOrigin: "anonymous" },
-      { rel: "preload", href: "https://hmhkrrbvkafwcbyyvezl.supabase.co/storage/v1/object/public/product-images/gallery/taskent.webp", as: "image", fetchPriority: "high" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap", media: "print", onLoad: (e: any) => { e.currentTarget.media = "all"; } },
-      { rel: "icon", href: FAVICON_URL },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" },
+      { rel: "icon", href: FAVICON_URL, type: "image/svg+xml" },
+      { rel: "icon", href: ASSETS.faviconPng, type: "image/png", sizes: "192x192" },
+      { rel: "apple-touch-icon", href: ASSETS.appleTouchIcon },
     ],
 scripts: [
         {
@@ -134,19 +142,6 @@ scripts: [
             ]
           }),
         },
-       {
-         type: "text/javascript",
-         children: `!function(f,b,e,v,n,t,s){
-if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'PIXEL_ID_GIRILECEK');
-fbq('track', 'PageView');`,
-       },
      ],
   }),
   shellComponent: RootShell,
@@ -185,15 +180,13 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
-    if (consent !== "accepted") return;
+    if (consent !== "accepted" || isBackendOffline()) return;
     const handleRouteChange = () => {
       try {
         const path = window.location.pathname;
         const referrer = document.referrer || "";
         const session_id = getSessionId();
-        supabase.from("page_views").insert({ path, referrer, session_id }).then(({ error }) => {
-          if (error) console.error("page_views insert error:", error);
-        });
+        supabase.from("page_views").insert({ path, referrer, session_id }).then(() => {});
       } catch {}
     };
     (router as any).subscribe?.((ev: any) => {

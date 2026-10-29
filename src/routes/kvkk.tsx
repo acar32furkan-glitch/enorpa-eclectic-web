@@ -6,7 +6,11 @@ export const Route = createFileRoute("/kvkk")({
   head: () => ({
     meta: [
       { title: "KVKK Aydınlatma Metni | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji KVKK aydınlatma metni." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji KVKK aydınlatma metni: kişisel verilerin işlenme amaçları, hukuki sebepleri, saklama süreleri ve ilgili kişi olarak haklarınız.",
+      },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/kvkk" },

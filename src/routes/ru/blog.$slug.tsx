@@ -12,9 +12,9 @@ export const Route = createFileRoute("/ru/blog/$slug")({
     const schema = generateBlogPostSchema({ title, excerpt: description, slug: params.slug, publishedAt: new Date().toISOString().split("T")[0] });
     return {
       meta: [
-        { title: `${title} | Enorpa Blog` },
+        { title: `${title} | Блог Enorpa Energy` },
         { name: "description", content: description },
-        { property: "og:title", content: `${title} | Enorpa Blog` },
+        { property: "og:title", content: `${title} | Блог Enorpa Energy` },
         { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:image", content: SITE.defaultOgImage },
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/ru/blog/$slug")({
   },
   component: RuBlogDetailPage,
   loader: async ({ params }) => {
-    const { data } = await supabase.from("blog_posts").select("*").eq("slug", params.slug).eq("language", "ru").single();
+    const { data } = await (supabase as any).from("blog_posts").select("*").eq("slug", params.slug).eq("language", "ru").single();
     return data;
   },
 });

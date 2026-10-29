@@ -5,7 +5,11 @@ export const Route = createFileRoute("/cerez-politikasi")({
   head: () => ({
     meta: [
       { title: "Çerez Politikası | Enorpa Enerji" },
-      { name: "description", content: "Enorpa Enerji çerez politikası." },
+      {
+        name: "description",
+        content:
+          "Enorpa Enerji çerez politikası: hangi çerezleri neden kullanıyoruz, analiz ve pazarlama çerezleri ile onay tercihlerinizi nasıl yönetebilirsiniz.",
+      },
     ],
     links: [
       { rel: "canonical", href: "https://enorpa.com/cerez-politikasi" },

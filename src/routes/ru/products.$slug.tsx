@@ -10,10 +10,13 @@ export const Route = createFileRoute("/ru/products/$slug")({
     const title = params.slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
     return {
       meta: [
-        { title: `${title} | Enorpa Energy` },
-        { name: "description", content: `${title} - Каталог продукции Enorpa Energy.` },
-        { property: "og:title", content: `${title} | Enorpa Energy` },
-        { property: "og:description", content: `${title} - Промышленный котел Enorpa Energy.` },
+        { title: `${title} | Продукция Enorpa Energy` },
+        {
+          name: "description",
+          content: `${title} — каталог продукции Enorpa Energy. Мощность, виды топлива, КПД и технические характеристики для вашего объекта.`,
+        },
+        { property: "og:title", content: `${title} | Продукция Enorpa Energy` },
+        { property: "og:description", content: `${title} — мощность, топливо и технические характеристики. Enorpa Energy.` },
         { property: "og:type", content: "product" },
         { property: "og:image", content: SITE.defaultOgImage },
         { property: "og:url", content: `https://enorpa.com/ru/products/${params.slug}` },
@@ -71,7 +74,7 @@ function RuProductDetailPage() {
         name: loaderData.name,
         description: loaderData.detail || loaderData.type,
         image: loaderData.image_url,
-        slug: params.slug,
+        slug: loaderData.slug || "",
       })) }} />
       <SiteHeader />
       <div className="mx-auto max-w-4xl px-4 py-16 md:py-24">
