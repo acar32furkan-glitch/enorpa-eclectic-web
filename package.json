@@ -21,6 +21,7 @@
     "db:down": "node scripts/db.mjs down",
     "db:reset": "node scripts/db.mjs reset",
     "db:status": "node scripts/db.mjs status",
+    "keepalive:cloud": "node scripts/keepalive-cloud.mjs",
     "db:env": "node scripts/db.mjs env",
     "db:keepalive": "node scripts/db.mjs keepalive"
   },

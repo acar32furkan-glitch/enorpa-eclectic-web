@@ -149,7 +149,8 @@ Site `http://localhost:3000` adresinde açılır.
 | `npm run images` | Orijinal site görsellerini içe aktar (ürün/proje/hero/kart) |
 | `npm run assets` | SVG yedek görselleri üret |
 | `npm run seo:sitemap` | `public/sitemap.xml` üret |
-| `npm run audit` | 34 rotada SEO + sağlık denetimi |
+| `npm run audit` | 35 rotada SEO + sağlık denetimi |
+| `npm run keepalive:cloud` | Bulut Supabase projesini uyandır (duraklatmayı önler) |
 | `npm run db:up` / `db:down` / `db:reset` / `db:status` | Yerel Supabase yönetimi |
 
 ---
@@ -346,6 +347,64 @@ ihtiyaç duyduğu tabloların tamamı (`products`, `leads`, `site_settings`,
 `product-images` storage bucket'ı `20261028120000_local_schema_completion.sql`
 ile tamamlanır; ürün kataloğu, proje vitrini ve bölüm anahtarları da burada seed
 edilir.
+
+---
+
+## 😴 Supabase Projesi Duraklatılmasın (Keep-Alive)
+
+Supabase **ücretsiz plan**, bir projeyi **7 gün** boyunca hiç API isteği almazsa
+duraklatır ve "projeniz duraklatılacak" e-postası gönderir. Duraklatılan projede
+admin paneli, lead kaydı ve DB'den gelen içerik çalışmaz (site statik yedeğe düşer,
+bkz. bir sonraki bölüm).
+
+Bunu "hiç kapanmayacak" hale getirmek için iki katman kuruldu:
+
+### 1. GitHub Actions (otomatik, ücretsiz)
+
+[`.github/workflows/supabase-keepalive.yml`](.github/workflows/supabase-keepalive.yml:1)
+**2 günde bir** (`17 4 */2 * *`) projeyi uyandırır — 7 günlük pencereye geniş pay
+bırakır, gereksiz istek üretmez. İstekler gerçek uçlara gider:
+
+| Uç | Amaç |
+|---|---|
+| `GET /auth/v1/health` | Auth servisini uyandırır |
+| `GET /rest/v1/products?select=id&limit=1` | Gerçek DB okuması (PostgREST) — `401/403` de "proje ayakta" sayılır |
+
+Duraklatılmış proje ilk istekte `503/540` dönebileceği için **3 deneme × 30 sn**
+bekleme vardır. Başarısız olursa iş kırmızı düşer ve GitHub e-posta atar — yani
+sessizce ölü kalmaz. `workflow_dispatch` ile elle de çalıştırılabilir.
+
+**Tek seferlik kurulum** (GitHub → Settings → Secrets and variables → Actions):
+
+| Ad | Tür | Değer |
+|---|---|---|
+| `SUPABASE_URL` | Variable *(gizli değil)* | `https://<proje-ref>.supabase.co` |
+| `SUPABASE_ANON_KEY` | Secret | Supabase → Project Settings → API → **anon / publishable** key |
+
+> Service-role anahtarını kullanmayın; anon anahtar bu iş için yeterli.
+
+### 2. Yerel/elle çalıştırma
+
+```bash
+npm run keepalive:cloud
+```
+
+[`scripts/keepalive-cloud.mjs`](scripts/keepalive-cloud.mjs:1) `.env.local` / `.env`
+içinden `VITE_SUPABASE_URL` + `VITE_SUPABASE_PUBLISHABLE_KEY` okur, yerel adresleri
+(`127.0.0.1`, `localhost`) atlar, 3 kez dener ve sonucu Türkçe raporlar. Windows
+Görev Zamanlayıcı'ya haftalık olarak da bağlanabilir.
+
+### Alternatifler
+
+| Yöntem | Maliyet | Not |
+|---|---|---|
+| GitHub Actions cron *(kurulu)* | Ücretsiz | Depo public ise sınırsız, private ise ayda ~1 dk |
+| UptimeRobot / BetterStack | Ücretsiz | 5 dk'da bir `https://<ref>.supabase.co/auth/v1/health` izle |
+| Supabase Pro plan | 25 $/ay | Projeler hiç duraklatılmaz + günlük yedek |
+
+> **Proje bir kez duraklatıldıysa** otomatik açılmaz: Supabase panelinden
+> **Restore project** → ardından `npm run keepalive:cloud` ile doğrulayın.
+> Ücretsiz planda duraklatılan proje **90 gün** sonra silinir, yedeklerinizi alın.
 
 ---
 

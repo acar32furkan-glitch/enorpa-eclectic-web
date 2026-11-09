@@ -1,0 +1,110 @@
+name: Supabase Keep-Alive
+
+# Supabase ücretsiz planı, 7 gün boyunca hiç API isteği almazsa projeyi
+# duraklatır ("Your project will be paused" e-postası). Bu iş akışı projeyi
+# 2 günde bir uyandırır; böylece duraklatma hiç tetiklenmez.
+#
+# Gerekli ayarlar (GitHub → Settings → Secrets and variables → Actions):
+#   Secret : SUPABASE_ANON_KEY      (public anon / publishable key)
+#   Variable veya Secret : SUPABASE_URL  (https://<proje-ref>.supabase.co)
+#
+# Anahtar gizli tutulmalı; URL gizli değildir, "Variables" altına da yazılabilir.
+
+on:
+  schedule:
+    # Her 2 günde bir 04:17 UTC (07:17 TRT) — Supabase'in 7 günlük penceresine
+    # bolca pay bırakır, gereksiz istek üretmez.
+    - cron: "17 4 */2 * *"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Neden elle çalıştırıyorsunuz? (opsiyonel)"
+        required: false
+        default: "manual"
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    name: projeyi uyandır
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Ayarları doğrula
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
+            echo "::error::SUPABASE_URL ve SUPABASE_ANON_KEY tanımlı değil. Settings → Secrets and variables → Actions altına ekleyin."
+            exit 1
+          fi
+          echo "URL: ${SUPABASE_URL%%/}"
+          echo "Anahtar uzunluğu: ${#SUPABASE_KEY} karakter"
+
+      - name: Projeyi uyandır (auth + rest)
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY || secrets.SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          BASE="${SUPABASE_URL%/}"
+          KEY="$SUPABASE_KEY"
+          ok=0
+
+          # Duraklatılmış proje ilk istekte 503/540 dönebilir; 3 deneme yapıyoruz.
+          for attempt in 1 2 3; do
+            echo "— Deneme $attempt —"
+
+            auth_code=$(curl -sS -o /tmp/auth.json -w "%{http_code}" \
+              --max-time 30 "$BASE/auth/v1/health" \
+              -H "apikey: $KEY" || echo "000")
+            echo "auth/v1/health → HTTP $auth_code"
+            head -c 200 /tmp/auth.json 2>/dev/null; echo
+
+            rest_code=$(curl -sS -o /tmp/rest.json -w "%{http_code}" \
+              --max-time 30 "$BASE/rest/v1/products?select=id&limit=1" \
+              -H "apikey: $KEY" \
+              -H "Authorization: Bearer $KEY" || echo "000")
+            echo "rest/v1/products → HTTP $rest_code"
+            head -c 200 /tmp/rest.json 2>/dev/null; echo
+
+            case "$auth_code" in
+              200|204) auth_ok=1 ;;
+              *) auth_ok=0 ;;
+            esac
+            case "$rest_code" in
+              200|206|401|403) rest_ok=1 ;;   # 401/403 = proje ayakta, sadece RLS/politika
+              *) rest_ok=0 ;;
+            esac
+
+            if [ "$auth_ok" = "1" ] && [ "$rest_ok" = "1" ]; then
+              ok=1
+              break
+            fi
+
+            echo "Bekliyoruz, proje uyanıyor olabilir… (30 sn)"
+            sleep 30
+          done
+
+          if [ "$ok" != "1" ]; then
+            echo "::error::Supabase projesine 3 denemede ulaşılamadı. Proje duraklatılmış olabilir — Supabase panelinden 'Restore project' gerekebilir."
+            exit 1
+          fi
+
+          echo "✅ Supabase projesi aktif; duraklatma sayacı sıfırlandı ($(date -u +%FT%TZ))"
+
+      - name: Özet
+        if: always()
+        run: |
+          {
+            echo "### Supabase keep-alive"
+            echo ""
+            echo "- Zaman: $(date -u +%FT%TZ)"
+            echo "- Tetikleyici: \`${{ github.event_name }}\`"
+            echo "- Sonuç: ${{ job.status }}"
+            echo ""
+            echo "Ücretsiz plan projeyi 7 gün isteksizlikte duraklatır; bu iş akışı 2 günde bir çalışır."
+          } >> "$GITHUB_STEP_SUMMARY"
