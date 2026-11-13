@@ -3,7 +3,8 @@ import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, Globe, Calendar } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
-import { projectImage } from "@/lib/assets";
+import { HERO_SLIDES, projectImage, promoImage } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 
 const PROJELER_CONTENT = `<h1>Öne Çıkan Projelerimiz</h1>
 <p>Enorpa Enerji, 26 ülkede 138+ projeyi hayata geçirmiştir. İşte öne çıkan projelerimiz:</p>
@@ -116,16 +117,15 @@ function ProjelerPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <PageBanner
+        eyebrow="Projeler"
+        title="Projelerimiz"
+        description="26 ülkede 138'den fazla tamamlanan proje: sera ısıtma, endüstriyel buhar ve mahal ısıtma sistemleri. Sahada kurulan, devreye alınan gerçek referanslar."
+        image={promoImage("projeler") ?? HERO_SLIDES[0]}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
         <Breadcrumbs items={[{ name: "Projeler" }]} />
-        <div className="mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Projeler
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Projelerimiz
-          </h1>
-        </div>
 
         <div
           className="prose prose-lg max-w-none text-muted-foreground mb-16 [&_h1]:text-navy [&_h1]:font-display [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:uppercase [&_h1]:mb-6 [&_h2]:text-navy [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:uppercase [&_h2]:mt-8 [&_h2]:mb-4 [&_p]:mb-4 [&_p]:leading-relaxed [&_strong]:text-navy [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_li]:mb-2"

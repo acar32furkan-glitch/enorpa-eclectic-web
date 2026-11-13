@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { submitLead } from "@/lib/backend";
+import { HERO_SLIDES } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { MapPin, Phone, Mail, Send, Clock, MessageCircle, Building2, Loader2 } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
@@ -90,18 +92,14 @@ function IletisimPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
+      <PageBanner
+        eyebrow="İletişim"
+        title="Bize Ulaşın"
+        description="Sorularınız, teklif talepleriniz ve teknik destek için formu doldurun ya da doğrudan arayın. Isparta ve Karaman'daki fabrikalarımızda yanınızdayız."
+        image={HERO_SLIDES[1] ?? HERO_SLIDES[0]}
+      />
+
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="max-w-2xl mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            İletişim
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            İletişim
-          </h1>
-          <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Sorularınız ve teklif talepleriniz için bizimle iletişime geçin.
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1">

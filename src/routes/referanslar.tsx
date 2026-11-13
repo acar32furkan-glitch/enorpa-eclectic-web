@@ -3,6 +3,8 @@ import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Star, Quote, MapPin, Globe, Factory } from "lucide-react";
 import { generateHreflangTags, SITE } from "@/lib/seo";
+import { HERO_SLIDES, promoImage } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 
 const REFERENCES = [
   {
@@ -129,20 +131,15 @@ function ReferanslarPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
+      <PageBanner
+        eyebrow="Referanslar"
+        title="Referanslarımız"
+        description="26 ülkede 138+ proje ve 347+ müşteri. Gerçekleştirdiğimiz referans projeler ve müşterilerimizin deneyimleri."
+        image={promoImage("projeler") ?? HERO_SLIDES[0]}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
         <Breadcrumbs items={[{ name: "Referanslar" }]} />
-        <div className="mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Referanslar
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Referanslarımız
-          </h1>
-          <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-2xl">
-            26 ülkede 138+ proje ve 347+ müşteriye hizmet vermekteyiz.
-            İşte gerçekleştirdiğimiz referans projeler ve müşterilerimizin deneyimleri.
-          </p>
-        </div>
 
         {/* Referans Projeleri */}
         <div className="mb-16">

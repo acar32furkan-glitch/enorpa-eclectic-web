@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Briefcase, CheckCircle2, Factory, Globe2, GraduationCap, Loader2, Send } from "lucide-react";
 import { submitLead } from "@/lib/backend";
+import { HERO_SLIDES } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { SITE } from "@/lib/seo";
 
@@ -121,19 +123,14 @@ function KariyerPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
+      <PageBanner
+        eyebrow="Kariyer"
+        title="Ekibimize Katılın"
+        description="2000'den bu yana endüstriyel ısıtma sistemleri üretiyoruz. Üretim, mühendislik ve satış ekiplerimize yeni çalışma arkadaşları arıyoruz."
+        image={HERO_SLIDES[2] ?? HERO_SLIDES[0]}
+      />
+
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="max-w-2xl mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Kariyer
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Ekibimize Katılın
-          </h1>
-          <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            2000'den bu yana endüstriyel ısıtma sistemleri üretiyoruz. Üretim, mühendislik ve satış
-            ekiplerimize yeni çalışma arkadaşları arıyoruz.
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {REASONS.map((item) => (

@@ -121,11 +121,23 @@ const HERO_SLIDES = [
 // OG kapağı için aday (slayt yoksa)
 const HERO_FALLBACK_PATTERNS = [/^nature-ANA-SAYFA-min\.png$/i, /^Enorpa-Enerji-1-min\.jpg$/i, /slider/i];
 
-// Ana sayfa 3'lü tanıtım kartları (orijinal sitedeki "Entegre Sistemler / Ürünler / Projeler")
+// Ana sayfa 3'lü tanıtım kartları.
+// Orijinal sitedeki koyu lacivert çizimler (Enorpa-Entegre-1-1.png vb.) kart
+// arka planında "bulanık leke" gibi duruyordu; onun yerine elimizdeki gerçek
+// fotoğraf/render'lar kullanılıyor:
+//   entegre  → kazan dairesi çekimi (turuncu Enorpa kazanları + hatlar)
+//   urunler  → yüksek çözünürlüklü ürün render'ı (temiz stüdyo görseli)
+//   projeler → sahada kurulu kazanlar (açık hava proje fotoğrafı)
 const PROMO_CARD_PATTERNS = {
-  entegre: [/^Enorpa-Entegre-1-1\.png$/i, /entegre/i],
-  urunler: [/^Enorpa-Urunler-1\.png$/i],
-  projeler: [/^Enorpa-Katalog-1\.png$/i],
+  entegre: [/^enorpa-foto-4-scaled\.jpg$/i, /^enorpa-foto-4\.jpg$/i, /^Enorpa-Entegre-1-1\.png$/i],
+  urunler: [
+    // Sahada çekilmiş, marka görünürlüğü yüksek gerçek ürün fotoğrafı (beyaz
+    // stüdyo render'ı koyu scrim üstünde "kesik" duruyordu).
+    /^Kuvars-2000\.jpg$/i,
+    /^Akuamarin-Urun-LIste-1\.png$/i,
+    /^Kalsedon1500-Kazan-Render-Arka\.png$/i,
+  ],
+  projeler: [/^Ozbekistan\.jpg$/i, /^izmir-slider-5-duzenli\.jpg$/i, /^Enorpa-Katalog-1\.png$/i],
 };
 
 const CERT_FILES = ["tse", "ce", "asme", "eac"];

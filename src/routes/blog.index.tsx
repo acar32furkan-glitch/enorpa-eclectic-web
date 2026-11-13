@@ -6,6 +6,8 @@ import { readOrFallback } from "@/lib/backend";
 import { localPostsBySlugs } from "@/data/blog";
 
 import { cleanContent } from "@/lib/cleanContent";
+import { HERO_SLIDES } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 
 function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
@@ -81,15 +83,14 @@ function BlogListPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Blog
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Enorpa Blog
-          </h1>
-        </div>
+      <PageBanner
+        eyebrow="Blog"
+        title="Enorpa Blog"
+        description="Endüstriyel ısıtma, kazan verimliliği ve sera ısıtma üzerine teknik yazılar; sahadan uygulama notları."
+        image={HERO_SLIDES[2] ?? HERO_SLIDES[0]}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {posts.map((post) => (

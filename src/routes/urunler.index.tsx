@@ -8,8 +8,9 @@ import {
   type ProductCategory,
   toSlug,
 } from "@/data/products";
-import { productImage } from "@/lib/assets";
+import { HERO_SLIDES, productImage, promoImage } from "@/lib/assets";
 import { PRODUCT_VIDEO } from "@/data/videos";
+import { PageBanner } from "@/components/PageBanner";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
@@ -102,19 +103,14 @@ function UrunlerPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="max-w-2xl mb-12">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Ürün Kataloğu
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase">
-            Ürünlerimiz
-          </h1>
-          <p className="mt-4 text-muted-foreground text-base md:text-lg">
-            Her tesis için özel mühendislik. Tüm modellerimiz TSE, CE ve ISO 9001 standartlarında
-            üretilir.
-          </p>
-        </div>
+      <PageBanner
+        eyebrow="Ürün Kataloğu"
+        title="Ürünlerimiz"
+        description="Her tesis için özel mühendislik. Sıcak su, buhar, sıcak hava ve kızgın su kazanlarında 24 seri; tüm modeller TSE, CE ve ISO 9001 standartlarında üretilir."
+        image={promoImage("urunler") ?? HERO_SLIDES[0]}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
 
         <div className="flex flex-wrap gap-2 mb-8 border-b border-border pb-4">
           {categories.map((cat) => (

@@ -344,7 +344,7 @@ function PromoTriptych({ lang }: { lang: Lang }) {
             <Link
               key={card.key}
               to={card.href}
-              className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden bg-navy-dark p-6 md:min-h-[260px]"
+              className="group relative flex min-h-[240px] flex-col justify-end overflow-hidden bg-navy-dark p-6 md:min-h-[300px]"
             >
               {image && (
                 <img
@@ -355,10 +355,11 @@ function PromoTriptych({ lang }: { lang: Lang }) {
                   height="700"
                   loading="eager"
                   decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/95 via-navy-dark/55 to-navy-dark/5" />
+              {/* Alt kısımda okunabilirlik için scrim; üstte fotoğraf net görünür */}
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,30,61,0.10)_0%,rgba(10,30,61,0.35)_38%,rgba(10,30,61,0.88)_78%,rgba(10,30,61,0.97)_100%)]" />
               <div className="relative">
                 <h3 className="font-display text-white text-xl md:text-2xl font-semibold uppercase tracking-wide">
                   {card.title}
@@ -431,7 +432,7 @@ function HeroSlider({ L }: { L: Dict }) {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-black/45 to-transparent" />
 
       {/* İçerik */}
-      <div className="relative mx-auto flex min-h-[540px] max-w-7xl flex-col justify-center px-4 py-20 md:min-h-[640px] md:py-28 lg:min-h-[720px]">
+      <div className="relative mx-auto flex min-h-[440px] max-w-7xl flex-col justify-center px-4 py-16 md:min-h-[560px] md:py-24 lg:min-h-[680px]">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 border-l-4 border-orange pl-3 mb-6">
             <span className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold">

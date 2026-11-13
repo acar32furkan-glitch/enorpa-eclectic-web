@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Award, Factory, BookOpen, Search, PenTool, Wrench, Users, Building2 } from "lucide-react";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { generateHreflangTags, SITE } from "@/lib/seo";
-import { certificateBadge } from "@/lib/assets";
+import { certificateBadge, HERO_SLIDES } from "@/lib/assets";
+import { PageBanner } from "@/components/PageBanner";
 
 const HAKKIMIZDA_CONTENT = `<h1>İçimizdeki Ateş Toprağı Yeşertiyor</h1>
 <h4>Buhar, sıcak su, sıcak hava, kızgın yağ sistemlerinin yanı sıra; akaryakıt tankları, yatay ve dikey basınçlı kaplar konusunda üretim, projelendirme ve taahhüt işleri yapmak amacıyla yola çıkan Enorpa bir çok farklı sektörün ısınma, depolama ve buhar ihtiyacını karşılamak üzere faaliyetlerini sürdürmektedir.</h4>
@@ -90,16 +91,14 @@ function HakkimizdaPage() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
-      <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        {/* Hero */}
-        <div className="max-w-3xl mb-16">
-          <div className="text-orange font-display uppercase tracking-[0.3em] text-xs font-semibold mb-3 border-b-2 border-orange inline-block pb-1">
-            Enorpa Enerji
-          </div>
-          <h1 className="font-display text-navy text-4xl md:text-5xl font-bold uppercase mt-2">
-            Hakkımızda
-          </h1>
-        </div>
+      <PageBanner
+        eyebrow="Enorpa Enerji"
+        title="Hakkımızda"
+        description="2000'den bu yana buhar, sıcak su, sıcak hava ve kızgın yağ sistemleri üretiyoruz. Isparta ve Karaman'daki üç fabrikamızda kazan, brülör ve otomasyonu uçtan uca kendimiz üretiyoruz."
+        image={HERO_SLIDES[1] ?? HERO_SLIDES[0]}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
 
         {/* WordPress İçeriği */}
         <div
