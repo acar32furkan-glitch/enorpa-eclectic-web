@@ -1892,12 +1892,19 @@ function GateModal({ doc, onClose }: { doc: Doc; onClose: () => void }) {
             </p>
             <form onSubmit={submit} className="flex flex-col gap-4">
               <div>
-                <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                <label
+                  htmlFor="gate-email"
+                  className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                >
                   E-posta Adresiniz
                 </label>
                 <input
+                  id="gate-email"
+                  name="email"
                   type="email"
                   required
+                  autoComplete="email"
+                  inputMode="email"
                   maxLength={255}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

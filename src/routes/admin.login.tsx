@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Flame, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { isBackendOffline, isUnreachable } from "@/lib/backend";
+import { isBackendOffline, isUnreachable, retryBackendNow } from "@/lib/backend";
 
 export const Route = createFileRoute("/admin/login")({
   ssr: false,
@@ -73,12 +73,19 @@ function AdminLogin() {
 
         <form onSubmit={submit} className="p-5 space-y-5 sm:p-8">
           <div>
-            <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+            <label
+              htmlFor="admin-email"
+              className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+            >
               E-posta
             </label>
             <input
+              id="admin-email"
+              name="email"
               type="email"
               required
+              autoComplete="username"
+              inputMode="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-border px-4 py-3 focus:border-orange focus:outline-none"
@@ -86,13 +93,19 @@ function AdminLogin() {
             />
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+            <label
+              htmlFor="admin-password"
+              className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+            >
               Şifre
             </label>
             <input
+              id="admin-password"
+              name="password"
               type="password"
               required
               minLength={6}
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border border-border px-4 py-3 focus:border-orange focus:outline-none"
@@ -100,10 +113,24 @@ function AdminLogin() {
             />
           </div>
 
-          {offline && !err && (
-            <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm px-3 py-2">
-              Sunucuya şu anda ulaşılamıyor. Yönetim paneli, veri tabanı bağlantısı
-              kurulduğunda kullanılabilir olacak.
+          {offline && (
+            <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm px-3 py-2.5">
+              <p>
+                Sunucuya şu anda ulaşılamıyor. Yönetim paneli, veri tabanı bağlantısı
+                kurulduğunda kullanılabilir olacak.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  retryBackendNow();
+                  setOffline(false);
+                  setErr(null);
+                  window.location.reload();
+                }}
+                className="mt-2 inline-flex items-center gap-1.5 border border-amber-300 bg-white px-2.5 py-1 text-xs font-semibold uppercase tracking-wider hover:border-orange hover:text-orange"
+              >
+                Tekrar dene
+              </button>
             </div>
           )}
 

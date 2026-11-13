@@ -121,12 +121,18 @@ function IletisimPage() {
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                    >
                       Ad Soyad *
                     </label>
                     <input
+                      id="contact-name"
+                      name="name"
                       type="text"
                       required
+                      autoComplete="name"
                       maxLength={80}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -135,11 +141,18 @@ function IletisimPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                    <label
+                      htmlFor="contact-phone"
+                      className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                    >
                       Telefon
                     </label>
                     <input
+                      id="contact-phone"
+                      name="phone"
                       type="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
                       maxLength={20}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
@@ -148,11 +161,18 @@ function IletisimPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                    >
                       E-posta
                     </label>
                     <input
+                      id="contact-email"
+                      name="email"
                       type="email"
+                      autoComplete="email"
+                      inputMode="email"
                       maxLength={255}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -161,10 +181,15 @@ function IletisimPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                    <label
+                      htmlFor="contact-message"
+                      className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                    >
                       Mesaj
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       rows={4}
                       maxLength={500}
                       value={message}
@@ -174,10 +199,15 @@ function IletisimPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2">
+                    <label
+                      htmlFor="contact-interest"
+                      className="block text-xs uppercase tracking-wider font-display font-semibold text-navy mb-2"
+                    >
                       Ürün İlgisi
                     </label>
                     <select
+                      id="contact-interest"
+                      name="interest"
                       value={interest}
                       onChange={(e) => setInterest(e.target.value)}
                       className="w-full border border-border px-3 py-2 focus:border-orange focus:outline-none bg-white"

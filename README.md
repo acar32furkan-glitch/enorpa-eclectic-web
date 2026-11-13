@@ -333,8 +333,19 @@ Sonrasında `npm run dev` ile siteyi yeniden başlatın.
 | `npm run db:env` | Sadece `.env.local` dosyasını yenile |
 | `npm run db:keepalive` | Uzak (bulut) projeye ping atarak duraklamasını engelle |
 
-Yerel adresler: API `http://127.0.0.1:54321` · Studio `http://127.0.0.1:54323` ·
-E-posta kutusu (Mailpit) `http://127.0.0.1:54324`.
+Yerel adresler: API `http://127.0.0.1:55321` · Studio `http://127.0.0.1:55323` ·
+E-posta kutusu (Mailpit) `http://127.0.0.1:55324` · DB `127.0.0.1:55322`.
+
+> **Neden 553xx?** Bu makinede başka Supabase projeleri varsayılan **54321**
+> portunu (Kong) kullanabildiği için site yanlış projeye bağlanıp
+> `401 / 404 relation does not exist` hataları veriyordu. Portlar
+> [`supabase/config.toml`](supabase/config.toml:5) içinde **553xx** aralığına
+> taşındı; [`scripts/db.mjs`](scripts/db.mjs:82) portları bu dosyadan okur,
+> `.env.local`'i buna göre yazar ve başlatmadan önce **port çakışması kontrolü**
+> yapıp net bir hata mesajı verir.
+>
+> Portları değiştirmek isterseniz yalnızca `config.toml`'u düzenleyip
+> `npm run db:up` (veya `npm run db:env`) çalıştırın.
 
 > Yerel anahtarlar ve JWT secret paylaşılan varsayılanlardır — production'da
 > kullanılmaz. `.env.local` git'e girmez.

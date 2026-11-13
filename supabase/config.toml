@@ -2,16 +2,20 @@
 # Bulut projesi kapalı olduğundan geliştirme ve demo tamamen yerelde çalışabilir.
 project_id = "enocnbkwemlgvdgafmpa"
 
+# NOT: Portlar bilinçli olarak 553xx aralığında. Bu makinede başka Supabase
+# projeleri varsayılan 5432x portlarını (54321 Kong) kullanabildiği için
+# çakışmayı önlemek adına ayrı aralık seçildi. `scripts/db.mjs` portları bu
+# dosyadan okur ve .env.local'i buna göre yazar.
 [api]
 enabled = true
-port = 54321
+port = 55321
 schemas = ["public", "storage", "graphql_public"]
 extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
 [db]
-port = 54322
-shadow_port = 54320
+port = 55322
+shadow_port = 55320
 major_version = 15
 
 [db.pooler]
@@ -26,11 +30,11 @@ enabled = false
 
 [studio]
 enabled = true
-port = 54323
+port = 55323
 
 [local_smtp]
 enabled = true
-port = 54324
+port = 55324
 
 [storage]
 enabled = true

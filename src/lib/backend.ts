@@ -20,19 +20,65 @@ export type LeadPayload = {
 const PENDING_KEY = "enorpa_pending_leads";
 const OFFLINE_KEY = "enorpa_backend_offline";
 
-let offline = typeof window !== "undefined" && localStorage.getItem(OFFLINE_KEY) === "1";
+/**
+ * Çevrimdışı bayrağının ömrü. Geçici bir kesinti (Docker kapalı, proje
+ * duraklatılmış, internet gitti) siteyi **kalıcı olarak** yedek içeriğe
+ * kilitlemesin: 5 dakika sonra ilk istekte yeniden denenir.
+ */
+const OFFLINE_TTL_MS = 5 * 60 * 1000;
+
+type OfflineState = { at: number };
+
+function readOfflineState(): OfflineState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(OFFLINE_KEY);
+    if (!raw) return null;
+    // Eski format "1" idi (zaman yok) → süresi dolmuş kabul et.
+    const parsed: OfflineState = raw === "1" ? { at: 0 } : (JSON.parse(raw) as OfflineState);
+    if (!parsed?.at || Date.now() - parsed.at > OFFLINE_TTL_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+let offline = readOfflineState() !== null;
 
 export function isBackendOffline(): boolean {
   return offline;
 }
 
+/** Bayrak ne zamandan beri açık? (arayüzde "son deneme" bilgisi için) */
+export function offlineSince(): Date | null {
+  const state = readOfflineState();
+  return state ? new Date(state.at) : null;
+}
+
 function markOffline() {
   offline = true;
   try {
-    if (typeof window !== "undefined") localStorage.setItem(OFFLINE_KEY, "1");
+    if (typeof window !== "undefined") {
+      localStorage.setItem(OFFLINE_KEY, JSON.stringify({ at: Date.now() } satisfies OfflineState));
+    }
   } catch {
     /* yoksay */
   }
+}
+
+/** Başarılı bir istekten sonra bayrağı temizle — kendini iyileştiren davranış. */
+function markOnline() {
+  offline = false;
+  try {
+    if (typeof window !== "undefined") localStorage.removeItem(OFFLINE_KEY);
+  } catch {
+    /* yoksay */
+  }
+}
+
+/** Kullanıcı "tekrar dene" dediğinde bayrağı hemen sıfırlar. */
+export function retryBackendNow(): void {
+  markOnline();
 }
 
 /** Ağ/DNS kaynaklı (kalıcı) erişim hatası mı? */
@@ -89,7 +135,10 @@ export async function submitLead(
 
   try {
     const { error } = await supabase.from("leads").insert(body);
-    if (!error) return { ok: true };
+    if (!error) {
+      markOnline();
+      return { ok: true };
+    }
     if (isUnreachable(error)) {
       markOffline();
       queueLead(payload);
@@ -120,6 +169,7 @@ export async function readOrFallback<T>(
       if (isUnreachable(error)) markOffline();
       return fallback;
     }
+    markOnline();
     if (data === null || data === undefined) return fallback;
     if (Array.isArray(data) && data.length === 0) return fallback;
     return data;

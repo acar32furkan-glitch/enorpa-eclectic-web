@@ -17,6 +17,7 @@
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";
+import net from "node:net";
 import path from "node:path";
 
 const ROOT = process.cwd();
@@ -86,6 +87,56 @@ function checkSupabaseDir() {
   }
 }
 
+/**
+ * supabase/config.toml içindeki portları okur.
+ * Portlar bu makinedeki diğer Supabase projeleriyle çakışmasın diye 553xx
+ * aralığında tutulur; burada tek kaynaktan okunması .env.local'in doğru
+ * adresi yazmasını sağlar.
+ */
+function readConfigPorts() {
+  const text = readFileSync(path.join(ROOT, "supabase", "config.toml"), "utf8");
+  const section = (name) => {
+    const re = new RegExp(`\\[${name}\\]([\\s\\S]*?)(?=\\n\\[|$)`);
+    return Number((text.match(re)?.[1] ?? "").match(/port\s*=\s*(\d+)/)?.[1] ?? 0);
+  };
+  const api = section("api") || 55321;
+  return {
+    api,
+    db: section("db") || api + 1,
+    studio: section("studio") || api + 2,
+    smtp: section("local_smtp") || api + 3,
+  };
+}
+
+/** Port dinleniyor mu? (başka bir konteyner/süreç tarafından) */
+function isPortBusy(port) {
+  return new Promise((resolve) => {
+    const socket = net.connect({ host: "127.0.0.1", port });
+    const done = (busy) => {
+      socket.removeAllListeners();
+      socket.destroy();
+      resolve(busy);
+    };
+    socket.setTimeout(700);
+    socket.once("connect", () => done(true));
+    socket.once("timeout", () => done(false));
+    socket.once("error", () => done(false));
+  });
+}
+
+/** Supabase Auth servisi ayakta mı? */
+async function healthOk(apiUrl) {
+  if (!apiUrl) return false;
+  try {
+    const res = await fetch(`${apiUrl.replace(/\/$/, "")}/auth/v1/health`, {
+      signal: AbortSignal.timeout(4000),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 /* ------------------------------------------------------------ .env.local */
 
 function parseStatusEnv() {
@@ -101,7 +152,8 @@ function parseStatusEnv() {
 
 function writeEnvLocal() {
   const status = parseStatusEnv();
-  const apiUrl = status.API_URL ?? status.SUPABASE_URL ?? "http://127.0.0.1:54321";
+  const { api } = readConfigPorts();
+  const apiUrl = status.API_URL ?? status.SUPABASE_URL ?? `http://127.0.0.1:${api}`;
   const anon =
     status.ANON_KEY ??
     status.PUBLISHABLE_KEY ??
@@ -180,11 +232,51 @@ async function ensureAdmin({ apiUrl, anon, service }) {
 async function up() {
   checkSupabaseDir();
   checkDocker();
+  const ports = readConfigPorts();
+  log(`Portlar (supabase/config.toml): api ${ports.api} · db ${ports.db} · studio ${ports.studio}`);
+
+  // 1) Zaten ayakta mı? (tekrar `supabase start` çağırmadan doğrula)
+  const existing = parseStatusEnv();
+  const existingUrl = existing.API_URL ?? existing.SUPABASE_URL;
+  if (existingUrl && (await healthOk(existingUrl))) {
+    ok(`Supabase zaten çalışıyor → ${existingUrl}`);
+    const keys = writeEnvLocal();
+    await ensureAdmin(keys);
+    return;
+  }
+
+  // 2) Port çakışması kontrolü — makinede başka bir Supabase projesi olabilir
+  const busy = [];
+  for (const [name, port] of Object.entries(ports)) {
+    if (await isPortBusy(port)) busy.push(`${name}:${port}`);
+  }
+  if (busy.length > 0) {
+    fail(
+      `Şu portlar dolu: ${busy.join(", ")}\n` +
+        "  Bu makinede başka bir Supabase projesi/konteyner çalışıyor olabilir.\n" +
+        "  Çözüm: supabase/config.toml içindeki portları boş bir aralığa taşıyın\n" +
+        "  (ör. 55321/55322/55323/55324) veya diğer projeyi durdurun:\n" +
+        "    docker ps --format \"{{.Names}}\" | findstr supabase\n" +
+        "    npx supabase stop --project-id <diger-proje>",
+    );
+    process.exit(1);
+  }
+
+  // 3) Başlat
   log("Supabase servisleri başlatılıyor (ilk seferde imaj indirmesi uzun sürebilir)…");
   supabase(["start", "-x", SERVICE_EXCLUDES]);
+
+  // 4) Anahtarları yaz + servis gerçekten ayakta mı doğrula
   const keys = writeEnvLocal();
+  if (!(await healthOk(keys.apiUrl))) {
+    fail(
+      `Servisler başladı ama ${keys.apiUrl}/auth/v1/health yanıt vermiyor.\n` +
+        "  `node scripts/db.mjs status` ve `docker ps` çıktısını kontrol edin.",
+    );
+    process.exit(1);
+  }
   await ensureAdmin(keys);
-  ok("Yerel Supabase hazır — http://127.0.0.1:54323 (Studio)");
+  ok(`Yerel Supabase hazır → API ${keys.apiUrl} · Studio http://127.0.0.1:${ports.studio}`);
   log("Siteyi yeniden başlatın: npm run dev");
 }
 
