@@ -1,8 +1,33 @@
-# Enorpa Enerji — Kurumsal Web Sitesi
+# Enorpa Enerji — Yeniden Tasarım Demosu (resmî site değildir)
 
-Endüstriyel ısıtma sistemleri üreticisi **Enorpa Enerji** için geliştirilmiş, çok dilli (TR/EN/RU), SEO odaklı kurumsal web sitesi ve içerik yönetim paneli.
+> ⚠️ **Bu depo ve canlı demo, Enorpa Enerji'nin resmî sitesi DEĞİLDİR.**
+> Enorpa Enerji'nin mevcut web sitesinin, **talep edilmeden, kendi girişimimle hazırladığım** bir yeniden tasarım demosudur.
+> Müşteri, freelance ya da işveren işi değildir; bu çalışma için **sözleşme veya ücret yoktur**. Şirketi temsil etmez.
+> Şirket adı, markası, görselleri, metinleri ve iletişim bilgileri ilgili şirkete aittir; burada yalnızca demo amacıyla kullanılmıştır.
+> Demo arama motorlarına kapalıdır (`noindex`) ve her sayfada bu durumu belirten bir bant gösterir — bkz. [Demo notu](#-demo-notu).
 
-> Eski WordPress altyapısından modern SSR mimarisine taşınmıştır. Mevcut SEO otoritesini korumak için 301 yönlendirme altyapısı, dinamik meta etiketleri ve yapısal veri (JSON-LD) desteği içerir.
+Endüstriyel ısıtma sistemleri üreticisi Enorpa Enerji'nin sitesi örnek alınarak hazırlanmış; çok dilli (TR/EN/RU), SEO odaklı bir kurumsal web sitesi ve içerik yönetim paneli **demosudur**.
+
+> Eski bir WordPress sitesinin modern SSR mimarisine nasıl taşınabileceğini gösterir: 301 yönlendirme altyapısı, dinamik meta etiketleri ve yapısal veri (JSON-LD) desteği içerir.
+
+---
+
+## 📌 Demo Notu
+
+Bu dağıtımın resmî bir site gibi görünmemesi / indekslenmemesi için:
+
+| Önlem | Nerede |
+|-------|--------|
+| Her sayfada görünür "resmî site değildir" bandı (TR/EN/RU) | [`src/components/DemoNotice.tsx`](src/components/DemoNotice.tsx) — `__root.tsx` içinde |
+| `<meta name="robots" content="noindex, nofollow">` | [`src/routes/__root.tsx`](src/routes/__root.tsx) |
+| `X-Robots-Tag: noindex, nofollow` başlığı | [`vercel.json`](vercel.json) |
+| `Disallow: /` | [`public/robots.txt`](public/robots.txt) |
+
+> **Bilinen sınırlama:** `canonical`, `og:url`, `hreflang` ve JSON-LD `Organization` alanları hâlâ orijinal
+> alan adını (`enorpa.com`) gösteriyor. `noindex` olduğu için arama sonuçlarına girmez; yine de bu adreslerin
+> kendi alan adıma çevrilmesi veya kaldırılması ayrı bir karar olarak açık duruyor.
+
+Bu demo ileride gerçek bir siteye dönüştürülürse yukarıdaki dört önlemin hepsi kaldırılmalıdır.
 
 ---
 
@@ -215,7 +240,7 @@ birlikte yükseltilmeli.
 | OpenGraph / Twitter | Dinamik title, description, 1200×630 `og-cover.png` + `og:image:width/height/alt` |
 | JSON-LD | Organization (kök), ProductCollection + VideoObject (`/urunler`), Product, Article, BreadcrumbList, WebSite |
 | Sitemap | [`scripts/gen-sitemap.mjs`](scripts/gen-sitemap.mjs:1) ile **üretilir** (127 URL: 24 ürün × 3 dil, 6 proje, 4 blog, statik sayfalar + hreflang alternatifleri). `prebuild` kancası sayesinde her build'de tazelenir |
-| robots.txt | `/admin`, `/api/`, `/login` hariç; `Sitemap:` satırı tanımlı |
+| robots.txt | Demo olduğu için tüm site `Disallow: /`; her sayfada `noindex, nofollow` meta + `X-Robots-Tag` başlığı (bkz. [Demo notu](#-demo-notu)). `Sitemap:` satırı bilerek yok |
 | 301 Redirects | Eski WordPress URL → yeni sayfa eşleştirmeleri (`vercel.json`) |
 | Core Web Vitals | Hero slider'da yalnızca aktif slayt metni render edilir, görseller WebP, `fetchPriority` ilk slaytta yüksek, YouTube gömme tıklamaya kadar yüklenmez |
 
@@ -442,7 +467,8 @@ kaynağıdır.
 
 ## 🚢 Deployment
 
-Proje Vercel'e deploy edilmek üzere yapılandırılmıştır.
+Proje Vercel'e deploy edilmek üzere yapılandırılmıştır. Mevcut dağıtım bir **demodur**:
+`vercel.json` her yanıta `X-Robots-Tag: noindex, nofollow` ekler.
 
 ```bash
 vercel --prod

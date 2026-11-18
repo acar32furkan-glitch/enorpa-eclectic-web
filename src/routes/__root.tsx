@@ -12,6 +12,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { isBackendOffline } from "@/lib/backend";
 import { ASSETS } from "@/lib/assets";
+import { DemoNotice } from "@/components/DemoNotice";
 
 import appCss from "../styles.css?url";
 
@@ -115,6 +116,9 @@ meta: [
           content: "default-src 'self'; img-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; object-src 'none';",
         },
         { name: "theme-color", content: "#0f2d5c" },
+        // Bu dağıtım Enorpa Enerji'nin resmî sitesi değil, talep edilmeden yapılmış bir demodur:
+        // arama motorlarına indekslenmesin (vercel.json'daki X-Robots-Tag ve robots.txt ile birlikte).
+        { name: "robots", content: "noindex, nofollow" },
      ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -210,6 +214,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      {/* "Resmî site değildir" bandı — her sayfada, en üstte */}
+      <DemoNotice />
       <main><Outlet /></main>
 
       {/* Cookie Consent Banner */}
