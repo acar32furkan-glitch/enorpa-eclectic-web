@@ -1,14 +1,12 @@
+# Bu dağıtım Enorpa Enerji'nin resmî sitesi DEĞİLDİR: talep edilmeden yapılmış bir
+# yeniden tasarım demosudur. Hiçbir arama motoru taramasın / indekslemesin.
+# (Ayrıca her sayfada <meta name="robots" content="noindex, nofollow"> ve
+#  X-Robots-Tag: noindex, nofollow başlığı vardır.)
 User-agent: *
-Allow: /
+Disallow: /
 
-# Yönetim paneli indekslenmesin
+# Yönetim paneli (yukarıdaki kural zaten kapsar; açıklık için bırakıldı)
 Disallow: /admin
 Disallow: /admin/
 Disallow: /api/
 Disallow: /login
-
-# Tarama bütçesini görsellere harcamayalım (görseller sayfa içinden erişilebilir)
-User-agent: Googlebot-Image
-Allow: /
-
-Sitemap: https://enorpa.com/sitemap.xml
